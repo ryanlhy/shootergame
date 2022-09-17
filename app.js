@@ -42,6 +42,7 @@ function gameLoop() {
   bulletController.draw(ctx);
   // call draw method
   player.draw(ctx);
+
   enemies.forEach((enemy) => {
     // if bullet collided with enemy
     if (bulletController.collideWith(enemy)) {
@@ -71,6 +72,14 @@ function setCommonStyle() {
 }
 
 setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
+
+// // in case didnt render
+// const animate = () => {
+//   requestAnimationFrame(animate);
+//   ctx.fillStyle = "black";
+//   player.draw(ctx);
+//   //   console.log("animate");
+// };
 
 ////////////////////////////////////////////////////////////
 // NOTES FOR UNDERSTANDING THIS SCRIPT
@@ -172,4 +181,66 @@ em: Relative to the font-size of the element (2em means 2 times the size of the 
 
 
 https://www.w3schools.com/cssref/css_units.asp
+
+
+/////////////////////////////////////////////
+THINGS TO IMRPOVE
+/////////////////////////////////////////////
+
+To do
+add animated images to enemies, players, bullets, collision,
+add background image
+
+
+AETHETICS
+add animated images to enemies, players, bullets, collision,
+add background image
+make background image move continously
+add sounds
+add start button
+
+
+LOGIC
+make enemies appear according to time, or stage completion
+make enemies appear randomly
+create a point system according to number of enemies defeated
+create different type of enemies
+make enemies move towards player
+make enemies move around player in a pattern
+make enemies shoot in a straight line
+make enemies shoot at player (diagonal)
+
+create a winning and losing scenario
+
+Player UX
+Ask for player name
+Create 3 lives, or a health bar
+when player collide with enemy, lose and end game
+more than one stream of bullets from player as game progress
+diagonal bullet from player
+Create an ulti option
+autoshoot bullets
+add additional player
+pause button
+
+nice to have
+add mouse mouse movement option to move the player
+add mobile touch movement option to move the player on mobile
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 */

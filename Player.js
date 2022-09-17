@@ -9,6 +9,11 @@ export default class Player {
     this.height = 50;
     this.speed = 4;
 
+    // set image
+    const image = new Image();
+    image.src = "./img/spaceship.png";
+    this.image = image;
+
     // add keyboard listeners, fired when key is pressed / released
     document.addEventListener("keydown", this.keydown);
     document.addEventListener("keyup", this.keyup);
@@ -17,15 +22,20 @@ export default class Player {
   // draw method
   draw(ctx) {
     this.move();
-    // strokeStyle	- Sets or returns the color, gradient, or pattern used for strokes
-    ctx.strokeStyle = "yellow";
-    // strokeRect() - Draws a rectangle (no fill)
-    ctx.strokeRect(this.x, this.y, this.width, this.height);
 
-    // fillStyle - Sets or returns the color, gradient, or pattern used to fill the drawing
-    ctx.fillStyle = "black";
-    // fillRect() - Draws a "filled" rectangle
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    //draw player as image
+    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+
+    // box
+    // // strokeStyle	- Sets or returns the color, gradient, or pattern used for strokes
+    // ctx.strokeStyle = "yellow";
+    // // strokeRect() - Draws a rectangle (no fill)
+    // ctx.strokeRect(this.x, this.y, this.width, this.height);
+    // // fillStyle - Sets or returns the color, gradient, or pattern used to fill the drawing
+    // ctx.fillStyle = "black";
+    // // fillRect() - Draws a "filled" rectangle
+    // ctx.fillRect(this.x, this.y, this.width, this.height);
+
     // shoot method
     this.shoot();
   }
@@ -35,7 +45,7 @@ export default class Player {
     if (this.shootPressed) {
       console.log("shoot");
       // how fast is the bullet
-      const speed = 5;
+      const speed = 15;
       // delay between bullets. used to control number of shoot() loops before next bullet activation
       const delay = 7;
       // how much damage bullet cause

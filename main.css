@@ -6,7 +6,7 @@ body{
     margin: 0;
     /* viewport -gradient background 
     100 of vh (viewport height)*/
-    height: 130vh; 
+    height: 100vh; 
     background: linear-gradient(
         0deg,
         rgb(17, 51, 161) 0%,
