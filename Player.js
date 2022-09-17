@@ -1,3 +1,4 @@
+// define player properties, draw, movement, shoot
 export default class Player {
   constructor(x, y, bulletController) {
     this.x = x;
@@ -35,7 +36,7 @@ export default class Player {
       console.log("shoot");
       // how fast is the bullet
       const speed = 5;
-      // delay between bullets
+      // delay between bullets. used to control number of shoot() loops before next bullet activation
       const delay = 7;
       // how much damage bullet cause
       const damange = 1;

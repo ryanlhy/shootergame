@@ -1,3 +1,4 @@
+// define bullet class properties and draw method
 export default class Bullet {
   // create bullet class properties and methods
   constructor(x, y, speed, damage) {

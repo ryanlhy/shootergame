@@ -90,6 +90,19 @@ https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code
 Keyboard Event Code Values
 https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_code_values
 
+////////////////////////////////////////////////
+ARRAY METHODS
+////////////////////////////////////////////////
+Array.prototype.indexOf()
+The indexOf() method returns the first index at which a given element can be found in the array,
+or -1 if it is not present.
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
+
+Array.prototype.splice()
+The splice() method adds and/or removes array elements.
+The splice() method overwrites the original array.
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
+
 
 ///////////////////////////////////////////////
 CSS

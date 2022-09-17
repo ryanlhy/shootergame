@@ -1,3 +1,4 @@
+// controls the bullet array, timeTillNextBullet
 import Bullet from "./Bullet.js";
 
 export default class BulletController {
@@ -5,6 +6,7 @@ export default class BulletController {
   bullets = [];
   // gap between bullets
   timerTillNextBullet = 0;
+  // canvas = document.getElementById("game");
   constructor(canvas) {
     this.canvas = canvas;
   }
@@ -20,9 +22,31 @@ export default class BulletController {
     // decrease the value of timeTillNextBullet for every time shoot get called
     this.timerTillNextBullet--;
   }
+
+  // loop over all the bullets in array and call draw method (bullet.draw)
   draw(ctx) {
+    console.log(this.bullets.length);
     // loop over all the bullets
     // and for each bullet, draw
-    this.bullets.forEach((bullet) => bullet.draw(ctx));
+    this.bullets.forEach((bullet) => {
+      //   remove bullets that are off screen
+      if (this.isBulletOffScreen(bullet)) {
+        const index = this.bullets.indexOf(bullet);
+        // removes 1 array element at index. overwrites array
+        // essentially remove 1 bullet from the array
+        this.bullets.splice(index, 1);
+      }
+      bullet.draw(ctx);
+    });
+  }
+  // bullets continue to be saved in the array, even if they are past outside the screen,
+  // so, remove bullets when they are off screen
+  isBulletOffScreen(bullet) {
+    // is bullet's y position smaller/= (above the x axis/ top of screen) to bullet's height
+    // negative height because full length of bullet must past the top of screen before it is removed
+    // y will keep decreasing value as bullet moves higher
+    // eg. bullet.y = 0, -bullet.height = -15, === false (bullet top touches screen top)
+    // eg. bullet.y = -15, -bullet.height = -15, === true (bullet bottom just past screen top)
+    return bullet.y <= -bullet.height;
   }
 }
