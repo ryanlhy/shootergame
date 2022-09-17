@@ -191,6 +191,9 @@ THINGS TO IMRPOVE
 To do
 add animated images to enemies, players, bullets, collision,
 add background image
+add double bullets
+mouse to control
+mobile responsive dimensions
 
 
 AETHETICS

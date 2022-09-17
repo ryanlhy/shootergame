@@ -18,6 +18,7 @@ export default class Player {
     // add keyboard listeners, fired when key is pressed / released
     document.addEventListener("keydown", this.keydown);
     document.addEventListener("keyup", this.keyup);
+    // document.addEventListener("mousemove", mouseMoveHandler, false);
   }
 
   // draw method
@@ -127,6 +128,12 @@ export default class Player {
     }
     if (e.code === "Space") {
       this.shootPressed = false;
+    }
+  };
+  mouseMoveHandler = (e) => {
+    var relativeX = e.clientX - canvas.offsetLeft;
+    if (relativeX > 0 && relativeX < canvas.width) {
+      paddleX = relativeX - paddleWidth / 2;
     }
   };
 }
