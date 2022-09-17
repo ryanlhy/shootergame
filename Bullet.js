@@ -1,0 +1,22 @@
+export default class Bullet {
+  // create bullet class properties and methods
+  constructor(x, y, speed, damage) {
+    this.x = x;
+    this.y = y;
+    this.speed = speed;
+    this.damage = damage;
+
+    this.width = 5;
+    this.height = 15;
+    this.color = "red";
+  }
+
+  // draw bullets
+  draw(ctx) {
+    ctx.fillStyle = this.color;
+    // bullets will go up the y axis, so negative
+    this.y -= this.speed;
+    // fillRect() - Draws a "filled" rectangle (bullet)
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
+}
