@@ -1,7 +1,7 @@
 import Player from "./Player.js";
 import Enemy from "./Enemy.js";
 import BulletController from "./BulletController.js";
-const canvas = document.getElementById("game");
+export const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
 
 // specify canvas dimensions
@@ -16,7 +16,8 @@ const bulletController = new BulletController(canvas);
 const player = new Player(
   canvas.width / 2.2,
   canvas.height / 1.3,
-  bulletController // pass in bulletcontroller to shoot
+  bulletController, // pass in bulletcontroller to shoot
+  canvas // pass in canvas to specify player restrictions
 );
 
 // create array of enemies

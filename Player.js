@@ -1,6 +1,6 @@
 // define player properties, draw, movement, shoot
 export default class Player {
-  constructor(x, y, bulletController) {
+  constructor(x, y, bulletController, canvas) {
     this.x = x;
     this.y = y;
     // create bullets and update on screen on command
@@ -8,6 +8,7 @@ export default class Player {
     this.width = 50;
     this.height = 50;
     this.speed = 4;
+    this.canvas = canvas;
 
     // set image
     const image = new Image();
@@ -49,32 +50,43 @@ export default class Player {
       // delay between bullets. used to control number of shoot() loops before next bullet activation
       const delay = 7;
       // how much damage bullet cause
-      const damange = 1;
+      const damage = 1;
       // where bullet originate in terms of x & y, (originally starts in top left corner of square)
       // middle of square - divide width of square by 2
       const bulletX = this.x + this.width / 2;
       const bulletY = this.y; //edge of the player - square
-      this.bulletController.shoot(bulletX, bulletY, speed, damange, delay);
+      this.bulletController.shoot(bulletX, bulletY, speed, damage, delay);
     }
   }
 
   // move method to specify what happens when key is true
   move() {
-    // is downpress is true, increment y value to reposition it in y axis
-    // same logic for the others
-    if (this.downPressed) {
-      this.y += this.speed;
+    // add restriction
+    if (this.y >= this.canvas.height - this.height) {
+      this.y = this.y - 1;
+    } else if (this.y < 0) {
+      this.y = 0;
+    } else if (this.x > this.canvas.width - this.width) {
+      this.x = this.x - 1;
+    } else if (this.x < 0) {
+      this.x = 0;
+    } else {
+      // is downpress is true, increment y value to reposition it in y axis
+      // same logic for the others
+      if (this.downPressed) {
+        this.y += this.speed;
+      }
+      if (this.upPressed) {
+        this.y -= this.speed;
+      }
+      if (this.leftPressed) {
+        this.x -= this.speed;
+      }
+      if (this.rightPressed) {
+        this.x += this.speed;
+      }
+      // if all is false (eg, key is up), nothing happens
     }
-    if (this.upPressed) {
-      this.y -= this.speed;
-    }
-    if (this.leftPressed) {
-      this.x -= this.speed;
-    }
-    if (this.rightPressed) {
-      this.x += this.speed;
-    }
-    // if all is false (eg, key is up), nothing happens
   }
 
   // keydown arrow function - when key is pressed down
