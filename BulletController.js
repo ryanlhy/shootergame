@@ -19,7 +19,7 @@ export default class BulletController {
       this.timerTillNextBullet = delay;
     }
 
-    // decrease the value of timeTillNextBullet for every time shoot get called
+    // decrease the value of timeTillNextBullet for every time shoot get called, collision detection
     this.timerTillNextBullet--;
   }
 
@@ -31,6 +31,7 @@ export default class BulletController {
     this.bullets.forEach((bullet) => {
       //   remove bullets that are off screen
       if (this.isBulletOffScreen(bullet)) {
+        // identify index of bullet in question
         const index = this.bullets.indexOf(bullet);
         // removes 1 array element at index. overwrites array
         // essentially remove 1 bullet from the array
@@ -39,6 +40,22 @@ export default class BulletController {
       bullet.draw(ctx);
     });
   }
+
+  // collide with method. can use for enemy or player
+  collideWith(sprite) {
+    // if there is at least one bullet (in array) hitting our sprite
+    // create a test using some method
+    return this.bullets.some((bullet) => {
+      // if there is a collision
+      if (bullet.collideWith(sprite)) {
+        // remove bullet from bullet array, since it collided with something
+        this.bullets.splice(this.bullets.indexOf(bullet), 1);
+        return true;
+      }
+      return false;
+    });
+  }
+
   // bullets continue to be saved in the array, even if they are past outside the screen,
   // so, remove bullets when they are off screen
   isBulletOffScreen(bullet) {

@@ -19,6 +19,20 @@ const player = new Player(
   bulletController // pass in bulletcontroller to shoot
 );
 
+// create array of enemies
+const enemies = [
+  new Enemy(50, 20, "green", 5),
+  new Enemy(150, 20, "green", 5),
+  new Enemy(250, 20, "green", 5),
+  new Enemy(350, 20, "green", 5),
+  new Enemy(450, 20, "green", 5),
+  new Enemy(50, 100, "green", 5),
+  new Enemy(150, 100, "green", 5),
+  new Enemy(250, 100, "green", 5),
+  new Enemy(350, 100, "green", 5),
+  new Enemy(450, 100, "green", 5),
+];
+
 // set a loop
 function gameLoop() {
   setCommonStyle();
@@ -28,7 +42,23 @@ function gameLoop() {
   bulletController.draw(ctx);
   // call draw method
   player.draw(ctx);
-  new Enemy(100, 100, "yellow", 10).draw(ctx);
+  enemies.forEach((enemy) => {
+    // if bullet collided with enemy
+    if (bulletController.collideWith(enemy)) {
+      // check enemy health
+      if (enemy.health <= 0) {
+        // find index of enemy in question
+        const index = enemies.indexOf(enemy);
+        // removes 1 array element at index. overwrites array
+        // essentially remove the 1 enemy from the array
+        enemies.splice(index, 1);
+      }
+    }
+    // draw if enemy not collidedwith
+    else {
+      enemy.draw(ctx);
+    }
+  });
 }
 
 // to add in notes
@@ -104,6 +134,18 @@ Array.prototype.splice()
 The splice() method adds and/or removes array elements.
 The splice() method overwrites the original array.
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
+
+Array.prototype.some()
+tests whether at least one element in the array passes the test implemented by the provided function.
+It returns true if, in the array, it finds an element for which the provided function returns true; otherwise it returns false.
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some
+
+//////////////////////////////////////////////
+COLLISION DETECTION
+//////////////////////////////////////////////
+
+https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+
 
 
 ///////////////////////////////////////////////

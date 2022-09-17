@@ -34,4 +34,8 @@ export default class Enemy {
       this.y + this.height / 1.5
     );
   }
+
+  takeDamage(damage) {
+    this.health -= damage;
+  }
 }
