@@ -1,4 +1,5 @@
 import Player from "./Player.js";
+import Enemy from "./Enemy.js";
 import BulletController from "./BulletController.js";
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
@@ -27,6 +28,7 @@ function gameLoop() {
   bulletController.draw(ctx);
   // call draw method
   player.draw(ctx);
+  new Enemy(100, 100, "yellow", 10).draw(ctx);
 }
 
 // to add in notes
