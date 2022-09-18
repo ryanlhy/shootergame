@@ -15,8 +15,8 @@ export default class BulletController {
     // if timerTillNextBullet is 0 or less, we can fire the next bullet
     if (this.timerTillNextBullet <= 0) {
       // create a bullet and push to bullet array
-      this.bullets.push(new Bullet(x - 10, y, speed, damage)); //delay used by bulletcontroller
-      this.bullets.push(new Bullet(x + 10, y, speed, damage)); //delay used by bulletcontroller
+      this.bullets.push(new Bullet(x, y, speed, damage)); //delay used by bulletcontroller
+      // this.bullets.push(new Bullet(x + 10, y, speed, damage)); //delay used by bulletcontroller
 
       this.timerTillNextBullet = delay;
     }

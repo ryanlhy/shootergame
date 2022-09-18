@@ -7,11 +7,13 @@ body{
     /* viewport -gradient background 
     100 of vh (viewport height)*/
     height: 100vh; 
-    background: linear-gradient(
+    background-image: url("./img/space.jpg");
+
+    /* background: linear-gradient(
         0deg,
         rgb(17, 51, 161) 0%,
         rgb( 136, 34, 195) 100%
-    );
+    ); */
 }
 
 h1{
