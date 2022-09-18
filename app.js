@@ -1,7 +1,7 @@
 import Player from "./Player.js";
 import Enemy from "./Enemy.js";
 import BulletController from "./BulletController.js";
-export const canvas = document.getElementById("game");
+const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
 
 // specify canvas dimensions
@@ -22,17 +22,36 @@ const player = new Player(
 
 // create array of enemies
 const enemies = [
-  new Enemy(50, 20, "green", 5),
-  new Enemy(150, 20, "green", 5),
-  new Enemy(250, 20, "green", 5),
-  new Enemy(350, 20, "green", 5),
-  new Enemy(450, 20, "green", 5),
-  new Enemy(50, 100, "green", 5),
-  new Enemy(150, 100, "green", 5),
-  new Enemy(250, 100, "green", 5),
-  new Enemy(350, 100, "green", 5),
-  new Enemy(450, 100, "green", 5),
+  // new Enemy(50, 20, "green", 5),
+  // new Enemy(150, 20, "green", 5),
+  // new Enemy(250, 20, "green", 5),
+  // new Enemy(350, 20, "green", 5),
+  // new Enemy(450, 20, "green", 5),
+  // new Enemy(50, 100, "green", 5),
+  // new Enemy(150, 100, "green", 5),
+  // new Enemy(250, 100, "green", 5),
+  // new Enemy(350, 100, "green", 5),
+  // new Enemy(450, 100, "green", 5),
 ];
+
+function createFleet() {
+  for (let x = 0; x < 4; x++) {
+    for (let y = 0; y < 2; y++) {
+      enemies.push(new Enemy(x * 100 + 100, y * 80 + 20, "red", 5));
+    }
+  }
+}
+createFleet();
+
+// class Fleet {
+//   constructor() {
+//     this.x = x;
+//     this.y = y;
+//     this.color = color;
+//     this.health = health;
+//     this.speed = speed;
+//   }
+// }
 
 // set a loop
 function gameLoop() {
