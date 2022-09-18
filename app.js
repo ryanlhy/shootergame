@@ -23,18 +23,21 @@ const player = new Player(
 // dynamically create group of enemies and move in a fleet
 class Fleet {
   constructor() {
-    // this.x = x;
-    // this.y = y;
-    // this.color = color;
-    // this.health = health;
-    // this.speedX = speedY;
+    this.x = 100; // x position of first
+    this.y = 20;
+    this.color = "red"; // not need if image is used
+    this.health = 1;
+    // this.speedX = speedX; //speed of movement towards x (create diagonal movement)
+    // this.speedX = speedX;
 
     this.enemies = [];
     const columns = 4;
     const rows = 4;
     for (let x = 0; x < columns; x++) {
       for (let y = 0; y < rows; y++) {
-        this.enemies.push(new Enemy(x * 100 + 100, y * 80 + 20, "red", 5));
+        this.enemies.push(
+          new Enemy(x * 100 + this.x, y * 80 + this.y, this.color, this.health)
+        );
       }
     }
   }

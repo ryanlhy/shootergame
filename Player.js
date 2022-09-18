@@ -7,7 +7,7 @@ export default class Player {
     this.bulletController = bulletController;
     this.width = 50;
     this.height = 50;
-    this.speed = 4;
+    this.speed = 9;
     this.canvas = canvas;
 
     // set image
