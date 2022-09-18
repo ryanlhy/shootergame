@@ -6,6 +6,8 @@ export default class Enemy {
     this.health = health;
     this.width = 50;
     this.height = 80;
+    // this.speedX = speedX;
+    // this.speedY = speedY;
 
     // set image
     const image = new Image();

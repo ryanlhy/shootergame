@@ -20,38 +20,27 @@ const player = new Player(
   canvas // pass in canvas to specify player restrictions
 );
 
-// create array of enemies
-const enemies = [
-  // new Enemy(50, 20, "green", 5),
-  // new Enemy(150, 20, "green", 5),
-  // new Enemy(250, 20, "green", 5),
-  // new Enemy(350, 20, "green", 5),
-  // new Enemy(450, 20, "green", 5),
-  // new Enemy(50, 100, "green", 5),
-  // new Enemy(150, 100, "green", 5),
-  // new Enemy(250, 100, "green", 5),
-  // new Enemy(350, 100, "green", 5),
-  // new Enemy(450, 100, "green", 5),
-];
+// dynamically create group of enemies and move in a fleet
+class Fleet {
+  constructor() {
+    // this.x = x;
+    // this.y = y;
+    // this.color = color;
+    // this.health = health;
+    // this.speedX = speedY;
 
-function createFleet() {
-  for (let x = 0; x < 4; x++) {
-    for (let y = 0; y < 2; y++) {
-      enemies.push(new Enemy(x * 100 + 100, y * 80 + 20, "red", 5));
+    this.enemies = [];
+    const columns = 4;
+    const rows = 4;
+    for (let x = 0; x < columns; x++) {
+      for (let y = 0; y < rows; y++) {
+        this.enemies.push(new Enemy(x * 100 + 100, y * 80 + 20, "red", 5));
+      }
     }
   }
 }
-createFleet();
 
-// class Fleet {
-//   constructor() {
-//     this.x = x;
-//     this.y = y;
-//     this.color = color;
-//     this.health = health;
-//     this.speed = speed;
-//   }
-// }
+const fleet = new Fleet();
 
 // set a loop
 function gameLoop() {
@@ -63,16 +52,16 @@ function gameLoop() {
   // call draw method
   player.draw(ctx);
 
-  enemies.forEach((enemy) => {
+  fleet.enemies.forEach((enemy) => {
     // if bullet collided with enemy
     if (bulletController.collideWith(enemy)) {
       // check enemy health
       if (enemy.health <= 0) {
         // find index of enemy in question
-        const index = enemies.indexOf(enemy);
+        const index = fleet.enemies.indexOf(enemy);
         // removes 1 array element at index. overwrites array
         // essentially remove the 1 enemy from the array
-        enemies.splice(index, 1);
+        fleet.enemies.splice(index, 1);
       }
     }
     // draw if enemy not collidedwith
@@ -92,6 +81,20 @@ function setCommonStyle() {
 }
 
 setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
+
+// create array of enemies
+// const enemies = [
+// new Enemy(50, 20, "green", 5),
+// new Enemy(150, 20, "green", 5),
+// new Enemy(250, 20, "green", 5),
+// new Enemy(350, 20, "green", 5),
+// new Enemy(450, 20, "green", 5),
+// new Enemy(50, 100, "green", 5),
+// new Enemy(150, 100, "green", 5),
+// new Enemy(250, 100, "green", 5),
+// new Enemy(350, 100, "green", 5),
+// new Enemy(450, 100, "green", 5),
+// ];
 
 // // in case didnt render
 // const animate = () => {
