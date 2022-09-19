@@ -10,6 +10,7 @@ export default class Player {
     this.speed = 9;
     this.canvas = canvas;
     this.gun = gun; // states number of guns the object holds. manipulates bullet stream
+    this.health = 3; // health of player
 
     // set image
     const image = new Image();
@@ -140,10 +141,10 @@ export default class Player {
       this.shootPressed = false;
     }
   };
-  mouseMoveHandler = (e) => {
-    var relativeX = e.clientX - canvas.offsetLeft;
-    if (relativeX > 0 && relativeX < canvas.width) {
-      paddleX = relativeX - paddleWidth / 2;
-    }
-  };
+  // mouseMoveHandler = (e) => {
+  //   var relativeX = e.clientX - canvas.offsetLeft;
+  //   if (relativeX > 0 && relativeX < canvas.width) {
+  //     paddleX = relativeX - paddleWidth / 2;
+  //   }
+  // };
 }

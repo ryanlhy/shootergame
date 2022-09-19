@@ -1,13 +1,20 @@
 export default class Enemy {
-  constructor(x, y, color, health) {
+  constructor(x, y, health, speedX = 0, speedY = 1) {
     this.x = x;
     this.y = y;
-    this.color = color;
     this.health = health;
     this.width = 50;
     this.height = 80;
-    // this.speedX = speedX;
-    // this.speedY = speedY;
+    this.speedX = speedX;
+    this.speedY = speedY;
+
+    // copied from player class, bullet control
+    // this.bulletController = bulletController;
+    // this.width = 50;
+    // this.height = 50;
+    // this.speed = 9;
+    // this.canvas = canvas;
+    // this.gun;
 
     // set image
     const image = new Image();
@@ -17,6 +24,7 @@ export default class Enemy {
 
   draw(ctx) {
     //draw player as image
+    this.move();
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 
     //default box
@@ -48,5 +56,11 @@ export default class Enemy {
 
   takeDamage(damage) {
     this.health -= damage;
+  }
+
+  move() {
+    // this.x -= this.speedX;
+    this.y += this.speedY;
+    console.log("called enemy.move()");
   }
 }

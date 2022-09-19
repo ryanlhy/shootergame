@@ -14,11 +14,10 @@ export default class BulletController {
   shoot(x, y, speedX, speedY, damage, delay, gun) {
     // if timerTillNextBullet is 0 or less, we can fire the next bullet
     if (this.timerTillNextBullet <= 0) {
-      // for loop to shoot bullets according to  of guns
+      // for loop to shoot bullets according to num of guns
       // create a bullet and push to bullet array
       if (gun === 1) {
         this.bullets.push(new Bullet(x, y, speedX, speedY, damage));
-        console.log("gun" + gun);
       } else {
         for (let i = 0; i < Math.floor(gun / 2); i++) {
           // gun comes in pairs, unless single
