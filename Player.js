@@ -1,6 +1,6 @@
 // define player properties, draw, movement, shoot
 export default class Player {
-  constructor(x, y, bulletController, canvas) {
+  constructor(x, y, bulletController, canvas, gun = 1) {
     this.x = x;
     this.y = y;
     // create bullets and update on screen on command
@@ -9,6 +9,7 @@ export default class Player {
     this.height = 50;
     this.speed = 9;
     this.canvas = canvas;
+    this.gun = gun; // states number of guns the object holds. manipulates bullet stream
 
     // set image
     const image = new Image();
@@ -47,16 +48,25 @@ export default class Player {
     if (this.shootPressed) {
       console.log("shoot");
       // how fast is the bullet
-      const speed = 15;
+      const speedY = 10;
+      const speedX = 0;
       // delay between bullets. used to control number of shoot() loops before next bullet activation
       const delay = 7;
       // how much damage bullet cause
       const damage = 1;
       // where bullet originate in terms of x & y, (originally starts in top left corner of square)
       // middle of square - divide width of square by 2
-      const bulletX = this.x + this.width / 2;
-      const bulletY = this.y; //edge of the player - square
-      this.bulletController.shoot(bulletX, bulletY, speed, damage, delay);
+      const bulletX = this.x + this.width / 2; // start from middle of plane
+      const bulletY = this.y + 10; //edge of the player - square. but  + 10 makes bullet source inside plane
+      this.bulletController.shoot(
+        bulletX,
+        bulletY,
+        speedX,
+        speedY,
+        damage,
+        delay,
+        this.gun
+      );
     }
   }
 

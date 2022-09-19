@@ -11,13 +11,21 @@ export default class BulletController {
     this.canvas = canvas;
   }
 
-  shoot(x, y, speed, damage, delay) {
+  shoot(x, y, speedX, speedY, damage, delay, gun) {
     // if timerTillNextBullet is 0 or less, we can fire the next bullet
     if (this.timerTillNextBullet <= 0) {
+      // for loop to shoot bullets according to  of guns
       // create a bullet and push to bullet array
-      this.bullets.push(new Bullet(x, y, speed, damage)); //delay used by bulletcontroller
-      // this.bullets.push(new Bullet(x + 10, y, speed, damage)); //delay used by bulletcontroller
-
+      if (gun === 1) {
+        this.bullets.push(new Bullet(x, y, speedX, speedY, damage));
+        console.log("gun" + gun);
+      } else {
+        for (let i = 0; i < Math.floor(gun / 2); i++) {
+          // gun comes in pairs, unless single
+          this.bullets.push(new Bullet(x + 10, y, speedX - i, speedY, damage)); //delay used by bulletcontroller
+          this.bullets.push(new Bullet(x - 10, y, speedX + i, speedY, damage));
+        }
+      }
       this.timerTillNextBullet = delay;
     }
 

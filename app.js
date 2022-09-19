@@ -26,7 +26,7 @@ class Fleet {
     this.x = 100; // x position of first
     this.y = 20;
     this.color = "red"; // not need if image is used
-    this.health = 1;
+    this.health = 5;
     // this.speedX = speedX; //speed of movement towards x (create diagonal movement)
     // this.speedX = speedX;
 

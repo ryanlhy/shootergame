@@ -1,10 +1,11 @@
 // define bullet class properties and draw method
 export default class Bullet {
   // create bullet class properties and methods
-  constructor(x, y, speed, damage) {
+  constructor(x, y, speedX = 0, speedY, damage) {
     this.x = x;
     this.y = y;
-    this.speed = speed;
+    this.speedY = speedY;
+    this.speedX = speedX; // diagonal bullets, angle
     this.damage = damage;
 
     this.width = 5;
@@ -17,7 +18,8 @@ export default class Bullet {
     // fill the rect
     ctx.fillStyle = this.color;
     // bullets will go up the y axis, so negative
-    this.y -= this.speed;
+    this.y -= this.speedY;
+    this.x -= this.speedX;
     // fillRect() - Draws a "filled" rectangle (bullet)
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
