@@ -73,32 +73,32 @@ export default class Player {
 
   // move method to specify what happens when key is true
   move() {
-    // add restriction
-    if (this.y >= this.canvas.height - this.height) {
-      this.y = this.y - 1;
+    // add player bounderies for (down,up,left,right)
+    if (this.y > this.canvas.height - this.height) {
+      this.y = this.canvas.height - this.height;
     } else if (this.y < 0) {
       this.y = 0;
-    } else if (this.x > this.canvas.width - this.width) {
-      this.x = this.x - 1;
     } else if (this.x < 0) {
       this.x = 0;
-    } else {
-      // is downpress is true, increment y value to reposition it in y axis
-      // same logic for the others
-      if (this.downPressed) {
-        this.y += this.speed;
-      }
-      if (this.upPressed) {
-        this.y -= this.speed;
-      }
-      if (this.leftPressed) {
-        this.x -= this.speed;
-      }
-      if (this.rightPressed) {
-        this.x += this.speed;
-      }
-      // if all is false (eg, key is up), nothing happens
+    } else if (this.x >= this.canvas.width - this.width) {
+      this.x = this.canvas.width - this.width;
     }
+    // is downpress is true, increment y value to reposition it in y axis
+    // same logic for the others
+    if (this.downPressed) {
+      this.y += this.speed - this.check;
+      console.log("check again" + this.check);
+    }
+    if (this.upPressed) {
+      this.y -= this.speed + this.check;
+    }
+    if (this.leftPressed) {
+      this.x -= this.speed + this.check;
+    }
+    if (this.rightPressed) {
+      this.x += this.speed - this.check;
+    }
+    // if all is false (eg, key is up), nothing happens
   }
 
   // keydown arrow function - when key is pressed down
