@@ -62,9 +62,9 @@ export default class Enemy {
       this.x + this.width / 3.5,
       this.y + this.height / 1.5
     );
-    if (gun < 0) {
-      this.shoot();
-    }
+    // if (gun < 0) {
+    // this.shoot();
+    // }
   }
 
   takeDamage(damage) {
@@ -76,6 +76,7 @@ export default class Enemy {
     this.y += this.speedY;
     console.log("called enemy.move()");
   }
+  //not working
   shoot() {
     if (this.shootPressed) {
       console.log("shoot");
