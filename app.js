@@ -3,6 +3,7 @@ import Enemy from "./Enemy.js";
 import BulletController from "./BulletController.js";
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
+let gameStart = true;
 
 // specify canvas dimensions
 canvas.width = 550;
@@ -56,6 +57,10 @@ const fleet = new Fleet();
 
 // set a loop
 function gameLoop() {
+  // if (gameStart === true) {
+  //   startPage();
+  //   // gameStart === false;
+  // }
   setCommonStyle();
   ctx.fillStyle = "black"; // clear the screen
   ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
@@ -93,7 +98,17 @@ function setCommonStyle() {
   ctx.lineWidth = 5;
 }
 
-setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
+// function startPage() {
+const startScreen = document.getElementById("startscreen");
+const h1 = document.createElement("h2");
+h1.innerText = "welcome1";
+startScreen.append(h1);
+
+// }
+canvas.addEventListener("click", () => {
+  setInterval(gameLoop, 1000 / 60);
+});
+// setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
 
 // create array of enemies
 // const enemies = [
