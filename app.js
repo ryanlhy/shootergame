@@ -53,52 +53,6 @@ class Fleet {
 }
 
 const fleet = new Fleet();
-////////////////////////////////////////////////////////////
-// touch events test
-function startup() {
-  const el = document.getElementById("game");
-  el.addEventListener("touchstart", handleStart);
-  el.addEventListener("touchend", handleEnd);
-  el.addEventListener("touchcancel", handleCancel);
-  el.addEventListener("touchmove", handleMove);
-  log("Initialized.");
-}
-
-document.addEventListener("DOMContentLoaded", startup);
-
-const ongoingTouches = [];
-
-function handleStart(evt) {
-  evt.preventDefault();
-  log("touchstart.");
-  // const el = document.getElementById('game');
-  // const ctx = el.getContext('2d');
-  const touches = evt.changedTouches;
-
-  for (let i = 0; i < touches.length; i++) {
-    log(`touchstart: ${i}.`);
-    ongoingTouches.push(copyTouch(touches[i]));
-    const color = colorForTouch(touches[i]);
-    log(`color of touch with id ${touches[i].identifier} = ${color}`);
-    ctx.beginPath();
-    ctx.arc(touches[i].pageX, touches[i].pageY, 4, 0, 2 * Math.PI, false); // a circle at the start
-    ctx.fillStyle = color;
-    ctx.fill();
-  }
-}
-
-function handleCancel(evt) {
-  evt.preventDefault();
-  log("touchcancel.");
-  const touches = evt.changedTouches;
-
-  for (let i = 0; i < touches.length; i++) {
-    let idx = ongoingTouchIndexById(touches[i].identifier);
-    ongoingTouches.splice(idx, 1); // remove it; we're done
-  }
-}
-//https://developer.mozilla.org/en-US/docs/Web/API/Touch_events
-///////////////////////////////////////////////////////////////////
 
 // set a loop
 function gameLoop() {
@@ -282,6 +236,7 @@ add animated images to enemies, players, bullets, collision,
 make background image move continously
 add sounds
 add start button
+add rotation when player move left or right
 
 
 LOGIC
