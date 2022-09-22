@@ -86,17 +86,16 @@ export default class Player {
     // is downpress is true, increment y value to reposition it in y axis
     // same logic for the others
     if (this.downPressed) {
-      this.y += this.speed - this.check;
-      console.log("check again" + this.check);
+      this.y += this.speed;
     }
     if (this.upPressed) {
-      this.y -= this.speed + this.check;
+      this.y -= this.speed;
     }
     if (this.leftPressed) {
-      this.x -= this.speed + this.check;
+      this.x -= this.speed;
     }
     if (this.rightPressed) {
-      this.x += this.speed - this.check;
+      this.x += this.speed;
     }
     // if all is false (eg, key is up), nothing happens
   }
