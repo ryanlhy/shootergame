@@ -61,9 +61,7 @@ startPage();
 
 // set a loop
 function gameLoop() {
-  if (gameStop === true) {
-    clearInterval(gameLoop);
-  } else {
+  if (gameStop === false) {
     setCommonStyle();
     ctx.fillStyle = "black"; // clear the screen
     ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
@@ -92,6 +90,9 @@ function gameLoop() {
       }
     });
   }
+  // else {
+  //   clearInterval(gameLoop);
+  // }
 }
 
 // to add in notes
@@ -103,12 +104,17 @@ function setCommonStyle() {
   ctx.lineWidth = 5;
 }
 
+// set common text properties
+function setTextCommonStyle() {
+  ctx.fillStyle = "white";
+  ctx.font = "30px Arial";
+  ctx.textAlign = "center";
+}
+
 // start page
 function startPage() {
   ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
-  ctx.fillStyle = "white"; // clear the screen
-  ctx.font = "30px Arial";
-  ctx.textAlign = "center";
+  setTextCommonStyle(); // text properties
   ctx.fillText(
     "Welcome to Space Shooter!",
     canvas.width / 2,
