@@ -4,7 +4,7 @@ import BulletController from "./BulletController.js";
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
 let gameStart = true; // checker to start gameloop once
-let gameStop = true;
+let gameStop = false;
 
 // specify canvas dimensions
 canvas.width = 550;
@@ -60,32 +60,36 @@ startPage();
 
 // set a loop
 function gameLoop() {
-  setCommonStyle();
-  ctx.fillStyle = "black"; // clear the screen
-  ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
-  // draw bullet (draw below player so player goes on top of bullet)
-  bulletController.draw(ctx);
-  // call draw method
-  player.draw(ctx);
+  if (gameStop === true) {
+    clearInterval(gameLoop);
+  } else {
+    setCommonStyle();
+    ctx.fillStyle = "black"; // clear the screen
+    ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
+    // draw bullet (draw below player so player goes on top of bullet)
+    bulletController.draw(ctx);
+    // call draw method
+    player.draw(ctx);
 
-  // enemy and bullets
-  fleet.enemies.forEach((enemy) => {
-    // if bullet collided with enemy
-    if (bulletController.collideWith(enemy)) {
-      // check enemy health
-      if (enemy.health <= 0) {
-        // find index of enemy in question
-        const index = fleet.enemies.indexOf(enemy);
-        // removes 1 array element at index. overwrites array
-        // essentially remove the 1 enemy from the array
-        fleet.enemies.splice(index, 1);
+    // enemy and bullets
+    fleet.enemies.forEach((enemy) => {
+      // if bullet collided with enemy
+      if (bulletController.collideWith(enemy)) {
+        // check enemy health
+        if (enemy.health <= 0) {
+          // find index of enemy in question
+          const index = fleet.enemies.indexOf(enemy);
+          // removes 1 array element at index. overwrites array
+          // essentially remove the 1 enemy from the array
+          fleet.enemies.splice(index, 1);
+        }
       }
-    }
-    // draw as per normal if enemy not collidedwith
-    else {
-      enemy.draw(ctx);
-    }
-  });
+      // draw as per normal if enemy not collidedwith
+      else {
+        enemy.draw(ctx);
+      }
+    });
+  }
 }
 
 // to add in notes
@@ -111,7 +115,9 @@ function startPage() {
 }
 
 function endPage() {
+  ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
+
   ctx.fillStyle = "white"; // clear the screen
   ctx.font = "30px Arial";
   ctx.textAlign = "center";
@@ -123,21 +129,28 @@ function endPage() {
   );
 }
 
+const startGameLoop = () => {
+  setInterval(gameLoop, 1000 / 60);
+};
+const test = 0;
 // start game loop on click in canvas
-canvas.addEventListener("click", (e) => {
+canvas.addEventListener("click", () => {
   if (gameStart === true) {
     gameStart = false; // checker to start gameloop only once
-    setInterval(gameLoop, 1000 / 60);
+    startGameLoop();
   }
 });
-
 // setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
-// document.addEventListener("keydown", (e) => {
-//   if (e.code === "Escape") {
-//     console.log(e.code + " escape key pressed");
-//     clearInterval(gameLoop);
-//   }
-// });
+
+// end game
+document.addEventListener("keydown", (e) => {
+  if (e.code === "Escape") {
+    console.log(e.code + " escape key pressed");
+    clearInterval(startGameLoop); //this not working, need to be in same scope?
+    gameStop = true;
+    endPage();
+  }
+});
 
 // create array of enemies
 // const enemies = [
