@@ -5,6 +5,7 @@ const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
 let gameStart = true; // checker to start gameloop once
 let gameStop = false;
+let score = 0;
 
 // specify canvas dimensions
 canvas.width = 550;
@@ -82,6 +83,7 @@ function gameLoop() {
           // removes 1 array element at index. overwrites array
           // essentially remove the 1 enemy from the array
           fleet.enemies.splice(index, 1);
+          score += 10; // increment score at every enemy kill
         }
       }
       // draw as per normal if enemy not collidedwith
@@ -135,6 +137,7 @@ function endPage() {
     canvas.height / (2 - 0.1),
     canvas.width
   );
+  console.log("Score: " + score);
 }
 // function that runs setinterval
 const startGameLoop = () => {
