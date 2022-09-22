@@ -3,7 +3,7 @@ import Enemy from "./Enemy.js";
 import BulletController from "./BulletController.js";
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
-let gameStart = true;
+// let gameStart = true;
 
 // specify canvas dimensions
 canvas.width = 550;
@@ -62,10 +62,6 @@ const fleet = new Fleet();
 
 // set a loop
 function gameLoop() {
-  // if (gameStart === true) {
-  //   startPage();
-  //   // gameStart === false;
-  // }
   setCommonStyle();
   ctx.fillStyle = "black"; // clear the screen
   ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
