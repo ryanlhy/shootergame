@@ -101,6 +101,7 @@ function setCommonStyle() {
   ctx.lineWidth = 5;
 }
 
+// start page
 function startPage() {
   ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
   ctx.fillStyle = "white"; // clear the screen
@@ -109,11 +110,18 @@ function startPage() {
   ctx.fillText(
     "Welcome to Space Shooter!",
     canvas.width / 2,
-    canvas.height / (2 - 0.1),
+    canvas.height / (2 + 0.25),
+    canvas.width
+  );
+  ctx.fillText(
+    "Please Click to start!",
+    canvas.width / 2,
+    canvas.height / (2 - 0.25),
     canvas.width
   );
 }
 
+// ending page
 function endPage() {
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
@@ -128,9 +136,9 @@ function endPage() {
     canvas.width
   );
 }
-
+// function that runs setinterval
 const startGameLoop = () => {
-  setInterval(gameLoop, 1000 / 60);
+  setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
 };
 const test = 0;
 // start game loop on click in canvas
@@ -140,13 +148,12 @@ canvas.addEventListener("click", () => {
     startGameLoop();
   }
 });
-// setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
 
 // end game
 document.addEventListener("keydown", (e) => {
   if (e.code === "Escape") {
     console.log(e.code + " escape key pressed");
-    clearInterval(startGameLoop); //this not working, need to be in same scope?
+    // clearInterval(startGameLoop); //this not working, need to be in same scope?
     gameStop = true;
     endPage();
   }
@@ -283,7 +290,10 @@ THINGS TO IMRPOVE
 To do
 add animated images to enemies, players, bullets, collision,
 when enemy hit, blink red = see grayscale: https://www.hongkiat.com/blog/grayscale-image-web/
-fix object at edge 
+add score system
+add score on every kill
+
+
 mouse to control
 mobile responsive dimensions
 
