@@ -3,6 +3,7 @@ import Enemy from "./Enemy.js";
 import BulletController from "./BulletController.js";
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
+let gameStart = true;
 
 // specify canvas dimensions
 canvas.width = 550;
@@ -54,6 +55,11 @@ class Fleet {
 
 const fleet = new Fleet();
 
+// if (gameStart === true) {
+//   startPage();
+//   // gameStart === false;
+// }
+
 // set a loop
 function gameLoop() {
   // if (gameStart === true) {
@@ -98,26 +104,29 @@ function setCommonStyle() {
 }
 
 // function startPage() {
-ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
-ctx.fillStyle = "white"; // clear the screen
-ctx.font = "30px Arial";
-ctx.textAlign = "center";
-ctx.fillText(
-  "Welcome to Space Shooter!",
-  canvas.width / 2,
-  canvas.height / (2 - 0.1),
-  canvas.width
-);
+//   ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
+//   ctx.fillStyle = "white"; // clear the screen
+//   ctx.font = "30px Arial";
+//   ctx.textAlign = "center";
+//   ctx.fillText(
+//     "Welcome to Space Shooter!",
+//     canvas.width / 2,
+//     canvas.height / (2 - 0.1),
+//     canvas.width
+//   );
 
-// const startScreen = document.getElementById("startscreen");
-// const h2 = document.createElement("h2");
-// h2.innerText = "Click start";
-// canvas.append(h2);
-
+//   // const startScreen = document.getElementById("startscreen");
+//   // const h2 = document.createElement("h2");
+//   // h2.innerText = "Click start";
+//   // canvas.append(h2);
+//   gameStart = false;
 // }
 canvas.addEventListener("click", () => {
   setInterval(gameLoop, 1000 / 60);
 });
+// canvas.removeEventListener("click", () => {
+//   setInterval(gameLoop, 1000 / 60);
+// });
 // setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
 
 // create array of enemies
@@ -250,7 +259,7 @@ THINGS TO IMRPOVE
 
 To do
 add animated images to enemies, players, bullets, collision,
-when enemy hit, blink red
+when enemy hit, blink red = see grayscale: https://www.hongkiat.com/blog/grayscale-image-web/
 fix object at edge 
 mouse to control
 mobile responsive dimensions
