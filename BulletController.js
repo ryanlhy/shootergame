@@ -34,7 +34,7 @@ export default class BulletController {
 
   // loop over all the bullets in array and call draw method (bullet.draw)
   draw(ctx) {
-    console.log(this.bullets.length);
+    // console.log(this.bullets.length);
     // loop over all the bullets
     // and for each bullet, draw
     this.bullets.forEach((bullet) => {

@@ -71,7 +71,7 @@ export default class Enemy {
   move() {
     // this.x -= this.speedX;
     this.y += this.speedY;
-    console.log("called enemy.move()");
+    // console.log("called enemy.move()");
   }
   //not working
   shoot() {

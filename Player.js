@@ -47,7 +47,7 @@ export default class Player {
   // shoot method to shoot bullets
   shoot() {
     if (this.shootPressed) {
-      console.log("shoot");
+      // console.log("shoot");
       // how fast is the bullet
       const speedY = 10;
       const speedX = 0;

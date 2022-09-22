@@ -2,6 +2,7 @@ import Player from "./Player.js";
 import Enemy from "./Enemy.js"; // not used yet
 import BulletController from "./BulletController.js";
 import Fleet from "./Fleet.js";
+import Bullet from "./Bullet.js";
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
@@ -29,6 +30,13 @@ const player = new Player(
 
 const fleet = new Fleet();
 
+class EnemyBullet extends Bullet {
+  constructor(x, y, speedX = 0, speedY, damage) {
+    super(x, y, (speedX = 0), speedY, damage);
+    this.source = "enemy";
+  }
+}
+
 startPage();
 
 // set a loop
@@ -54,6 +62,7 @@ function gameLoop() {
           // essentially remove the 1 enemy from the array
           fleet.enemies.splice(index, 1);
           score += 10; // increment score at every enemy kill
+          console.log(fleet.enemies);
         }
       }
       // draw as per normal if enemy not collidedwith
