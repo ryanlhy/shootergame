@@ -89,10 +89,9 @@ function gameLoop() {
         enemy.draw(ctx);
       }
     });
+  } else {
+    clearInterval(gameLoop); // this seems redundant
   }
-  // else {
-  //   clearInterval(gameLoop);
-  // }
 }
 
 // to add in notes
@@ -133,10 +132,7 @@ function startPage() {
 function endPage() {
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
-
-  ctx.fillStyle = "white"; // clear the screen
-  ctx.font = "30px Arial";
-  ctx.textAlign = "center";
+  setTextCommonStyle();
   ctx.fillText(
     "Game has ended!",
     canvas.width / 2,
