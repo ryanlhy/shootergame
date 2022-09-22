@@ -121,13 +121,10 @@ function setCommonStyle() {
 //   // canvas.append(h2);
 //   gameStart = false;
 // }
-canvas.addEventListener("click", () => {
-  setInterval(gameLoop, 1000 / 60);
-});
-// canvas.removeEventListener("click", () => {
+// canvas.addEventListener("click", () => {
 //   setInterval(gameLoop, 1000 / 60);
 // });
-// setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
+setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
 
 // create array of enemies
 // const enemies = [
