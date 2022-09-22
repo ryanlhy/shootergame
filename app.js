@@ -6,6 +6,7 @@ const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
 let gameStart = true; // checker to start gameloop once
 let gameStop = false;
 let score = 0;
+let pointsTextSize = 20; // text size on screen for points
 
 // specify canvas dimensions
 canvas.width = 550;
@@ -89,6 +90,10 @@ function gameLoop() {
         enemy.draw(ctx);
       }
     });
+    // add points on screen
+    setTextCommonStyle();
+    ctx.font = `${pointsTextSize}px Arial`;
+    ctx.fillText(`Score: ${score}`, 50, canvas.height, canvas.width);
   } else {
     clearInterval(gameLoop); // this seems redundant
   }
