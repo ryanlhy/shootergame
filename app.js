@@ -4,6 +4,7 @@ import BulletController from "./BulletController.js";
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
 let gameStart = true; // checker to start gameloop once
+let gameStop = true;
 
 // specify canvas dimensions
 canvas.width = 550;
@@ -85,9 +86,6 @@ function gameLoop() {
       enemy.draw(ctx);
     }
   });
-  // if (gameStop === true) {
-  //   clearInterval();
-  // }
 }
 
 // to add in notes
@@ -110,20 +108,36 @@ function startPage() {
     canvas.height / (2 - 0.1),
     canvas.width
   );
-
-  // gameStart = false;
 }
 
-canvas.addEventListener("click", () => {
+function endPage() {
+  ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
+  ctx.fillStyle = "white"; // clear the screen
+  ctx.font = "30px Arial";
+  ctx.textAlign = "center";
+  ctx.fillText(
+    "Game has ended!",
+    canvas.width / 2,
+    canvas.height / (2 - 0.1),
+    canvas.width
+  );
+}
+
+// start game loop on click in canvas
+canvas.addEventListener("click", (e) => {
   if (gameStart === true) {
-    gameStart = false; // checker to start gameloop once
-    setInterval(gameLoop, 10000 / 60);
+    gameStart = false; // checker to start gameloop only once
+    setInterval(gameLoop, 1000 / 60);
   }
 });
 
 // setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
-
-// document.addEventListener("keydown", clearInterval());
+// document.addEventListener("keydown", (e) => {
+//   if (e.code === "Escape") {
+//     console.log(e.code + " escape key pressed");
+//     clearInterval(gameLoop);
+//   }
+// });
 
 // create array of enemies
 // const enemies = [
