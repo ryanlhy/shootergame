@@ -1,5 +1,5 @@
 import Player from "./Player.js";
-import Enemy from "./Enemy.js";
+import Enemy from "./Enemy.js"; // not used yet
 import BulletController from "./BulletController.js";
 import Fleet from "./Fleet.js";
 
@@ -109,11 +109,11 @@ function endPage() {
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
   setTextCommonStyle();
+  ctx.fillText("Game has ended!", canvas.width / 2, canvas.height / (2 - 0.25));
   ctx.fillText(
-    "Game has ended!",
+    `Your Score: ${score}`,
     canvas.width / 2,
-    canvas.height / (2 - 0.1),
-    canvas.width
+    canvas.height / (2 + 0.3)
   );
   console.log("Score: " + score);
 }
