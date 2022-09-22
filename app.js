@@ -1,6 +1,8 @@
 import Player from "./Player.js";
 import Enemy from "./Enemy.js";
 import BulletController from "./BulletController.js";
+import Fleet from "./Fleet.js";
+
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
 let gameStart = true; // checker to start gameloop once
@@ -24,37 +26,6 @@ const player = new Player(
   canvas, // pass in canvas to specify player restrictions
   4 //gun
 );
-
-// dynamically create group of enemies and move in a fleet
-class Fleet {
-  constructor() {
-    this.x = 100; // x position of first
-    this.y = 20;
-    this.health = 5;
-    this.speedX = 1; //speed of movement towards x (create diagonal movement)
-    this.speedY = 0;
-
-    this.enemies = [];
-    const columns = 4;
-    const rows = 4;
-    // create rows and cols of enemies, 1st wave
-    for (let x = 0; x < columns; x++) {
-      for (let y = 0; y < rows; y++) {
-        this.enemies.push(
-          new Enemy(x * 100 + this.x, y * 80 + this.y, this.health)
-        );
-      }
-    }
-    // create 2nd way of enemies, make y negative
-    for (let x = 0; x < columns; x++) {
-      for (let y = 0; y < rows; y++) {
-        this.enemies.push(
-          new Enemy(x * 100 + this.x, -y * 80 - 500, this.health)
-        );
-      }
-    }
-  }
-}
 
 const fleet = new Fleet();
 
