@@ -7,7 +7,8 @@ body{
     /* viewport -gradient background 
     100 of vh (viewport height)*/
     height: 100vh; 
-    /* background-image: url("./img/space.jpg"); */
+    background-image: url("./img/space.jpg");
+    position: relative;
 
     /* background: linear-gradient(
         0deg,
@@ -16,11 +17,25 @@ body{
     ); */
 }
 
+#game {
+    position: relative;
+
+}
+
 h1{
     margin: 0px;
     margin-bottom: 10px;
     font-size: 2.9em;
     color: lightgray;
+}
+
+
+h2{
+    margin: 0px;
+    margin-top: 200px;
+    font-size: 2.9em;
+    color: lightgray;
+    position:absolute;
 }
 
 p{

@@ -3,7 +3,6 @@ import Enemy from "./Enemy.js";
 import BulletController from "./BulletController.js";
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
-let gameStart = true;
 
 // specify canvas dimensions
 canvas.width = 550;
@@ -99,10 +98,21 @@ function setCommonStyle() {
 }
 
 // function startPage() {
-const startScreen = document.getElementById("startscreen");
-const h1 = document.createElement("h2");
-h1.innerText = "welcome1";
-startScreen.append(h1);
+ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
+ctx.fillStyle = "white"; // clear the screen
+ctx.font = "30px Arial";
+ctx.textAlign = "center";
+ctx.fillText(
+  "Welcome to Space Shooter!",
+  canvas.width / 2,
+  canvas.height / (2 - 0.1),
+  canvas.width
+);
+
+// const startScreen = document.getElementById("startscreen");
+// const h2 = document.createElement("h2");
+// h2.innerText = "Click start";
+// canvas.append(h2);
 
 // }
 canvas.addEventListener("click", () => {
