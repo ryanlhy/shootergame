@@ -3,7 +3,7 @@ import Enemy from "./Enemy.js";
 import BulletController from "./BulletController.js";
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
-// let gameStart = true;
+let gameStart = true; // checker to start gameloop once
 
 // specify canvas dimensions
 canvas.width = 550;
@@ -55,10 +55,7 @@ class Fleet {
 
 const fleet = new Fleet();
 
-// if (gameStart === true) {
-//   startPage();
-//   // gameStart === false;
-// }
+startPage();
 
 // set a loop
 function gameLoop() {
@@ -88,6 +85,9 @@ function gameLoop() {
       enemy.draw(ctx);
     }
   });
+  // if (gameStop === true) {
+  //   clearInterval();
+  // }
 }
 
 // to add in notes
@@ -99,28 +99,31 @@ function setCommonStyle() {
   ctx.lineWidth = 5;
 }
 
-// function startPage() {
-//   ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
-//   ctx.fillStyle = "white"; // clear the screen
-//   ctx.font = "30px Arial";
-//   ctx.textAlign = "center";
-//   ctx.fillText(
-//     "Welcome to Space Shooter!",
-//     canvas.width / 2,
-//     canvas.height / (2 - 0.1),
-//     canvas.width
-//   );
+function startPage() {
+  ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
+  ctx.fillStyle = "white"; // clear the screen
+  ctx.font = "30px Arial";
+  ctx.textAlign = "center";
+  ctx.fillText(
+    "Welcome to Space Shooter!",
+    canvas.width / 2,
+    canvas.height / (2 - 0.1),
+    canvas.width
+  );
 
-//   // const startScreen = document.getElementById("startscreen");
-//   // const h2 = document.createElement("h2");
-//   // h2.innerText = "Click start";
-//   // canvas.append(h2);
-//   gameStart = false;
-// }
-// canvas.addEventListener("click", () => {
-//   setInterval(gameLoop, 1000 / 60);
-// });
-setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
+  // gameStart = false;
+}
+
+canvas.addEventListener("click", () => {
+  if (gameStart === true) {
+    gameStart = false; // checker to start gameloop once
+    setInterval(gameLoop, 10000 / 60);
+  }
+});
+
+// setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
+
+// document.addEventListener("keydown", clearInterval());
 
 // create array of enemies
 // const enemies = [
