@@ -1,4 +1,6 @@
 // dynamically create group of enemies and move in a fleet
+import { canvas } from "./app.js";
+import BulletController from "./BulletController.js";
 import Enemy from "./Enemy.js";
 export default class Fleet {
   constructor() {
@@ -11,9 +13,10 @@ export default class Fleet {
     this.enemies = [];
     const columns = 4;
     const rows = 4;
+    const bulletController = new BulletController(canvas);
 
     // one
-    this.enemies.push(new Enemy(300, 200, this.health));
+    this.enemies.push(new Enemy(300, 200, this.health, 0, 0, bulletController));
 
     // // create rows and cols of enemies, 1st wave
     // for (let x = 0; x < columns; x++) {

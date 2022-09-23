@@ -14,7 +14,7 @@ let pointsTextSize = 20; // text size on screen for points
 // specify canvas dimensions
 canvas.width = 550;
 canvas.height = 600;
-
+export { canvas };
 // create bullet
 const bulletController = new BulletController(canvas);
 

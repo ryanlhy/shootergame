@@ -4,7 +4,7 @@ export default class Enemy {
     y,
     health,
     speedX = 0,
-    speedY = 1,
+    speedY = 0, //speeed of enemy moving
     bulletController,
     canvas,
     gun
@@ -62,6 +62,7 @@ export default class Enemy {
       this.x + this.width / 3.5,
       this.y + this.height / 1.5
     );
+    this.shoot();
   }
 
   takeDamage(damage) {
@@ -75,8 +76,8 @@ export default class Enemy {
   }
   //not working
   shoot() {
-    if (this.shootPressed) {
-      console.log("shoot");
+    if (true) {
+      console.log("enemy shooting");
       // how fast is the bullet
       const speedY = 10;
       const speedX = 0;
