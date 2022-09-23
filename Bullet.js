@@ -44,7 +44,7 @@ export class Bullet {
 export class EnemyBullet extends Bullet {
   constructor(x, y, speedX = 0, speedY, damage) {
     super(x, y, (speedX = 0), speedY, damage);
-    this.source = "enemy";
+    this.source = "enemyshoots";
   }
   collideWith(sprite) {
     console.log("enemy shoots");

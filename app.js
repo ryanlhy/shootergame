@@ -2,7 +2,7 @@ import Player from "./Player.js";
 import Enemy from "./Enemy.js"; // not used yet
 import BulletController from "./BulletController.js";
 import Fleet from "./Fleet.js";
-import { Bullet, EnemyBullet } from "./Bullet.js";
+// import { Bullet, EnemyBullet } from "./Bullet.js";
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
@@ -48,6 +48,7 @@ function gameLoop() {
       // if bullet collided with enemy
       if (bulletController.collideWith(enemy, "playershoots")) {
         // check enemy health
+        console.log(enemy);
         if (enemy.health <= 0) {
           // find index of enemy in question
           const index = fleet.enemies.indexOf(enemy);
@@ -55,7 +56,6 @@ function gameLoop() {
           // essentially remove the 1 enemy from the array
           fleet.enemies.splice(index, 1);
           score += 10; // increment score at every enemy kill
-          console.log(fleet.enemies);
         }
       }
       // draw as per normal if enemy not collidedwith
@@ -63,6 +63,18 @@ function gameLoop() {
         enemy.draw(ctx);
       }
     });
+    if (bulletController.collideWith(player, "playershoots")) {
+      // check enemy health
+      console.log(player);
+      // if (player.health <= 0) {
+      // find index of enemy in question
+      // const index = fleet.enemies.indexOf(enemy);
+      // removes 1 array element at index. overwrites array
+      // essentially remove the 1 enemy from the array
+      // fleet.enemies.splice(index, 1);
+      console.log("player loses");
+      // }
+    }
     // add points on screen
     setTextCommonStyle();
     ctx.font = `${pointsTextSize}px Arial`;

@@ -64,7 +64,7 @@ export default class BulletController {
         }
       } else if (source === "enemyshoots") {
         console.log("Enemy Shoots: " + source);
-        if (EnemyBullet.collideWith(sprite)) {
+        if (bullet.collideWith(sprite)) {
           // remove bullet from bullet array, since it collided with something
           this.bullets.splice(this.bullets.indexOf(bullet), 1);
           return true;
