@@ -1,5 +1,5 @@
 // define bullet class properties and draw method
-export default class Bullet {
+export class Bullet {
   // create bullet class properties and methods
   constructor(x, y, speedX = 0, speedY, damage) {
     this.x = x;
@@ -25,6 +25,29 @@ export default class Bullet {
   }
 
   collideWith(sprite) {
+    // function adaapted from 2d collision detection
+    // if this is all true, a collision occured
+    if (
+      this.x < sprite.x + sprite.width &&
+      this.x + this.width > sprite.x &&
+      this.y < sprite.y + sprite.height &&
+      this.y + this.height > sprite.y
+    ) {
+      // damage taken
+      sprite.takeDamage(this.damage);
+      return true;
+    }
+    return false;
+  }
+}
+
+export class EnemyBullet extends Bullet {
+  constructor(x, y, speedX = 0, speedY, damage) {
+    super(x, y, (speedX = 0), speedY, damage);
+    this.source = "enemy";
+  }
+  collideWith(sprite) {
+    console.log("enemy shoots");
     // function adaapted from 2d collision detection
     // if this is all true, a collision occured
     if (

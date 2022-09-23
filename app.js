@@ -2,7 +2,7 @@ import Player from "./Player.js";
 import Enemy from "./Enemy.js"; // not used yet
 import BulletController from "./BulletController.js";
 import Fleet from "./Fleet.js";
-import Bullet from "./Bullet.js";
+import { Bullet, EnemyBullet } from "./Bullet.js";
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
@@ -30,30 +30,6 @@ const player = new Player(
 
 const fleet = new Fleet();
 
-class EnemyBullet extends Bullet {
-  constructor(x, y, speedX = 0, speedY, damage) {
-    super(x, y, (speedX = 0), speedY, damage);
-    this.source = "enemy";
-  }
-  collideWith(sprite) {
-    console.log("enemy shootes");
-    // function adaapted from 2d collision detection
-    // if this is all true, a collision occured
-    // if (
-    //   this.x < sprite.x + sprite.width &&
-    //   this.x + this.width > sprite.x &&
-    //   this.y < sprite.y + sprite.height &&
-    //   this.y + this.height > sprite.y
-    // ) {
-    //   // damage taken
-    //   sprite.takeDamage(this.damage);
-    //   return true;
-    // }
-    // return false;
-  }
-}
-export { EnemyBullet };
-
 startPage();
 
 // set a loop
@@ -70,7 +46,7 @@ function gameLoop() {
     // enemy and bullets
     fleet.enemies.forEach((enemy) => {
       // if bullet collided with enemy
-      if (bulletController.collideWith(enemy, "enemyshoots")) {
+      if (bulletController.collideWith(enemy, "playershoots")) {
         // check enemy health
         if (enemy.health <= 0) {
           // find index of enemy in question
