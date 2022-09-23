@@ -36,22 +36,23 @@ class EnemyBullet extends Bullet {
     this.source = "enemy";
   }
   collideWith(sprite) {
+    console.log("enemy shootes");
     // function adaapted from 2d collision detection
     // if this is all true, a collision occured
-    if (
-      this.x < sprite.x + sprite.width &&
-      this.x + this.width > sprite.x &&
-      this.y < sprite.y + sprite.height &&
-      this.y + this.height > sprite.y
-    ) {
-      // damage taken
-      sprite.takeDamage(this.damage);
-      return true;
-    }
-    return false;
+    // if (
+    //   this.x < sprite.x + sprite.width &&
+    //   this.x + this.width > sprite.x &&
+    //   this.y < sprite.y + sprite.height &&
+    //   this.y + this.height > sprite.y
+    // ) {
+    //   // damage taken
+    //   sprite.takeDamage(this.damage);
+    //   return true;
+    // }
+    // return false;
   }
 }
-export EnemyBullet;
+export { EnemyBullet };
 
 startPage();
 
@@ -69,7 +70,7 @@ function gameLoop() {
     // enemy and bullets
     fleet.enemies.forEach((enemy) => {
       // if bullet collided with enemy
-      if (bulletController.collideWith(enemy, "playershoots")) {
+      if (bulletController.collideWith(enemy, "enemyshoots")) {
         // check enemy health
         if (enemy.health <= 0) {
           // find index of enemy in question

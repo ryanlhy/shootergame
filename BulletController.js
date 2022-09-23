@@ -1,5 +1,6 @@
 // controls the bullet array, timeTillNextBullet
 import Bullet from "./Bullet.js";
+import { EnemyBullet } from "./app.js";
 
 export default class BulletController {
   // array to store bullets
