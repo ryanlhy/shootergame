@@ -51,15 +51,20 @@ export default class BulletController {
   }
 
   // collide with method. can use for enemy or player
-  collideWith(sprite) {
+  collideWith(sprite, source) {
     // if there is at least one bullet (in array) hitting our sprite
     // create a test using some method
     return this.bullets.some((bullet) => {
       // if there is a collision
-      if (bullet.collideWith(sprite)) {
-        // remove bullet from bullet array, since it collided with something
-        this.bullets.splice(this.bullets.indexOf(bullet), 1);
-        return true;
+      if (source === "playershoots") {
+        console.log("enemy collide");
+        if (bullet.collideWith(sprite)) {
+          // remove bullet from bullet array, since it collided with something
+          this.bullets.splice(this.bullets.indexOf(bullet), 1);
+          return true;
+        }
+      } else {
+        console.log("is not enemy: " + source);
       }
       return false;
     });
