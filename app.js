@@ -51,6 +51,7 @@ class EnemyBullet extends Bullet {
     return false;
   }
 }
+export EnemyBullet;
 
 startPage();
 
