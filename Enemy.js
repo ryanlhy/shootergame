@@ -5,7 +5,7 @@ export default class Enemy {
     health,
     speedX = 0,
     speedY = 0, //speeed of enemy moving
-    bulletController,
+    bulletControllerEnemy,
     canvas,
     gun
   ) {
@@ -18,13 +18,13 @@ export default class Enemy {
     this.speedY = speedY;
 
     // copied from player class, bullet control
-    this.bulletController = bulletController;
-    this.bulletWidth = 50;
-    this.bulletHeight = 50;
-    this.BulletspeedX = 9;
-    this.BulletspeedY = 9;
+    this.bulletControllerEnemy = bulletControllerEnemy;
+    // this.bulletWidth = 50;
+    // this.bulletHeight = 50;
+    // this.BulletspeedX = 9;
+    // this.BulletspeedY = 9;
     this.canvas = canvas;
-    this.gun = 0;
+    this.gun = 1;
 
     // set image
     const image = new Image();
@@ -76,28 +76,26 @@ export default class Enemy {
   }
   //not working
   shoot() {
-    if (true) {
-      console.log("enemy shooting");
-      // how fast is the bullet
-      const speedY = 10;
-      const speedX = 0;
-      // delay between bullets. used to control number of shoot() loops before next bullet activation
-      const delay = 7;
-      // how much damage bullet cause
-      const damage = 1;
-      // where bullet originate in terms of x & y, (originally starts in top left corner of square)
-      // middle of square - divide width of square by 2
-      const bulletX = this.x + this.width / 2; // start from middle of plane
-      const bulletY = this.y + 10; //edge of the player - square. but  + 10 makes bullet source inside plane
-      this.bulletController.shoot(
-        bulletX,
-        bulletY,
-        speedX,
-        speedY,
-        damage,
-        delay,
-        this.gun
-      );
-    }
+    // console.log("enemy shooting");
+    // how fast is the bullet
+    const speedY = -10;
+    const speedX = 0;
+    // delay between bullets. used to control number of shoot() loops before next bullet activation
+    const delay = 7;
+    // how much damage bullet cause
+    const damage = 1;
+    // where bullet originate in terms of x & y, (originally starts in top left corner of square)
+    // middle of square - divide width of square by 2
+    const bulletX = this.x + this.width / 2; // start from middle of plane
+    const bulletY = this.y + 10; //edge of the player - square. but  + 10 makes bullet source inside plane
+    this.bulletControllerEnemy.shoot(
+      bulletX,
+      bulletY,
+      speedX,
+      speedY,
+      damage,
+      delay,
+      this.gun
+    );
   }
 }

@@ -40,12 +40,13 @@ export default class Player {
     // // fillRect() - Draws a "filled" rectangle
     // ctx.fillRect(this.x, this.y, this.width, this.height);
 
-    // shoot method
+    // shoot method, always running, but false is no spacebar
     this.shoot();
   }
 
   // shoot method to shoot bullets
   shoot() {
+    //adjust to 'true' to always shoot
     if (this.shootPressed) {
       // console.log("shoot");
       // how fast is the bullet

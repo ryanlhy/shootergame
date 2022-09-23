@@ -1,5 +1,6 @@
 // controls the bullet array, timeTillNextBullet
 import { Bullet, EnemyBullet } from "./Bullet.js";
+import { ctx } from "./app.js";
 
 export default class BulletController {
   // canvas = document.getElementById("game");
@@ -8,7 +9,7 @@ export default class BulletController {
   }
   // array to store bullets
   bullets = [];
-  // gap between bullets
+  // gap between bullets, initialise
   timerTillNextBullet = 0;
 
   shoot(x, y, speedX, speedY, damage, delay, gun) {
@@ -46,6 +47,7 @@ export default class BulletController {
         // essentially remove 1 bullet from the array
         this.bullets.splice(index, 1);
       }
+      // try: if enemy draw different bullet
       bullet.draw(ctx);
     });
   }
@@ -85,3 +87,60 @@ export default class BulletController {
     return bullet.y <= -bullet.height;
   }
 }
+
+class BulletControllerEnemy extends BulletController {
+  constructor(canvas) {
+    super(canvas);
+  }
+
+  shoot(x, y, speedX, speedY, damage, delay, gun) {
+    // if timerTillNextBullet is 0 or less, we can fire the next bullet
+    if (this.timerTillNextBullet <= 0) {
+      // note to set an identifier bullet source, enemy or player
+      // for loop to shoot bullets according to num of guns
+      // create a bullet and push to bullet array
+      if (gun === 1) {
+        this.bullets.push(new EnemyBullet(x, y, speedX, speedY, damage));
+      } else {
+        for (let i = 0; i < Math.floor(gun / 2); i++) {
+          // gun comes in pairs, unless single
+          this.bullets.push(
+            new EnemyBullet(x + 10, y, speedX - i, speedY, damage)
+          );
+          //delay used by bulletcontroller
+          this.bullets.push(
+            new EnemyBullet(x - 10, y, speedX + i, speedY, damage)
+          );
+        }
+      }
+      this.timerTillNextBullet = delay;
+    }
+
+    // decrease the value of timeTillNextBullet for every time shoot get called, collision detection
+    this.timerTillNextBullet--;
+  }
+
+  draw(ctx) {
+    // console.log("enemy" + this.bullets.length);
+    // loop over all the bullets
+    // and for each bullet, draw
+    // console.log("bulletcontrolenemy");
+    // console.log(bullets);
+    this.bullets.forEach((bullet) => {
+      //   remove bullets that are off screen
+      if (this.isBulletOffScreen(bullet)) {
+        // identify index of bullet in question
+        const index = this.bullets.indexOf(bullet);
+        // removes 1 array element at index. overwrites array
+        // essentially remove 1 bullet from the array
+        this.bullets.splice(index, 1);
+      }
+      bullet.draw(ctx);
+      console.log("bullet drawing without keypress");
+    });
+  }
+  isBulletOffScreen(bullet) {
+    return bullet.y <= bullet.height;
+  }
+}
+export { BulletControllerEnemy };

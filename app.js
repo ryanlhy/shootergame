@@ -1,11 +1,12 @@
 import Player from "./Player.js";
 import Enemy from "./Enemy.js"; // not used yet
-import BulletController from "./BulletController.js";
+import BulletController, { BulletControllerEnemy } from "./BulletController.js";
 import Fleet from "./Fleet.js";
 // import { Bullet, EnemyBullet } from "./Bullet.js";
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
+export { ctx };
 let gameStart = true; // checker to start gameloop once
 let gameStop = false;
 let score = 0;
@@ -17,7 +18,8 @@ canvas.height = 600;
 export { canvas };
 // create bullet
 const bulletController = new BulletController(canvas);
-
+const bulletControllerEnemy = new BulletControllerEnemy(canvas);
+export { bulletControllerEnemy };
 // create player.
 // takes x & y position to specify where the player is on the canvas
 const player = new Player(
@@ -25,7 +27,7 @@ const player = new Player(
   canvas.height / 1.3,
   bulletController, // pass in bulletcontroller to shoot
   canvas, // pass in canvas to specify player restrictions
-  4 //gun
+  1 //gun
 );
 
 const fleet = new Fleet();
@@ -41,14 +43,13 @@ function gameLoop() {
     // draw bullet (draw below player so player goes on top of bullet)
     bulletController.draw(ctx);
     // call draw method
-    player.draw(ctx);
+    player.draw(ctx); // not .draw also has shoot method
 
     // enemy and bullets
     fleet.enemies.forEach((enemy) => {
       // if bullet collided with enemy
       if (bulletController.collideWith(enemy, "playershoots")) {
         // check enemy health
-        console.log(enemy);
         if (enemy.health <= 0) {
           // find index of enemy in question
           const index = fleet.enemies.indexOf(enemy);
@@ -61,20 +62,13 @@ function gameLoop() {
       // draw as per normal if enemy not collidedwith
       else {
         enemy.draw(ctx);
+        bulletControllerEnemy.draw(ctx);
       }
     });
-    if (bulletController.collideWith(player, "playershoots")) {
-      // check enemy health
-      console.log(player);
-      // if (player.health <= 0) {
-      // find index of enemy in question
-      // const index = fleet.enemies.indexOf(enemy);
-      // removes 1 array element at index. overwrites array
-      // essentially remove the 1 enemy from the array
-      // fleet.enemies.splice(index, 1);
-      console.log("player loses");
-      // }
-    }
+
+    // if (bulletControllerEnemy.collideWith(player, "playershoots")) {
+    //   console.log("player loses");
+    // }
     // add points on screen
     setTextCommonStyle();
     ctx.font = `${pointsTextSize}px Arial`;

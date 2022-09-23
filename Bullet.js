@@ -62,4 +62,16 @@ export class EnemyBullet extends Bullet {
     }
     return false;
   }
+
+  // draw bullets
+  draw(ctx) {
+    // fill the rect
+    ctx.fillStyle = this.color;
+    // bullets will go up the y axis, so negative
+    this.y -= this.speedY;
+    this.x -= this.speedX;
+    // fillRect() - Draws a "filled" rectangle (bullet)
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+    console.log("bullet drawn");
+  }
 }
