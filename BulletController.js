@@ -2,14 +2,14 @@
 import { Bullet, EnemyBullet } from "./Bullet.js";
 
 export default class BulletController {
-  // array to store bullets
-  bullets = [];
-  // gap between bullets
-  timerTillNextBullet = 0;
   // canvas = document.getElementById("game");
   constructor(canvas) {
     this.canvas = canvas;
   }
+  // array to store bullets
+  bullets = [];
+  // gap between bullets
+  timerTillNextBullet = 0;
 
   shoot(x, y, speedX, speedY, damage, delay, gun) {
     // if timerTillNextBullet is 0 or less, we can fire the next bullet
