@@ -25,12 +25,12 @@ export default class Enemy {
 
     //speed of the bullet
     this.bulletSpeedX = 0;
-    this.bulletSpeedY = -5;
+    this.bulletSpeedY = -7;
     // this.canvas = canvas;
     this.gun = gun;
 
     // delay between bullets. used to control number of shoot() loops before next bullet activation
-    this.delay = 100; //600;
+    this.delay = 200; //600;
 
     // damage of bullet from enemies
     this.damage = 1;
@@ -81,6 +81,7 @@ export default class Enemy {
   move() {
     // this.x -= this.speedX;
     this.y += this.speedY;
+    console.log(this.y);
   }
   shoot() {
     // where bullet originate in terms of x & y, (originally starts in top left corner of square)

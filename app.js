@@ -45,7 +45,7 @@ function gameLoop() {
     bulletController.draw(ctx);
     // call draw method
     player.draw(ctx); // not .draw also has shoot method
-    if (fleet.enemies.length < 5) {
+    if (fleet.enemies.length < 8) {
       console.log("generate fleet");
       fleet.draw();
     }
