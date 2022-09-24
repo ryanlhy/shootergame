@@ -86,26 +86,27 @@ class BulletControllerEnemy extends BulletController {
   }
   // array within arrau
 
-  shoot(x, y, speedX, speedY, damage, delay, gun) {
+  shoot(x, y, speedX, speedY, damage, delay, gun, enemyYPosition) {
     // if timerTillNextBullet is 0 or less, we can fire the next bullet
     // note: fleet.enemies.length - 1. since loop runs one enemy after another,
     // allow all the bullets to shoot before setting the delay after the last enemy
     if (this.timerTillNextBullet <= 0 + fleet.enemies.length - 1) {
-      // add an array of arrays for multiple enemies shooting bullets
-      // for loop to shoot bullets according to num of guns
-      // create a bullet and push to bullet array
-      if (gun === 1) {
-        this.bullets.push(new EnemyBullet(x, y, speedX, speedY, damage));
-      } else {
-        for (let i = 0; i < Math.floor(gun / 2); i++) {
-          // gun comes in pairs, unless single
-          this.bullets.push(
-            new EnemyBullet(x + 10, y, speedX - i, speedY, damage)
-          );
-          //delay used by bulletcontroller
-          this.bullets.push(
-            new EnemyBullet(x - 10, y, speedX + i, speedY, damage)
-          );
+      if (enemyYPosition > 0) {
+        // for loop to shoot bullets according to num of guns
+        // create a bullet and push to bullet array
+        if (gun === 1) {
+          this.bullets.push(new EnemyBullet(x, y, speedX, speedY, damage));
+        } else {
+          for (let i = 0; i < Math.floor(gun / 2); i++) {
+            // gun comes in pairs, unless single
+            this.bullets.push(
+              new EnemyBullet(x + 10, y, speedX - i, speedY, damage)
+            );
+            //delay used by bulletcontroller
+            this.bullets.push(
+              new EnemyBullet(x - 10, y, speedX + i, speedY, damage)
+            );
+          }
         }
       }
       // console.log("timer till next " + this.timerTillNextBullet);

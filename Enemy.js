@@ -30,7 +30,7 @@ export default class Enemy {
     this.gun = gun;
 
     // delay between bullets. used to control number of shoot() loops before next bullet activation
-    this.delay = 600;
+    this.delay = 100; //600;
 
     // damage of bullet from enemies
     this.damage = 1;
@@ -85,7 +85,7 @@ export default class Enemy {
   shoot() {
     // where bullet originate in terms of x & y, (originally starts in top left corner of square)
     // middle of square - divide width of square by 2
-    console.log(this.x);
+    console.log("y position" + this.y);
     const bulletX = this.x + this.width / 2; // start from middle of plane
     const bulletY = this.y + this.height - 10; //edge of the player - square. but  + 10 makes bullet source inside plane
     this.bulletControllerEnemy.shoot(
@@ -95,7 +95,8 @@ export default class Enemy {
       this.bulletSpeedY,
       this.damage,
       this.delay,
-      this.gun
+      this.gun,
+      this.y
     );
   }
 }
