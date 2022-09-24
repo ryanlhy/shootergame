@@ -17,6 +17,9 @@ export default class Player {
     image.src = "./img/spaceship.png";
     this.image = image;
 
+    // collision damage with enemy
+    this.collideDamage = 1;
+
     // add keyboard listeners, fired when key is pressed / released
     document.addEventListener("keydown", this.keydown);
     document.addEventListener("keyup", this.keyup);
@@ -143,5 +146,21 @@ export default class Player {
   };
   takeDamage(damage) {
     this.health -= damage;
+  }
+  collideWith(sprite) {
+    // if this is all true, a collision occured
+    if (
+      this.x < sprite.x + sprite.width &&
+      this.x + this.width > sprite.x &&
+      this.y < sprite.y + sprite.height &&
+      this.y + this.height > sprite.y
+    ) {
+      // damage taken
+      sprite.takeDamage(this.collideDamage);
+      this.takeDamage(this.collideDamage);
+
+      return true;
+    }
+    return false;
   }
 }

@@ -16,7 +16,15 @@ export default class Fleet {
 
     // one
     this.enemies.push(
-      new Enemy(200, 200, this.health, 0, 0, bulletControllerEnemy, 1)
+      new Enemy(
+        200,
+        200,
+        this.health,
+        this.speedX,
+        this.speedY,
+        bulletControllerEnemy,
+        1
+      )
     );
     this.enemies.push(
       new Enemy(300, 100, this.health, 0, 0, bulletControllerEnemy, 1)

@@ -59,31 +59,41 @@ function gameLoop() {
           fleet.enemies.splice(index, 1);
           score += 10; // increment score at every enemy kill
         }
+      } else if (player.collideWith(enemy)) {
+        console.log("player collided with enemy, health" + player.health);
+        const index = fleet.enemies.indexOf(enemy);
+        fleet.enemies.splice(index, 1);
       }
       // draw as per normal if enemy not collidedwith
       else {
         bulletControllerEnemy.draw(ctx);
         enemy.draw(ctx);
       }
-    });
-    // if enemy bullet collided with enemy
-    if (bulletControllerEnemy.collideWith(player)) {
-      console.log("player loses health");
+      // if enemy bullet collided with player or player collide with enemy
+      if (bulletControllerEnemy.collideWith(player)) {
+        console.log("player loses health " + player.health);
 
-      // check player health
-      if (player.health <= 0) {
-        console.log("player loses");
-        gameStop = true;
-        // go to end page after 1 sec
-        setTimeout(endPage, 1000);
+        // check player health
+        if (player.health <= 0) {
+          gameStop = true;
+          // go to end page after 1 sec
+          setTimeout(endPage, 1000);
+        }
       }
-    }
+    });
+
     // add points on screen
     setTextCommonStyle();
     ctx.font = `${pointsTextSize}px Arial`;
     ctx.fillText(`Score: ${score}`, 50, canvas.height, canvas.width);
   } else {
     clearInterval(gameLoop); // this seems redundant
+  }
+  // check player health
+  if (player.health <= 0) {
+    gameStop = true;
+    // go to end page after 1 sec
+    setTimeout(endPage, 1000);
   }
 }
 
