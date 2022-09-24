@@ -27,7 +27,7 @@ const player = new Player(
   canvas.height / 1.3,
   bulletController, // pass in bulletcontroller to shoot
   canvas, // pass in canvas to specify player restrictions
-  1 //gun
+  4 //gun
 );
 
 const fleet = new Fleet();
@@ -49,7 +49,7 @@ function gameLoop() {
     // enemy and bullets
     fleet.enemies.forEach((enemy) => {
       // if bullet collided with enemy
-      if (bulletController.collideWith(enemy, "playershoots")) {
+      if (bulletController.collideWith(enemy)) {
         // check enemy health
         if (enemy.health <= 0) {
           // find index of enemy in question
@@ -67,11 +67,11 @@ function gameLoop() {
       }
     });
     // if enemy bullet collided with enemy
-    if (bulletControllerEnemy.collideWith(player, "playershoots")) {
+    if (bulletControllerEnemy.collideWith(player)) {
       console.log("player loses health");
 
       // check player health
-      if (player.health <= 3) {
+      if (player.health <= 0) {
         console.log("player loses");
         gameStop = true;
         // go to end page after 1 sec

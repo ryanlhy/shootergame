@@ -1,6 +1,6 @@
 // controls the bullet array, timeTillNextBullet
 import { Bullet, EnemyBullet } from "./Bullet.js";
-import { ctx } from "./app.js";
+import { ctx, fleet } from "./app.js";
 import Fleet from "./Fleet.js";
 
 export default class BulletController {
@@ -54,24 +54,15 @@ export default class BulletController {
   }
 
   // collide with method. can use for enemy or player
-  collideWith(sprite, source) {
+  collideWith(sprite) {
     // if there is at least one bullet (in array) hitting our sprite
     // create a test using some method
     return this.bullets.some((bullet) => {
-      if (source === "playershoots") {
-        // if there is a collision
-        if (bullet.collideWith(sprite)) {
-          // remove bullet from bullet array, since it collided with something
-          this.bullets.splice(this.bullets.indexOf(bullet), 1);
-          return true;
-        }
-      } else if (source === "enemyshoots") {
-        console.log("Enemy Shoots: " + source);
-        if (bullet.collideWith(sprite)) {
-          // remove bullet from bullet array, since it collided with something
-          this.bullets.splice(this.bullets.indexOf(bullet), 1);
-          return true;
-        }
+      // if there is a collision
+      if (bullet.collideWith(sprite)) {
+        // remove bullet from bullet array, since it collided with something
+        this.bullets.splice(this.bullets.indexOf(bullet), 1);
+        return true;
       }
       return false;
     });
@@ -100,7 +91,7 @@ class BulletControllerEnemy extends BulletController {
     // if timerTillNextBullet is 0 or less, we can fire the next bullet
     if (this.timerTillNextBullet <= 0) {
       // add an array of arrays for multiple enemies shooting bullets
-      for (let num = 0; num < Fleet.enemies.length; num++) {
+      for (let num = 0; num < fleet.enemies.length; num++) {
         console.log(num);
       }
       // for loop to shoot bullets according to num of guns
