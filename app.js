@@ -48,23 +48,23 @@ function gameLoop() {
 
     // enemy and bullets
     fleet.enemies.forEach((enemy) => {
+      // find index of enemy in question
+      const index = fleet.enemies.indexOf(enemy);
       // if bullet collided with enemy
       if (bulletController.collideWith(enemy)) {
         // check enemy health
         if (enemy.health <= 0) {
-          // find index of enemy in question
-          const index = fleet.enemies.indexOf(enemy);
           // removes 1 array element at index. overwrites array
           // essentially remove the 1 enemy from the array
           fleet.enemies.splice(index, 1);
           score += 10; // increment score at every enemy kill
         }
-      } else if (player.collideWith(enemy)) {
-        const index = fleet.enemies.indexOf(enemy);
+      } // player collide with enemy
+      else if (player.collideWith(enemy)) {
         fleet.enemies.splice(index, 1);
-      } else if (enemy.y >= canvas.height + enemy.height) {
+      } // if enemy is out of screen or canvas
+      else if (enemy.y >= canvas.height + enemy.height) {
         console.log("pass screen");
-        const index = fleet.enemies.indexOf(enemy);
         fleet.enemies.splice(index, 1);
         console.log("pass screen " + fleet.enemies.length);
       }
@@ -73,17 +73,8 @@ function gameLoop() {
         bulletControllerEnemy.draw(ctx);
         enemy.draw(ctx);
       }
-      // if player collide with enemy
-      if (bulletControllerEnemy.collideWith(player)) {
-        console.log("player loses health " + player.health);
-
-        // check player health
-        if (player.health <= 0) {
-          gameStop = true;
-          // go to end page after 1 sec
-          setTimeout(endPage, 500);
-        }
-      }
+      // player collide with enemy. player health deducted
+      bulletControllerEnemy.collideWith(player);
     });
 
     // add points and health on screen
@@ -99,7 +90,7 @@ function gameLoop() {
   } else {
     clearInterval(gameLoop); // this seems redundant
   }
-  // check player health and when no enemies are around. need to remove enemies from array
+  // check player health and when no enemies in array. need to remove enemies from array
   if (player.health <= 0 || fleet.enemies.length === 0) {
     gameStop = true;
     // go to end page after 1 sec
