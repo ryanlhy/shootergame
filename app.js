@@ -60,16 +60,20 @@ function gameLoop() {
           score += 10; // increment score at every enemy kill
         }
       } else if (player.collideWith(enemy)) {
-        console.log("player collided with enemy, health" + player.health);
         const index = fleet.enemies.indexOf(enemy);
         fleet.enemies.splice(index, 1);
+      } else if (enemy.y >= canvas.height + enemy.height) {
+        console.log("pass screen");
+        const index = fleet.enemies.indexOf(enemy);
+        fleet.enemies.splice(index, 1);
+        console.log("pass screen " + fleet.enemies.length);
       }
       // draw as per normal if enemy not collidedwith
       else {
         bulletControllerEnemy.draw(ctx);
         enemy.draw(ctx);
       }
-      // if enemy bullet collided with player or player collide with enemy
+      // if player collide with enemy
       if (bulletControllerEnemy.collideWith(player)) {
         console.log("player loses health " + player.health);
 

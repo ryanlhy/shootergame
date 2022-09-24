@@ -8,7 +8,7 @@ export default class Fleet {
     this.y = 20;
     this.health = 5;
     this.speedX = 0; //speed of movement towards x (create diagonal movement)
-    this.speedY = 1; //speed of movement towards x (create Vertical movement)
+    this.speedY = 2; //speed of movement towards x (create Vertical movement)
 
     this.enemies = [];
     const columns = 4;
@@ -26,17 +26,17 @@ export default class Fleet {
         1
       )
     );
-    // this.enemies.push(
-    //   new Enemy(
-    //     150,
-    //     -100,
-    //     this.health,
-    //     this.speedX,
-    //     this.speedY,
-    //     bulletControllerEnemy,
-    //     1
-    //   )
-    // );
+    this.enemies.push(
+      new Enemy(
+        150,
+        -100,
+        this.health,
+        this.speedX,
+        this.speedY,
+        bulletControllerEnemy,
+        1
+      )
+    );
 
     // // create rows and cols of enemies, 1st wave
     // for (let x = 0; x < columns; x++) {
