@@ -73,7 +73,8 @@ function gameLoop() {
       if (player.health <= 3) {
         console.log("player loses");
         gameStop = true;
-        clearInterval(gameLoop); // this seems redundant
+        // go to end page after 1 sec
+        setTimeout(endPage, 1000);
       }
     }
     // add points on screen
