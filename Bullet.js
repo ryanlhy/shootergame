@@ -1,3 +1,4 @@
+import { fleet } from "./app.js";
 // define bullet class properties and draw method
 export class Bullet {
   // create bullet class properties and methods
@@ -68,7 +69,7 @@ export class EnemyBullet extends Bullet {
     // fill the rect
     ctx.fillStyle = this.color;
     // bullets will go up the y axis, so negative
-    this.y -= this.speedY;
+    this.y -= this.speedY / fleet.enemies.length; // temperory solution
     this.x -= this.speedX;
     // fillRect() - Draws a "filled" rectangle (bullet)
     ctx.fillRect(this.x, this.y, this.width, this.height);

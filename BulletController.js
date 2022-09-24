@@ -94,6 +94,7 @@ class BulletControllerEnemy extends BulletController {
       // create a bullet and push to bullet array
       if (gun === 1) {
         this.bullets.push(new EnemyBullet(x, y, speedX, speedY, damage));
+        console.log(speedY);
       } else {
         for (let i = 0; i < Math.floor(gun / 2); i++) {
           // gun comes in pairs, unless single
@@ -106,6 +107,7 @@ class BulletControllerEnemy extends BulletController {
           );
         }
       }
+      // console.log("timer till next " + this.timerTillNextBullet);
       this.timerTillNextBullet = delay;
     }
 

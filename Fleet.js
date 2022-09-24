@@ -7,7 +7,7 @@ export default class Fleet {
     this.x = 100; // x position of first
     this.y = 20;
     this.health = 5;
-    this.speedX = 1; //speed of movement towards x (create diagonal movement)
+    this.speedX = 0; //speed of movement towards x (create diagonal movement)
     this.speedY = 0;
 
     this.enemies = [];
