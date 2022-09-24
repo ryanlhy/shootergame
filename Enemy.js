@@ -22,10 +22,18 @@ export default class Enemy {
     this.bulletControllerEnemy = bulletControllerEnemy;
     // this.bulletWidth = 50;
     // this.bulletHeight = 50;
+
+    //speed of the bullet
     this.bulletSpeedX = 0;
-    this.bulletSpeedY = -1;
+    this.bulletSpeedY = -5;
     // this.canvas = canvas;
     this.gun = gun;
+
+    // delay between bullets. used to control number of shoot() loops before next bullet activation
+    this.delay = 600;
+
+    // damage of bullet from enemies
+    this.damage = 1;
 
     // set image
     const image = new Image();
@@ -73,29 +81,20 @@ export default class Enemy {
   move() {
     // this.x -= this.speedX;
     this.y += this.speedY;
-    // console.log("called enemy.move()");
   }
-  //not working
   shoot() {
-    // how fast is the bullet
-    const bulletSpeedY = -1;
-    const bulletSpeedX = 0;
-    // delay between bullets. used to control number of shoot() loops before next bullet activation
-    const delay = 100;
-    // how much damage bullet cause
-    const damage = 1;
     // where bullet originate in terms of x & y, (originally starts in top left corner of square)
     // middle of square - divide width of square by 2
     console.log(this.x);
     const bulletX = this.x + this.width / 2; // start from middle of plane
-    const bulletY = this.y + 10; //edge of the player - square. but  + 10 makes bullet source inside plane
+    const bulletY = this.y + this.height - 10; //edge of the player - square. but  + 10 makes bullet source inside plane
     this.bulletControllerEnemy.shoot(
       bulletX,
       bulletY,
       this.bulletSpeedX,
       this.bulletSpeedY,
-      damage,
-      delay,
+      this.damage,
+      this.delay,
       this.gun
     );
   }

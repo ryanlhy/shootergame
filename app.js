@@ -82,14 +82,20 @@ function gameLoop() {
       }
     });
 
-    // add points on screen
+    // add points and health on screen
     setTextCommonStyle();
     ctx.font = `${pointsTextSize}px Arial`;
     ctx.fillText(`Score: ${score}`, 50, canvas.height, canvas.width);
+    ctx.fillText(
+      `Health: ${player.health}`,
+      canvas.width - 50,
+      canvas.height,
+      canvas.width
+    );
   } else {
     clearInterval(gameLoop); // this seems redundant
   }
-  // check player health
+  // check player health and when no enemies are around. need to remove enemies from array
   if (player.health <= 0 || fleet.enemies.length === 0) {
     gameStop = true;
     // go to end page after 1 sec

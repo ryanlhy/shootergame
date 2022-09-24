@@ -11,7 +11,7 @@ export class Bullet {
 
     this.width = 5;
     this.height = 15;
-    this.color = "red";
+    this.color = "blue";
   }
 
   // draw bullets
@@ -45,7 +45,7 @@ export class Bullet {
 export class EnemyBullet extends Bullet {
   constructor(x, y, speedX = 0, speedY, damage) {
     super(x, y, speedX, speedY, damage);
-    this.source = "enemyshoots";
+    this.color = "red";
   }
   collideWith(sprite) {
     // console.log("enemy shoots");
@@ -74,5 +74,6 @@ export class EnemyBullet extends Bullet {
     this.x -= this.speedX;
     // fillRect() - Draws a "filled" rectangle (bullet)
     ctx.fillRect(this.x, this.y, this.width, this.height);
+    // ctx.arc(this.x, this.y, this.width, 0, 2 * Math.PI);
   }
 }
