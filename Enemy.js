@@ -6,7 +6,7 @@ export default class Enemy {
     speedX = 0,
     speedY = 0, //speeed of enemy moving
     bulletControllerEnemy,
-    canvas,
+    // canvas,
     gun
   ) {
     this.x = x;
@@ -23,8 +23,8 @@ export default class Enemy {
     // this.bulletHeight = 50;
     // this.BulletspeedX = 9;
     // this.BulletspeedY = 9;
-    this.canvas = canvas;
-    this.gun = 1;
+    // this.canvas = canvas;
+    this.gun = gun;
 
     // set image
     const image = new Image();
