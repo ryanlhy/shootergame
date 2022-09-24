@@ -22,7 +22,7 @@ export default class Fleet {
       new Enemy(300, 100, this.health, 0, 0, bulletControllerEnemy, 1)
     );
     this.enemies.push(
-      new Enemy(100, 50, this.health, 0, 0, bulletControllerEnemy, 1)
+      new Enemy(200, 50, this.health, 0, 0, bulletControllerEnemy, 1)
     );
 
     // // create rows and cols of enemies, 1st wave
