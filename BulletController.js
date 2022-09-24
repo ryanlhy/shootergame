@@ -92,8 +92,10 @@ class BulletControllerEnemy extends BulletController {
   constructor(canvas) {
     super(canvas);
   }
+  // array within arrau
 
   shoot(x, y, speedX, speedY, damage, delay, gun) {
+    console.log(this.bullets.length);
     // if timerTillNextBullet is 0 or less, we can fire the next bullet
     if (this.timerTillNextBullet <= 0) {
       // note to set an identifier bullet source, enemy or player
@@ -139,7 +141,7 @@ class BulletControllerEnemy extends BulletController {
     });
   }
   isBulletOffScreen(bullet) {
-    return bullet.y <= bullet.height;
+    return bullet.y >= this.canvas.height + bullet.height;
   }
 }
 export { BulletControllerEnemy };

@@ -47,7 +47,7 @@ export class EnemyBullet extends Bullet {
     this.source = "enemyshoots";
   }
   collideWith(sprite) {
-    console.log("enemy shoots");
+    // console.log("enemy shoots");
     // function adaapted from 2d collision detection
     // if this is all true, a collision occured
     if (
