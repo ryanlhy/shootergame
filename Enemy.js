@@ -22,8 +22,8 @@ export default class Enemy {
     this.bulletControllerEnemy = bulletControllerEnemy;
     // this.bulletWidth = 50;
     // this.bulletHeight = 50;
-    // this.BulletspeedX = 9;
-    // this.BulletspeedY = 9;
+    this.bulletSpeedX = 0;
+    this.bulletSpeedY = -1;
     // this.canvas = canvas;
     this.gun = gun;
 
@@ -78,8 +78,8 @@ export default class Enemy {
   //not working
   shoot() {
     // how fast is the bullet
-    const speedY = -1;
-    const speedX = 0;
+    const bulletSpeedY = -1;
+    const bulletSpeedX = 0;
     // delay between bullets. used to control number of shoot() loops before next bullet activation
     const delay = 100;
     // how much damage bullet cause
@@ -92,8 +92,8 @@ export default class Enemy {
     this.bulletControllerEnemy.shoot(
       bulletX,
       bulletY,
-      speedX,
-      speedY,
+      this.bulletSpeedX,
+      this.bulletSpeedY,
       damage,
       delay,
       this.gun

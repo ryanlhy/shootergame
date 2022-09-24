@@ -44,7 +44,7 @@ export class Bullet {
 
 export class EnemyBullet extends Bullet {
   constructor(x, y, speedX = 0, speedY, damage) {
-    super(x, y, (speedX = 0), speedY, damage);
+    super(x, y, speedX, speedY, damage);
     this.source = "enemyshoots";
   }
   collideWith(sprite) {
@@ -69,7 +69,8 @@ export class EnemyBullet extends Bullet {
     // fill the rect
     ctx.fillStyle = this.color;
     // bullets will go up the y axis, so negative
-    this.y -= this.speedY / fleet.enemies.length; // temperory solution
+    //bug: bullets speed up after each elimninated enemy
+    this.y -= this.speedY / (fleet.enemies.length + 1); // temperory solution
     this.x -= this.speedX;
     // fillRect() - Draws a "filled" rectangle (bullet)
     ctx.fillRect(this.x, this.y, this.width, this.height);

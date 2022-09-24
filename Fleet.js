@@ -8,11 +8,11 @@ export default class Fleet {
     this.y = 20;
     this.health = 5;
     this.speedX = 0; //speed of movement towards x (create diagonal movement)
-    this.speedY = 0; //speed of movement towards x (create diagonal movement)
+    this.speedY = 0; //speed of movement towards x (create Vertical movement)
 
     this.enemies = [];
     const columns = 4;
-    const rows = 1;
+    const rows = 2;
 
     // one
     this.enemies.push(
@@ -49,7 +49,7 @@ export default class Fleet {
             this.speedX,
             this.speedY,
             bulletControllerEnemy,
-            0
+            1
           )
         );
       }
