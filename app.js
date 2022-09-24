@@ -47,7 +47,7 @@ function gameLoop() {
     player.draw(ctx); // not .draw also has shoot method
     if (fleet.enemies.length < 5) {
       console.log("generate fleet");
-      const fleet = new Fleet();
+      fleet.draw();
     }
     // enemy and bullets
     fleet.enemies.forEach((enemy) => {

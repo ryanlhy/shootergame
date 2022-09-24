@@ -11,6 +11,9 @@ export default class Fleet {
     this.speedY = 1; //speed of movement towards x (create Vertical movement)
 
     this.enemies = [];
+
+    this.columns = 4;
+    this.rows = 1;
     const columns = 4;
     const rows = 2;
 
