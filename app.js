@@ -45,7 +45,10 @@ function gameLoop() {
     bulletController.draw(ctx);
     // call draw method
     player.draw(ctx); // not .draw also has shoot method
-
+    if (fleet.enemies.length < 5) {
+      console.log("generate fleet");
+      const fleet = new Fleet();
+    }
     // enemy and bullets
     fleet.enemies.forEach((enemy) => {
       // find index of enemy in question
@@ -143,7 +146,6 @@ function endPage() {
     canvas.width / 2,
     canvas.height / (2 + 0.3)
   );
-  console.log("Score: " + score);
 }
 // function that runs setinterval
 const startGameLoop = () => {

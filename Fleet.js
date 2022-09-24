@@ -12,7 +12,7 @@ export default class Fleet {
 
     this.enemies = [];
     const columns = 4;
-    const rows = 20;
+    const rows = 2;
 
     // one
     this.enemies.push(
@@ -64,5 +64,25 @@ export default class Fleet {
     //     );
     //   }
     // }
+  }
+  draw() {
+    // create rows and cols of enemies, 1st wave
+    for (let x = 0; x < columns; x++) {
+      for (let y = 0; y < rows; y++) {
+        // randomise if there will be enemies created
+        if (Math.floor(Math.random() * 2) === 0)
+          this.enemies.push(
+            new Enemy(
+              x * 100 + this.x + Math.floor(Math.random() * 50),
+              y * -80 + this.y,
+              this.health,
+              this.speedX,
+              this.speedY,
+              bulletControllerEnemy,
+              1
+            )
+          );
+      }
+    }
   }
 }
