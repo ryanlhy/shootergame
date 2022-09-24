@@ -136,7 +136,6 @@ class BulletControllerEnemy extends BulletController {
         this.bullets.splice(index, 1);
       }
       bullet.draw(ctx);
-      console.log("bullet drawing without keypress");
     });
   }
   isBulletOffScreen(bullet) {

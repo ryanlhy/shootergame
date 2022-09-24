@@ -78,10 +78,10 @@ export default class Enemy {
   shoot() {
     // console.log("enemy shooting");
     // how fast is the bullet
-    const speedY = -10;
+    const speedY = -1;
     const speedX = 0;
     // delay between bullets. used to control number of shoot() loops before next bullet activation
-    const delay = 7;
+    const delay = 100;
     // how much damage bullet cause
     const damage = 1;
     // where bullet originate in terms of x & y, (originally starts in top left corner of square)

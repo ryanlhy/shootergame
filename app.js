@@ -61,14 +61,21 @@ function gameLoop() {
       }
       // draw as per normal if enemy not collidedwith
       else {
-        enemy.draw(ctx);
         bulletControllerEnemy.draw(ctx);
+        enemy.draw(ctx);
       }
     });
 
-    // if (bulletControllerEnemy.collideWith(player, "playershoots")) {
-    //   console.log("player loses");
-    // }
+    if (bulletControllerEnemy.collideWith(player, "playershoots")) {
+      console.log("player loses health");
+
+      // check enemy health
+      if (player.health <= 3) {
+        console.log("player loses");
+        gameStop = true;
+        clearInterval(gameLoop); // this seems redundant
+      }
+    }
     // add points on screen
     setTextCommonStyle();
     ctx.font = `${pointsTextSize}px Arial`;

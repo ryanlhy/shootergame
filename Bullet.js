@@ -72,6 +72,5 @@ export class EnemyBullet extends Bullet {
     this.x -= this.speedX;
     // fillRect() - Draws a "filled" rectangle (bullet)
     ctx.fillRect(this.x, this.y, this.width, this.height);
-    console.log("bullet drawn");
   }
 }
