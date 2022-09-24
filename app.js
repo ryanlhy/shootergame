@@ -31,6 +31,7 @@ const player = new Player(
 );
 
 const fleet = new Fleet();
+export { fleet };
 
 startPage();
 
@@ -65,11 +66,11 @@ function gameLoop() {
         enemy.draw(ctx);
       }
     });
-
+    // if enemy bullet collided with enemy
     if (bulletControllerEnemy.collideWith(player, "playershoots")) {
       console.log("player loses health");
 
-      // check enemy health
+      // check player health
       if (player.health <= 3) {
         console.log("player loses");
         gameStop = true;

@@ -1,6 +1,7 @@
 // controls the bullet array, timeTillNextBullet
 import { Bullet, EnemyBullet } from "./Bullet.js";
 import { ctx } from "./app.js";
+import Fleet from "./Fleet.js";
 
 export default class BulletController {
   // canvas = document.getElementById("game");
@@ -98,7 +99,10 @@ class BulletControllerEnemy extends BulletController {
     console.log(this.bullets.length);
     // if timerTillNextBullet is 0 or less, we can fire the next bullet
     if (this.timerTillNextBullet <= 0) {
-      // note to set an identifier bullet source, enemy or player
+      // add an array of arrays for multiple enemies shooting bullets
+      for (let num = 0; num < Fleet.enemies.length; num++) {
+        console.log(num);
+      }
       // for loop to shoot bullets according to num of guns
       // create a bullet and push to bullet array
       if (gun === 1) {
