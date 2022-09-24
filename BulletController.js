@@ -88,13 +88,14 @@ class BulletControllerEnemy extends BulletController {
 
   shoot(x, y, speedX, speedY, damage, delay, gun) {
     // if timerTillNextBullet is 0 or less, we can fire the next bullet
-    if (this.timerTillNextBullet <= 0) {
+    // note: fleet.enemies.length - 1. loop runs one enemy after another.
+    // allow all the bullets to shoot before setting the delay after the last enemy
+    if (this.timerTillNextBullet <= 0 + fleet.enemies.length - 1) {
       // add an array of arrays for multiple enemies shooting bullets
       // for loop to shoot bullets according to num of guns
       // create a bullet and push to bullet array
       if (gun === 1) {
         this.bullets.push(new EnemyBullet(x, y, speedX, speedY, damage));
-        console.log(speedY);
       } else {
         for (let i = 0; i < Math.floor(gun / 2); i++) {
           // gun comes in pairs, unless single

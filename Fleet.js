@@ -8,11 +8,11 @@ export default class Fleet {
     this.y = 20;
     this.health = 5;
     this.speedX = 0; //speed of movement towards x (create diagonal movement)
-    this.speedY = 0;
+    this.speedY = 0; //speed of movement towards x (create diagonal movement)
 
     this.enemies = [];
     const columns = 4;
-    const rows = 4;
+    const rows = 1;
 
     // one
     this.enemies.push(
@@ -27,20 +27,33 @@ export default class Fleet {
       )
     );
     this.enemies.push(
-      new Enemy(300, 100, this.health, 0, 0, bulletControllerEnemy, 1)
-    );
-    this.enemies.push(
-      new Enemy(200, 50, this.health, 0, 0, bulletControllerEnemy, 1)
+      new Enemy(
+        150,
+        100,
+        this.health,
+        this.speedX,
+        this.speedY,
+        bulletControllerEnemy,
+        1
+      )
     );
 
-    // // create rows and cols of enemies, 1st wave
-    // for (let x = 0; x < columns; x++) {
-    //   for (let y = 0; y < rows; y++) {
-    //     this.enemies.push(
-    //       new Enemy(x * 100 + this.x, y * 80 + this.y, this.health)
-    //     );
-    //   }
-    // }
+    // create rows and cols of enemies, 1st wave
+    for (let x = 0; x < columns; x++) {
+      for (let y = 0; y < rows; y++) {
+        this.enemies.push(
+          new Enemy(
+            x * 100 + this.x,
+            y * 80 + this.y,
+            this.health,
+            this.speedX,
+            this.speedY,
+            bulletControllerEnemy,
+            0
+          )
+        );
+      }
+    }
     // // create 2nd way of enemies, make y negative
     // for (let x = 0; x < columns; x++) {
     //   for (let y = 0; y < rows; y++) {

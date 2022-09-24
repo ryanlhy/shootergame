@@ -1,3 +1,4 @@
+import { fleet } from "./app.js";
 export default class Enemy {
   constructor(
     x,
@@ -76,7 +77,6 @@ export default class Enemy {
   }
   //not working
   shoot() {
-    // console.log("enemy shooting");
     // how fast is the bullet
     const speedY = -1;
     const speedX = 0;
@@ -86,6 +86,7 @@ export default class Enemy {
     const damage = 1;
     // where bullet originate in terms of x & y, (originally starts in top left corner of square)
     // middle of square - divide width of square by 2
+    console.log(this.x);
     const bulletX = this.x + this.width / 2; // start from middle of plane
     const bulletY = this.y + 10; //edge of the player - square. but  + 10 makes bullet source inside plane
     this.bulletControllerEnemy.shoot(

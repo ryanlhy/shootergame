@@ -77,7 +77,7 @@ function gameLoop() {
         if (player.health <= 0) {
           gameStop = true;
           // go to end page after 1 sec
-          setTimeout(endPage, 1000);
+          setTimeout(endPage, 500);
         }
       }
     });
@@ -90,10 +90,10 @@ function gameLoop() {
     clearInterval(gameLoop); // this seems redundant
   }
   // check player health
-  if (player.health <= 0) {
+  if (player.health <= 0 || fleet.enemies.length === 0) {
     gameStop = true;
     // go to end page after 1 sec
-    setTimeout(endPage, 1000);
+    setTimeout(endPage, 500);
   }
 }
 
