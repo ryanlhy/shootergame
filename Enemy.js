@@ -13,8 +13,8 @@ export default class Enemy {
     this.x = x;
     this.y = y;
     this.health = health;
-    this.width = 50; //dimensions of enemy
-    this.height = 80; //dimension of enemy
+    this.width = 30; //dimensions of enemy
+    this.height = 50; //dimension of enemy
     this.speedX = speedX;
     this.speedY = speedY;
 
@@ -63,14 +63,14 @@ export default class Enemy {
     // // Draws a rectangle (no fill) / outline
     // ctx.strokeRect(this.x, this.y, this.width, this.height);
 
-    // draw text
-    ctx.fillStyle = "gray";
-    ctx.font = "25px Arial";
-    ctx.fillText(
-      this.health,
-      this.x + this.width / 3.5,
-      this.y + this.height / 1.5
-    );
+    // // draw text
+    // ctx.fillStyle = "gray";
+    // ctx.font = "25px Arial";
+    // ctx.fillText(
+    //   this.health,
+    //   this.x + this.width / 3.5,
+    //   this.y + this.height / 1.5
+    // );
     this.shoot();
   }
 
