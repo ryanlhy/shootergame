@@ -7,7 +7,7 @@ import Fleet from "./Fleet.js";
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
 export { ctx };
-let gameStart = true; // checker to start gameloop once
+let gameStart = false; // checker to start gameloop once
 let gameStop = false;
 let score = 0;
 let pointsTextSize = 20; // text size on screen for points
@@ -37,7 +37,7 @@ startPage();
 
 // set a loop
 function gameLoop() {
-  if (gameStop === false) {
+  if (gameStop === false && gameStart === true) {
     setCommonStyle();
     ctx.fillStyle = "black"; // clear the screen
     ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
@@ -96,6 +96,8 @@ function gameLoop() {
   // check player health and when no enemies in array. need to remove enemies from array
   if (player.health <= 0 || fleet.enemies.length === 0) {
     gameStop = true;
+    clearInterval(gameLoop); // this seems redundant
+
     // go to end page after 1 sec
     setTimeout(endPage, 500);
   }
@@ -146,16 +148,21 @@ function endPage() {
     canvas.width / 2,
     canvas.height / (2 + 0.3)
   );
+  document.addEventListener("keydown", (e) => {
+    if (e.code === "Enter") {
+      console.log(e.code + "restart pressed");
+      gameStop = false;
+      startGameLoop();
+    }
+  });
 }
 // function that runs setinterval
-const startGameLoop = () => {
-  setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
-};
-const test = 0;
+const startGameLoop = setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
+
 // start game loop on click in canvas
 canvas.addEventListener("click", () => {
-  if (gameStart === true) {
-    gameStart = false; // checker to start gameloop only once
+  if (gameStart === false) {
+    gameStart = true; // checker to start gameloop only once
     startGameLoop();
   }
 });
@@ -164,7 +171,7 @@ canvas.addEventListener("click", () => {
 document.addEventListener("keydown", (e) => {
   if (e.code === "Escape") {
     console.log(e.code + " escape key pressed");
-    // clearInterval(startGameLoop); //this not working, need to be in same scope?
+    clearInterval(gameLoop); //this not working, need to be in same scope?
     gameStop = true;
     endPage();
   }
