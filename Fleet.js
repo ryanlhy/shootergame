@@ -6,7 +6,7 @@ export default class Fleet {
   constructor() {
     this.x = 100; // x position of first
     this.y = 200;
-    this.health = 5;
+    this.health = 3;
     this.speedX = 0; //speed of movement towards x (create diagonal movement)
     this.speedY = 2; //speed of movement towards positive y downwards (create Vertical movement)
 
@@ -76,7 +76,7 @@ export default class Fleet {
         if (Math.floor(Math.random() * 2) === 0)
           this.enemies.push(
             new Enemy(
-              x * 100 + Math.floor(Math.random() * 50),
+              x * 100 + Math.floor(Math.random() * 25),
               y * -this.y,
               this.health,
               this.speedX,

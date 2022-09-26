@@ -39,6 +39,7 @@ let startGameLoop = setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60
 // set a loop
 function gameLoop() {
   if (gameStop === false) {
+    console.log("player health " + player.health);
     setCommonStyle();
     ctx.fillStyle = "black"; // clear the screen
     ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
@@ -149,6 +150,7 @@ function endPage() {
     canvas.width / 2,
     canvas.height / (2 + 0.3)
   );
+
   //restart game?
   document.addEventListener("keydown", (e) => {
     if (e.code === "Enter") {
@@ -157,6 +159,7 @@ function endPage() {
         clearInterval(startGameLoop);
       }
       console.log(e.code + "restart pressed " + gameStop);
+      resetValues();
       startGameLoop = setInterval(gameLoop, 1000 / 60);
     }
   });
@@ -183,6 +186,13 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+function resetValues() {
+  player.health = 3;
+  fleet.enemies = [];
+  score = 0;
+  bulletController.bullets = [];
+  bulletControllerEnemy.bullets = [];
+}
 // create array of enemies
 // const enemies = [
 // new Enemy(50, 20, "green", 5),
