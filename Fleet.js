@@ -74,7 +74,7 @@ export default class Fleet {
     for (let x = 1; x <= this.columns; x++) {
       for (let y = 1; y <= this.rows; y++) {
         // randomise if there will be enemies created
-        if (Math.floor(Math.random() * 2) === 0)
+        if (Math.floor(Math.random() * 1.5) === 0)
           this.enemies.push(
             new Enemy(
               x * this.x +
@@ -122,5 +122,12 @@ export default class Fleet {
           );
       }
     }
+  }
+  determineStage(score) {
+    if (score <= 100) return 1;
+    else if (score <= 200) return 2;
+    else if (score <= 300) return 3;
+    else if (score <= 400) return 4;
+    else if (score <= 500) return 5;
   }
 }
