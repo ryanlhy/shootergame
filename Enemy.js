@@ -81,7 +81,7 @@ export default class Enemy {
   move() {
     // this.x -= this.speedX;
     this.y += this.speedY;
-    console.log(this.y);
+    this.x += this.speedX;
   }
   shoot() {
     // where bullet originate in terms of x & y, (originally starts in top left corner of square)

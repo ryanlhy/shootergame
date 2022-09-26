@@ -11,9 +11,10 @@ export default class Fleet {
     this.speedY = 2; //speed of movement towards positive y downwards (create Vertical movement)
 
     this.enemies = [];
+    this.timeToNextEnemy = 50; // height of enemy
 
     this.columns = 4;
-    this.rows = 2;
+    this.rows = 1;
     const columns = 4;
     const rows = 1;
 
@@ -21,7 +22,7 @@ export default class Fleet {
     this.enemies.push(
       new Enemy(
         200,
-        -100,
+        100,
         this.health,
         this.speedX,
         this.speedY,
@@ -76,13 +77,47 @@ export default class Fleet {
         if (Math.floor(Math.random() * 2) === 0)
           this.enemies.push(
             new Enemy(
-              x * 100 + Math.floor(Math.random() * 25),
+              x * this.x +
+                this.x / 4 -
+                Math.floor((Math.random() * this.x) / 2),
               y * -this.y,
               this.health,
               this.speedX,
               this.speedY,
               bulletControllerEnemy,
-              1
+              Math.floor(Math.random() * 5)
+            )
+          );
+
+        //diaganal towards right, higher speed
+        if (Math.floor(Math.random() * 5) === 0)
+          this.enemies.push(
+            new Enemy(
+              x * this.x +
+                this.x / 4 -
+                Math.floor((Math.random() * this.x) / 2),
+              y * -this.y,
+              this.health,
+              this.speedX + 0.5,
+              this.speedY + 1,
+              bulletControllerEnemy,
+              Math.floor(Math.random() * 5)
+            )
+          );
+
+        //diaganal towards left, higher speed
+        if (Math.floor(Math.random() * 5) === 0)
+          this.enemies.push(
+            new Enemy(
+              x * this.x +
+                this.x / 4 -
+                Math.floor((Math.random() * this.x) / 2),
+              y * -this.y,
+              this.health,
+              this.speedX - 0.5,
+              this.speedY + 1,
+              bulletControllerEnemy,
+              Math.floor(Math.random() * 5)
             )
           );
       }

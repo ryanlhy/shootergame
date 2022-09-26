@@ -11,7 +11,7 @@ let gameStart = false; // checker to start gameloop once
 let gameStop = true;
 let score = 0;
 let pointsTextSize = 20; // text size on screen for points
-
+let timeToNextEnemy = 0; //delay till next row of enemy is drawn. height of enemy, start from 0
 // specify canvas dimensions
 canvas.width = 550;
 canvas.height = 600;
@@ -30,7 +30,7 @@ const player = new Player(
   4 //gun
 );
 
-const fleet = new Fleet();
+let fleet = new Fleet();
 export { fleet };
 
 startPage();
@@ -39,7 +39,6 @@ let startGameLoop = setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60
 // set a loop
 function gameLoop() {
   if (gameStop === false) {
-    console.log("player health " + player.health);
     setCommonStyle();
     ctx.fillStyle = "black"; // clear the screen
     ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
@@ -47,10 +46,14 @@ function gameLoop() {
     bulletController.draw(ctx);
     // call draw method
     player.draw(ctx); // not .draw also has shoot method
-    if (fleet.enemies.length < 8) {
+    if (fleet.enemies.length < 8 && timeToNextEnemy <= 0) {
       console.log("generate fleet");
       fleet.draw();
+      timeToNextEnemy = 35; //height of enemy
     }
+    timeToNextEnemy--;
+    console.log(timeToNextEnemy);
+
     // enemy and bullets
     fleet.enemies.forEach((enemy) => {
       // find index of enemy in question
@@ -69,9 +72,7 @@ function gameLoop() {
         fleet.enemies.splice(index, 1);
       } // if enemy is out of screen or canvas
       else if (enemy.y >= canvas.height + enemy.height) {
-        console.log("pass screen");
         fleet.enemies.splice(index, 1);
-        console.log("pass screen " + fleet.enemies.length);
       }
       // draw as per normal if enemy not collidedwith
       else {
@@ -192,6 +193,7 @@ function resetValues() {
   score = 0;
   bulletController.bullets = [];
   bulletControllerEnemy.bullets = [];
+  fleet = new Fleet();
 }
 // create array of enemies
 // const enemies = [

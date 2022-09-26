@@ -89,7 +89,7 @@ class BulletControllerEnemy extends BulletController {
   shoot(x, y, speedX, speedY, damage, delay, gun, enemyYPosition) {
     // if timerTillNextBullet is 0 or less, we can fire the next bullet
     // note: fleet.enemies.length - 1. since loop runs one enemy after another,
-    // allow all the bullets to shoot before setting the delay after the last enemy
+    // give space to allow all the bullets to shoot before setting the delay after the last enemy
     if (this.timerTillNextBullet <= 0 + fleet.enemies.length - 1) {
       // only shoot bullets when enemy is in screen
       if (enemyYPosition > 0) {
