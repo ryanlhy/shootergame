@@ -34,7 +34,8 @@ const fleet = new Fleet();
 export { fleet };
 
 startPage();
-
+// function that runs setinterval
+const startGameLoop = setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
 // set a loop
 function gameLoop() {
   if (gameStop === false && gameStart === true) {
@@ -148,22 +149,22 @@ function endPage() {
     canvas.width / 2,
     canvas.height / (2 + 0.3)
   );
+  //restart game?
   document.addEventListener("keydown", (e) => {
     if (e.code === "Enter") {
       console.log(e.code + "restart pressed");
       gameStop = false;
-      startGameLoop();
+      gameStart = true;
+      startGameLoop;
     }
   });
 }
-// function that runs setinterval
-const startGameLoop = setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
 
 // start game loop on click in canvas
 canvas.addEventListener("click", () => {
   if (gameStart === false) {
     gameStart = true; // checker to start gameloop only once
-    startGameLoop();
+    startGameLoop; // does not do anything
   }
 });
 
@@ -171,7 +172,7 @@ canvas.addEventListener("click", () => {
 document.addEventListener("keydown", (e) => {
   if (e.code === "Escape") {
     console.log(e.code + " escape key pressed");
-    clearInterval(gameLoop); //this not working, need to be in same scope?
+    clearInterval(startGameLoop);
     gameStop = true;
     endPage();
   }
