@@ -69,7 +69,9 @@ export default class Fleet {
     //   }
     // }
   }
-  draw() {
+  draw(score) {
+    let stage = this.determineStage(score);
+    console.log("stage " + stage);
     // create rows and cols of enemies, 1st wave
     for (let x = 1; x <= this.columns; x++) {
       for (let y = 1; y <= this.rows; y++) {
@@ -85,12 +87,12 @@ export default class Fleet {
               this.speedX,
               this.speedY,
               bulletControllerEnemy,
-              Math.floor(Math.random() * 5)
+              Math.floor(Math.random() * stage)
             )
           );
 
         //diaganal towards right, higher speed
-        if (Math.floor(Math.random() * 5) === 0)
+        if (Math.floor(Math.random() * (10 - stage)) === 0)
           this.enemies.push(
             new Enemy(
               x * this.x +
@@ -101,15 +103,16 @@ export default class Fleet {
               this.speedX + 0.5,
               this.speedY + 1,
               bulletControllerEnemy,
-              Math.floor(Math.random() * 5)
+              Math.floor(Math.random() * stage + 1) //gun
             )
           );
 
         //diaganal towards left, higher speed
-        if (Math.floor(Math.random() * 5) === 0)
+        if (Math.floor(Math.random() * (10 - stage)) === 0)
           this.enemies.push(
             new Enemy(
               x * this.x +
+                400 +
                 this.x / 4 -
                 Math.floor((Math.random() * this.x) / 2),
               y * -this.y,
@@ -117,17 +120,18 @@ export default class Fleet {
               this.speedX - 0.5,
               this.speedY + 1,
               bulletControllerEnemy,
-              Math.floor(Math.random() * 5)
+              Math.floor(Math.random() * stage + 1) //gun
             )
           );
       }
     }
   }
   determineStage(score) {
-    if (score <= 100) return 1;
-    else if (score <= 200) return 2;
-    else if (score <= 300) return 3;
-    else if (score <= 400) return 4;
-    else if (score <= 500) return 5;
+    if (score <= 300) return 0;
+    else if (score <= 400) return 1;
+    else if (score <= 500) return 2;
+    else if (score <= 600) return 3;
+    else if (score <= 700) return 4;
+    else return 4;
   }
 }

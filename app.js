@@ -48,11 +48,10 @@ function gameLoop() {
     player.draw(ctx); // not .draw also has shoot method
     if (fleet.enemies.length < 8 && timeToNextEnemy <= 0) {
       console.log("generate fleet");
-      fleet.draw();
+      fleet.draw(score);
       timeToNextEnemy = 35; //height of enemy
     }
     timeToNextEnemy--;
-    console.log(timeToNextEnemy);
 
     // enemy and bullets
     fleet.enemies.forEach((enemy) => {
@@ -152,7 +151,7 @@ function endPage() {
     canvas.height / (2 + 0.3)
   );
 
-  //restart game?
+  //restart game
   document.addEventListener("keydown", (e) => {
     if (e.code === "Enter") {
       gameStop = false;
@@ -166,6 +165,22 @@ function endPage() {
   });
 }
 
+// pause game
+document.addEventListener("keydown", (e) => {
+  // pause game
+  if (e.code === "Enter" && gameStop === false) {
+    gameStop = true;
+    console.log(e.code + " pause " + gameStop);
+  } //continue game
+  else if (e.code === "Enter" && gameStop === true) {
+    gameStop = false;
+    if (startGameLoop) {
+      clearInterval(startGameLoop);
+    }
+    console.log(e.code + " continue " + gameStop);
+    startGameLoop = setInterval(gameLoop, 1000 / 60);
+  }
+});
 // start game loop on click in canvas
 canvas.addEventListener("click", () => {
   if (gameStop === true) {
