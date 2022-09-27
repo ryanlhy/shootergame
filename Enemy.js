@@ -31,7 +31,6 @@ export default class Enemy {
 
     // delay between bullets. used to control number of shoot() loops before next bullet activation
     this.delay = 200; //600;
-
     // damage of bullet from enemies
     this.damage = 1;
 

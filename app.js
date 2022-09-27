@@ -49,7 +49,7 @@ function gameLoop() {
     if (fleet.enemies.length < 8 && timeToNextEnemy <= 0) {
       console.log("generate fleet");
       fleet.draw(score);
-      timeToNextEnemy = 35; //height of enemy
+      timeToNextEnemy = 50; //height of enemy
     }
     timeToNextEnemy--;
 

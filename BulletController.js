@@ -1,6 +1,6 @@
 // controls the bullet array, timeTillNextBullet
 import { Bullet, EnemyBullet } from "./Bullet.js";
-import { ctx, fleet } from "./app.js";
+import { fleet } from "./app.js";
 import Fleet from "./Fleet.js";
 
 export default class BulletController {
@@ -47,9 +47,9 @@ export default class BulletController {
         // removes 1 array element at index. overwrites array
         // essentially remove 1 bullet from the array
         this.bullets.splice(index, 1);
+      } else {
+        bullet.draw(ctx);
       }
-      // try: if enemy draw different bullet
-      bullet.draw(ctx);
     });
   }
 
@@ -103,7 +103,6 @@ class BulletControllerEnemy extends BulletController {
             this.bullets.push(
               new EnemyBullet(x + 10, y, speedX - i, speedY, damage)
             );
-            //delay used by bulletcontroller
             this.bullets.push(
               new EnemyBullet(x - 10, y, speedX + i, speedY, damage)
             );
@@ -119,7 +118,7 @@ class BulletControllerEnemy extends BulletController {
   }
 
   draw(ctx) {
-    // console.log("enemy" + this.bullets.length);
+    console.log("enemy bullets" + this.bullets.length);
     // loop over all the bullets
     // and for each bullet, draw
     this.bullets.forEach((bullet) => {
@@ -130,8 +129,9 @@ class BulletControllerEnemy extends BulletController {
         // removes 1 array element at index. overwrites array
         // essentially remove 1 bullet from the array
         this.bullets.splice(index, 1);
+      } else {
+        bullet.draw(ctx);
       }
-      bullet.draw(ctx);
     });
   }
   isBulletOffScreen(bullet) {
