@@ -74,7 +74,10 @@ export default class Fleet {
         if (Math.floor(Math.random() * 1.5) === 0)
           this.enemies.push(
             new Enemy(
-              this.x / 2 + x * this.x - enemyWidth / 2,
+              this.x / 2 +
+                x * this.x -
+                enemyWidth / 2 -
+                (Math.random() * this.x - this.x) / 2,
               y * -this.y,
               this.health,
               this.speedX,
@@ -88,7 +91,7 @@ export default class Fleet {
       if (Math.floor(Math.random() * stage) >= 2)
         this.enemies.push(
           new Enemy(
-            this.x + this.x / 4 - Math.floor((Math.random() * this.x) / 2),
+            this.x + this.x / 4 - (Math.random() * this.x - this.x) / 2,
             -this.y,
             this.health,
             this.speedX + Math.floor(Math.random() * 0.5),
