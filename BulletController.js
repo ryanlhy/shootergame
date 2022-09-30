@@ -145,56 +145,63 @@ class StarsController extends BulletController {
     super(canvas);
     this.x = Math.floor(Math.random() * canvas.width);
     this.y = 150;
-    this.maxStars = 50;
+    this.maxStars = 100;
     this.delay = 0;
-    this.bullets = [];
+    this.stars = [];
     this.createStars();
   }
   timerTillNextBullet = 0;
 
   shoot(delay) {
     // if timerTillNextBullet is 0 or less, we can fire the next bullet
-    if (this.timerTillNextBullet <= 0 && this.bullets.length <= this.maxStars) {
+    if (this.timerTillNextBullet <= 0 && this.stars.length <= this.maxStars) {
       // create a bullet and push to bullet array
-      this.bullets.push(new Stars(this.x, this.y));
+      this.stars.push(new Stars(this.x, this.y));
       this.timerTillNextBullet = delay;
     }
     this.timerTillNextBullet--;
   }
-  // loop over all the bullets in array and call draw method (bullet.draw)
+  // loop over all the star in array and call draw method (star.draw)
   draw(ctx) {
-    if (this.bullets.length === 0) {
+    if (this.stars.length === 0) {
       // this.createStars();
     }
     // this.shoot(this.delay);
-    console.log(" bullets length" + this.bullets.length);
-    // loop over all the bullets
-    // and for each bullet, draw
-    this.bullets.forEach((bullet) => {
-      //   remove bullets that are off screen
-      if (this.isBulletOffScreen(bullet)) {
+    console.log(" stars length" + this.stars.length);
+    // loop over all the star
+    // and for each star, draw
+    this.stars.forEach((star) => {
+      //   remove stars that are off screen
+      if (this.isStarOffScreen(star)) {
         // identify index of bullet in question
-        const index = this.bullets.indexOf(bullet);
+        const index = this.stars.indexOf(star);
         // removes 1 array element at index. overwrites array
         // essentially remove 1 bullet from the array
-        this.bullets.splice(index, 1);
+        this.stars.splice(index, 1);
+        this.stars.push(
+          new Stars(Math.floor(Math.random() * this.canvas.height), 0)
+        );
+        console.log("off scren");
       } else {
-        bullet.draw(ctx);
+        star.draw(ctx);
       }
     });
   }
   createStars() {
     for (let i = 0; i < this.maxStars; i++) {
-      if (this.bullets.length <= this.maxStars) {
-        this.bullets.push(
+      if (this.stars.length <= this.maxStars) {
+        this.stars.push(
           new Stars(
-            Math.floor(Math.random() * this.canvas.height),
+            Math.floor(Math.random() * this.canvas.width),
             Math.floor(Math.random() * this.canvas.height)
           )
         );
-        // this.bullets.push(new Stars(this.x, this.y));
+        // this.stars.push(new Stars(this.x, this.y));
       }
     }
+  }
+  isStarOffScreen(star) {
+    return star.y >= this.canvas.height + star.height;
   }
 }
 export { StarsController };

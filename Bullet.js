@@ -87,6 +87,7 @@ export class Stars extends EnemyBullet {
     this.y = y;
     this.speedY = -0.5;
     this.speedX = 0; // diagonal bullets, angle
+    // this.size = size;
 
     this.width = 2;
     this.height = 2;
@@ -100,6 +101,15 @@ export class Stars extends EnemyBullet {
     this.y -= this.speedY;
     this.x -= this.speedX;
     // fillRect() - Draws a "filled" rectangle (bullet)
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    // let size = Math.ceil(Math.random() * 2);
+    // ctx.fillRect(this.x, this.y, size, size);
+    // ctx.fillRect(this.x, this.y, 2, 2);
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, 1, 0, 2 * Math.PI);
+    // ctx.fillStyle = this.color;
+    ctx.fill();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = this.color;
+    ctx.stroke();
   }
 }
