@@ -90,7 +90,7 @@ export default class Fleet {
             this.x + this.x / 4 - Math.floor((Math.random() * this.x) / 2),
             -this.y,
             this.health,
-            this.speedX + 0.5,
+            this.speedX + Math.floor(Math.random() * 0.5),
             this.speedY + 1,
             bulletControllerEnemy,
             Math.floor(Math.random() * stage + 1) //gun
@@ -106,7 +106,7 @@ export default class Fleet {
               Math.floor((Math.random() * this.x) / 2),
             -this.y,
             this.health,
-            this.speedX - 0.5,
+            this.speedX - Math.floor(Math.random() * 0.5),
             this.speedY + 1,
             bulletControllerEnemy,
             Math.floor(Math.random() * stage + 1) //gun

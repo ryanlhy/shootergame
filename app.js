@@ -33,9 +33,11 @@ const player = new Player(
 let fleet = new Fleet();
 export { fleet };
 
+// sounds
 let selectionSound = new Audio(
   "./sfx/mixkit-negative-game-notification-249.wav"
 );
+let gameOverSound = new Audio("./sfx/mixkit-funny-system-break-down-2955.wav");
 // selectionSound.volume = 0.5;
 // let sound = new Audio("mp3")
 // new audio context?
@@ -149,6 +151,8 @@ function startPage() {
 
 // ending page
 function endPage() {
+  gameOverSound.play();
+  // ctx.globalAlpha = 0.5; // make transparent
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
   setTextCommonStyle();
