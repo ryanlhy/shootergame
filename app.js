@@ -33,6 +33,14 @@ const player = new Player(
 let fleet = new Fleet();
 export { fleet };
 
+let selectionSound = new Audio(
+  "./sfx/mixkit-negative-game-notification-249.wav"
+);
+// selectionSound.volume = 0.5;
+// let sound = new Audio("mp3")
+// new audio context?
+// sound effects: selection. destory enemies, lose. background
+
 startPage();
 // function that runs setinterval
 let startGameLoop = setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
@@ -188,6 +196,7 @@ canvas.addEventListener("click", () => {
     if (startGameLoop) {
       clearInterval(startGameLoop);
     }
+    selectionSound.play();
     startGameLoop = setInterval(gameLoop, 1000 / 60); // does not do anything
   }
 });

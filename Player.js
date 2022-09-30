@@ -120,11 +120,10 @@ export default class Player {
     if (e.code === "ArrowRight") {
       this.rightPressed = true;
     }
-    if (e.code === "Space") {
-      this.shootPressed = true;
-    }
-    this.shootPressed = true;
-
+    // if (e.code === "Space") {
+    //   this.shootPressed = true;
+    // }
+    this.shootPressed = true; // always shoot
     e.preventDefault();
   };
 
