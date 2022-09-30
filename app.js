@@ -1,6 +1,9 @@
 import Player from "./Player.js";
 import Enemy from "./Enemy.js"; // not used yet
-import BulletController, { BulletControllerEnemy } from "./BulletController.js";
+import BulletController, {
+  BulletControllerEnemy,
+  StarsController,
+} from "./BulletController.js";
 import Fleet from "./Fleet.js";
 // import { Bullet, EnemyBullet } from "./Bullet.js";
 
@@ -22,10 +25,12 @@ const enemyWidth = 30;
 const enemyHeight = 50;
 export { enemyWidth, enemyHeight };
 
-// create bullet
+// create bullet, stars
 const bulletController = new BulletController(canvas);
 const bulletControllerEnemy = new BulletControllerEnemy(canvas);
-export { bulletControllerEnemy };
+const starsController = new StarsController(canvas);
+export { bulletControllerEnemy, starsController };
+
 // create player.
 // takes x & y position to specify where the player is on the canvas
 const player = new Player(
@@ -61,8 +66,9 @@ function gameLoop() {
     bulletController.draw(ctx);
     // call draw method
     player.draw(ctx); // not .draw also has shoot method
+    starsController.draw(ctx);
     if (fleet.enemies.length < 8 && timeToNextEnemy <= 0) {
-      console.log("generate fleet");
+      // console.log("generate fleet");
       fleet.draw(score);
       timeToNextEnemy = 50; //height of enemy
     }

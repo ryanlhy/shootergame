@@ -10,7 +10,7 @@ export default class Player {
     this.speed = 9;
     this.canvas = canvas;
     this.gun = gun; // states number of guns the object holds. manipulates bullet stream
-    this.health = 3; // health of player
+    this.health = 1113; // health of player
 
     // set image
     const image = new Image();
@@ -23,7 +23,7 @@ export default class Player {
     // add keyboard listeners, fired when key is pressed / released
     document.addEventListener("keydown", this.keydown);
     document.addEventListener("keyup", this.keyup);
-    // document.addEventListener("mousemove", mouseMoveHandler, false);
+    // document.addEventListener("pointerdown", this.pointerDown);
   }
 
   // draw method
@@ -110,21 +110,24 @@ export default class Player {
     // note: allows one key at a time but toggles very quickly so it moves diagonally i think
     if (e.code === "ArrowUp") {
       this.upPressed = true;
+      e.preventDefault();
     }
     if (e.code === "ArrowDown") {
       this.downPressed = true;
+      e.preventDefault();
     }
     if (e.code === "ArrowLeft") {
       this.leftPressed = true;
+      e.preventDefault();
     }
     if (e.code === "ArrowRight") {
       this.rightPressed = true;
+      e.preventDefault();
     }
     // if (e.code === "Space") {
     //   this.shootPressed = true;
     // }
     this.shootPressed = true; // always shoot
-    e.preventDefault();
   };
 
   // keyup arrow function - when key is up
@@ -146,6 +149,15 @@ export default class Player {
     //   this.shootPressed = false;
     // }
   };
+
+  // pointerDown = (e) => {
+  //   const dot = document.createElement("div");
+  //   dot.classList.add("dot");
+  //   dot.id = e.pointerId;
+  //   positionDot(e, dot);
+  //   document.body.append(dot);
+  // };
+
   takeDamage(damage) {
     this.health -= damage;
   }

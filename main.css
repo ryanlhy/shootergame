@@ -19,7 +19,7 @@ body{
 
 #game {
     position: relative;
-
+    touch-action: none;
 }
 
 h1{

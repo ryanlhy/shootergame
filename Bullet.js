@@ -1,4 +1,4 @@
-import { fleet } from "./app.js";
+import { canvas, fleet } from "./app.js";
 // define bullet class properties and draw method
 export class Bullet {
   // create bullet class properties and methods
@@ -75,5 +75,31 @@ export class EnemyBullet extends Bullet {
     // fillRect() - Draws a "filled" rectangle (bullet)
     ctx.fillRect(this.x, this.y, this.width, this.height);
     // ctx.arc(this.x, this.y, this.width, 0, 2 * Math.PI);
+  }
+}
+
+//background stars
+export class Stars extends EnemyBullet {
+  constructor(x, y) {
+    super(x, y);
+
+    this.x = x;
+    this.y = y;
+    this.speedY = -0.5;
+    this.speedX = 0; // diagonal bullets, angle
+
+    this.width = 2;
+    this.height = 2;
+    this.color = "white";
+  }
+  // draw bullets
+  draw(ctx) {
+    // fill the rect
+    ctx.fillStyle = this.color;
+    // bullets will go up the y axis, so negative
+    this.y -= this.speedY;
+    this.x -= this.speedX;
+    // fillRect() - Draws a "filled" rectangle (bullet)
+    ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 }

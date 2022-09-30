@@ -1,5 +1,5 @@
 // controls the bullet array, timeTillNextBullet
-import { Bullet, EnemyBullet } from "./Bullet.js";
+import { Bullet, EnemyBullet, Stars } from "./Bullet.js";
 import { fleet } from "./app.js";
 import Fleet from "./Fleet.js";
 
@@ -118,7 +118,7 @@ class BulletControllerEnemy extends BulletController {
   }
 
   draw(ctx) {
-    console.log("enemy bullets" + this.bullets.length);
+    // console.log("enemy bullets" + this.bullets.length);
     // loop over all the bullets
     // and for each bullet, draw
     this.bullets.forEach((bullet) => {
@@ -139,3 +139,62 @@ class BulletControllerEnemy extends BulletController {
   }
 }
 export { BulletControllerEnemy };
+
+class StarsController extends BulletController {
+  constructor(canvas) {
+    super(canvas);
+    this.x = Math.floor(Math.random() * canvas.width);
+    this.y = 150;
+    this.maxStars = 50;
+    this.delay = 0;
+    this.bullets = [];
+    this.createStars();
+  }
+  timerTillNextBullet = 0;
+
+  shoot(delay) {
+    // if timerTillNextBullet is 0 or less, we can fire the next bullet
+    if (this.timerTillNextBullet <= 0 && this.bullets.length <= this.maxStars) {
+      // create a bullet and push to bullet array
+      this.bullets.push(new Stars(this.x, this.y));
+      this.timerTillNextBullet = delay;
+    }
+    this.timerTillNextBullet--;
+  }
+  // loop over all the bullets in array and call draw method (bullet.draw)
+  draw(ctx) {
+    if (this.bullets.length === 0) {
+      // this.createStars();
+    }
+    // this.shoot(this.delay);
+    console.log(" bullets length" + this.bullets.length);
+    // loop over all the bullets
+    // and for each bullet, draw
+    this.bullets.forEach((bullet) => {
+      //   remove bullets that are off screen
+      if (this.isBulletOffScreen(bullet)) {
+        // identify index of bullet in question
+        const index = this.bullets.indexOf(bullet);
+        // removes 1 array element at index. overwrites array
+        // essentially remove 1 bullet from the array
+        this.bullets.splice(index, 1);
+      } else {
+        bullet.draw(ctx);
+      }
+    });
+  }
+  createStars() {
+    for (let i = 0; i < this.maxStars; i++) {
+      if (this.bullets.length <= this.maxStars) {
+        this.bullets.push(
+          new Stars(
+            Math.floor(Math.random() * this.canvas.height),
+            Math.floor(Math.random() * this.canvas.height)
+          )
+        );
+        // this.bullets.push(new Stars(this.x, this.y));
+      }
+    }
+  }
+}
+export { StarsController };
