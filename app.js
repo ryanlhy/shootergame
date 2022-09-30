@@ -152,6 +152,13 @@ function startPage() {
     canvas.height / (2 - 0.25),
     canvas.width
   );
+  ctx.font = "20px Arial";
+  ctx.fillText(
+    "Move with Arrow Keys",
+    canvas.width / 2,
+    canvas.height / (2 - 0.5),
+    canvas.width
+  );
 }
 
 // ending page
