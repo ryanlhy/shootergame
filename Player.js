@@ -123,6 +123,7 @@ export default class Player {
     if (e.code === "Space") {
       this.shootPressed = true;
     }
+    e.preventDefault();
   };
 
   // keyup arrow function - when key is up
