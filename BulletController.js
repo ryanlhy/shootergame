@@ -145,7 +145,7 @@ class StarsController extends BulletController {
     super(canvas);
     this.x = Math.floor(Math.random() * canvas.width);
     this.y = 150;
-    this.maxStars = 100;
+    this.maxStars = 75;
     this.delay = 0;
     this.stars = [];
     this.createStars();
@@ -179,7 +179,11 @@ class StarsController extends BulletController {
         // essentially remove 1 bullet from the array
         this.stars.splice(index, 1);
         this.stars.push(
-          new Stars(Math.floor(Math.random() * this.canvas.height), 0)
+          new Stars(
+            Math.floor(Math.random() * this.canvas.height),
+            0,
+            Math.floor(Math.random() * 3)
+          )
         );
         console.log("off scren");
       } else {
@@ -193,7 +197,8 @@ class StarsController extends BulletController {
         this.stars.push(
           new Stars(
             Math.floor(Math.random() * this.canvas.width),
-            Math.floor(Math.random() * this.canvas.height)
+            Math.floor(Math.random() * this.canvas.height),
+            Math.floor(Math.random() * 3)
           )
         );
         // this.stars.push(new Stars(this.x, this.y));

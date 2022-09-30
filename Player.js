@@ -10,7 +10,7 @@ export default class Player {
     this.speed = 9;
     this.canvas = canvas;
     this.gun = gun; // states number of guns the object holds. manipulates bullet stream
-    this.health = 1113; // health of player
+    this.health = 3; // health of player
 
     // set image
     const image = new Image();

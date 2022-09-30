@@ -22,9 +22,9 @@ export default class Fleet {
     this.timeToNextEnemy = 50; // height of enemy
 
     // one
-    this.enemies.push(
-      new Enemy(200, 100, this.health, this.speedX, 0, bulletControllerEnemy, 1)
-    );
+    // this.enemies.push(
+    //   new Enemy(200, 100, this.health, this.speedX, 0, bulletControllerEnemy, 1)
+    // );
     // this.enemies.push(
     //   new Enemy(
     //     150,

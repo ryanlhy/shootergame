@@ -80,14 +80,14 @@ export class EnemyBullet extends Bullet {
 
 //background stars
 export class Stars extends EnemyBullet {
-  constructor(x, y) {
+  constructor(x, y, size) {
     super(x, y);
 
     this.x = x;
     this.y = y;
     this.speedY = -0.5;
     this.speedX = 0; // diagonal bullets, angle
-    // this.size = size;
+    this.size = size;
 
     this.width = 2;
     this.height = 2;
@@ -108,7 +108,7 @@ export class Stars extends EnemyBullet {
     ctx.arc(this.x, this.y, 1, 0, 2 * Math.PI);
     // ctx.fillStyle = this.color;
     ctx.fill();
-    ctx.lineWidth = 1;
+    ctx.lineWidth = this.size;
     ctx.strokeStyle = this.color;
     ctx.stroke();
   }

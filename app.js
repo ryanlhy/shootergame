@@ -15,9 +15,11 @@ let gameStop = true;
 let score = 0;
 let pointsTextSize = 20; // text size on screen for points
 let timeToNextEnemy = 0; //delay till next row of enemy is drawn. height of enemy, start from 0
+let highScore = 0;
+
 // specify canvas dimensions
-canvas.width = 394; //innerWidth - 550
-canvas.height = 700; //innerHeight -600
+canvas.width = 550; //394; //innerWidth - 550
+canvas.height = 600; //700; //innerHeight -600
 export { canvas };
 
 //specify enemy width and height
@@ -106,18 +108,30 @@ function gameLoop() {
     // add points and health on screen
     setTextCommonStyle();
     ctx.font = `${pointsTextSize}px Arial`;
-    ctx.fillText(`Score: ${score}`, 50, canvas.height, canvas.width);
+    ctx.textAlign = "left";
+    ctx.fillText(
+      `Score: ${score}`,
+      pointsTextSize,
+      canvas.height - pointsTextSize / 2 - pointsTextSize,
+      canvas.width
+    );
+    ctx.fillText(
+      `High Score: ${highScore}`,
+      pointsTextSize,
+      canvas.height - pointsTextSize / 2,
+      canvas.width
+    );
     ctx.fillText(
       `Health: ${player.health}`,
-      canvas.width - 50,
-      canvas.height,
+      canvas.width - pointsTextSize * 5,
+      canvas.height - pointsTextSize / 2,
       canvas.width
     );
   } else {
     clearInterval(startGameLoop); // this seems redundant
   }
   // check player health and when no enemies in array. need to remove enemies from array
-  if (player.health <= 0 || fleet.enemies.length === 0) {
+  if (player.health <= 0) {
     gameStop = true;
     clearInterval(startGameLoop); // this seems redundant
 
@@ -169,16 +183,24 @@ function startPage() {
 
 // ending page
 function endPage() {
+  if (highScore < score) {
+    highScore = score;
+  }
   gameOverSound.play();
   // ctx.globalAlpha = 0.5; // make transparent
   ctx.fillStyle = "black";
-  ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
+  // ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
   setTextCommonStyle();
   ctx.fillText("Game has ended!", canvas.width / 2, canvas.height / (2 - 0.25));
   ctx.fillText(
     `Your Score: ${score}`,
     canvas.width / 2,
     canvas.height / (2 + 0.3)
+  );
+  ctx.fillText(
+    "Press Enter to play again",
+    canvas.width / 2,
+    canvas.height / (2 - 0.5)
   );
 
   //restart game
