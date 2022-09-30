@@ -15,7 +15,7 @@ export default class Fleet {
     this.x = canvas.width / 4; //100; // distance till next enemy
     this.y = 200; // distance till next enemy
     this.health = 3;
-    this.speedX = 0; //speed of movement towards x (create diagonal movement)
+    this.speedX = 0; //speed of movement towards x
     this.speedY = 2; //speed of movement towards positive y downwards (create Vertical movement)
 
     this.enemies = [];
@@ -77,7 +77,7 @@ export default class Fleet {
               this.x / 2 +
                 x * this.x -
                 enemyWidth / 2 -
-                (Math.random() * this.x - this.x) / 2,
+                (Math.random() * this.x - this.x / 2) / 2,
               y * -this.y,
               this.health,
               this.speedX,
@@ -87,35 +87,22 @@ export default class Fleet {
             )
           );
       }
-      //diaganal towards right, higher speed
+      // diaganal enemies, higher speed.
       if (Math.floor(Math.random() * stage) >= 2)
-        this.enemies.push(
-          new Enemy(
-            this.x + this.x / 4 - (Math.random() * this.x - this.x) / 2,
-            -this.y,
-            this.health,
-            this.speedX + Math.floor(Math.random() * 0.5),
-            this.speedY + 1,
-            bulletControllerEnemy,
-            Math.floor(Math.random() * stage + 1) //gun
-          )
-        );
-      //diaganal towards left, higher speed
-      if (Math.floor(Math.random() * stage) >= 2)
-        this.enemies.push(
-          new Enemy(
-            this.x +
-              400 +
-              this.x / 4 -
-              Math.floor((Math.random() * this.x) / 2),
-            -this.y,
-            this.health,
-            this.speedX - Math.floor(Math.random() * 0.5),
-            this.speedY + 1,
-            bulletControllerEnemy,
-            Math.floor(Math.random() * stage + 1) //gun
-          )
-        );
+        if (this.enemies.length <= 8)
+          this.enemies.push(
+            new Enemy(
+              this.x +
+                this.x / Math.floor(Math.random() * 2 + 1) -
+                (Math.random() * this.x - this.x / 2) / 2,
+              -this.y,
+              this.health,
+              this.speedX + (Math.random() * 0.7 - 0.7 / 2),
+              this.speedY + 1,
+              bulletControllerEnemy,
+              Math.floor(Math.random() * stage + 1) //gun
+            )
+          );
     }
   }
   determineStage(score) {
@@ -123,7 +110,7 @@ export default class Fleet {
     else if (score <= 100) return 1;
     else if (score <= 500) return 2;
     else if (score <= 600) return 3;
-    else if (score <= 700) return 4;
+    else if (score <= 200) return 4;
     else return 4;
   }
 }
