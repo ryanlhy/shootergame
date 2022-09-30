@@ -182,14 +182,15 @@ document.addEventListener("keydown", (e) => {
   // pause game
   if (e.code === "Enter" && gameStop === false) {
     gameStop = true;
-    console.log(e.code + " pause " + gameStop);
+    selectionSound.play();
+    // console.log(e.code + " pause " + gameStop);
   } //continue game
   else if (e.code === "Enter" && gameStop === true) {
     gameStop = false;
     if (startGameLoop) {
       clearInterval(startGameLoop);
     }
-    console.log(e.code + " continue " + gameStop);
+    selectionSound.play();
     startGameLoop = setInterval(gameLoop, 1000 / 60);
   }
 });
@@ -208,6 +209,7 @@ canvas.addEventListener("click", () => {
 // end game
 document.addEventListener("keydown", (e) => {
   if (e.code === "Escape") {
+    selectionSound.play();
     console.log(e.code + " escape key pressed");
     clearInterval(startGameLoop);
     gameStop = true;
