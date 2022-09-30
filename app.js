@@ -13,8 +13,8 @@ let score = 0;
 let pointsTextSize = 20; // text size on screen for points
 let timeToNextEnemy = 0; //delay till next row of enemy is drawn. height of enemy, start from 0
 // specify canvas dimensions
-canvas.width = 550; //innerWidth
-canvas.height = 600; //innerHeight
+canvas.width = 394; //innerWidth - 550
+canvas.height = 700; //innerHeight -600
 export { canvas };
 
 //specify enemy width and height
@@ -143,20 +143,20 @@ function startPage() {
   ctx.fillText(
     "Welcome to Space Shooter!",
     canvas.width / 2,
-    canvas.height / (2 + 0.25),
+    canvas.height / (2 + 0.5),
     canvas.width
   );
   ctx.fillText(
     "Please Click to start!",
     canvas.width / 2,
-    canvas.height / (2 - 0.25),
+    canvas.height / 2,
     canvas.width
   );
   ctx.font = "20px Arial";
   ctx.fillText(
     "Move with Arrow Keys",
     canvas.width / 2,
-    canvas.height / (2 - 0.5),
+    canvas.height / (2 - 0.3),
     canvas.width
   );
 }

@@ -106,11 +106,11 @@ export default class Fleet {
     }
   }
   determineStage(score) {
-    if (score <= 300) return 0;
-    else if (score <= 100) return 1;
-    else if (score <= 500) return 2;
-    else if (score <= 600) return 3;
-    else if (score <= 200) return 4;
+    if (score <= 100) return 0;
+    else if (score <= 200) return 1;
+    else if (score <= 300) return 2;
+    else if (score <= 400) return 3;
+    else if (score <= 500) return 4;
     else return 4;
   }
 }
