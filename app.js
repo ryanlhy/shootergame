@@ -95,6 +95,7 @@ function gameLoop() {
       } // if enemy is out of screen or canvas
       else if (enemy.y >= canvas.height + enemy.height) {
         fleet.enemies.splice(index, 1);
+        score -= 10;
       }
       // draw as per normal if enemy not collidedwith
       else {
@@ -167,7 +168,7 @@ function startPage() {
     canvas.width
   );
   ctx.fillText(
-    "Please Click to start!",
+    "Press Space to start!",
     canvas.width / 2,
     canvas.height / 2,
     canvas.width
@@ -177,6 +178,20 @@ function startPage() {
     "Move with Arrow Keys",
     canvas.width / 2,
     canvas.height / (2 - 0.3),
+    canvas.width
+  );
+  ctx.font = "18px Arial";
+  ctx.fillText(
+    `You have ${player.health} lives`,
+    canvas.width / 2,
+    canvas.height / (2 - 0.5),
+    canvas.width
+  );
+  ctx.font = "35px Arial";
+  ctx.fillText(
+    `ELIMINATE ALL ENEMIES!`,
+    canvas.width / 2,
+    canvas.height / (2 - 0.7),
     canvas.width
   );
 }
@@ -219,6 +234,15 @@ function endPage() {
 
 // pause game
 document.addEventListener("keydown", (e) => {
+  // START GAME
+  if (e.code === "Space" && gameStop === true) {
+    gameStop = false; // checker to start gameloop only once
+    if (startGameLoop) {
+      clearInterval(startGameLoop);
+    }
+    selectionSound.play();
+    startGameLoop = setInterval(gameLoop, 1000 / 60); // does not do anything
+  }
   // pause game
   if (e.code === "Enter" && gameStop === false) {
     gameStop = true;
