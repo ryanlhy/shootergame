@@ -142,9 +142,9 @@ export default class Player {
     if (e.code === "ArrowRight") {
       this.rightPressed = false;
     }
-    if (e.code === "Space") {
-      this.shootPressed = false;
-    }
+    // if (e.code === "Space") {
+    //   this.shootPressed = false;
+    // }
   };
   takeDamage(damage) {
     this.health -= damage;

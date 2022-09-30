@@ -43,9 +43,9 @@ export { fleet };
 let selectionSound = new Audio(
   "./sfx/mixkit-negative-game-notification-249.wav"
 );
-selectionSound.volume = 0.5;
+selectionSound.volume = 0.3;
 let gameOverSound = new Audio("./sfx/mixkit-funny-system-break-down-2955.wav");
-gameOverSound.volume = 0.5;
+gameOverSound.volume = 0.3;
 // sound effects: selection. destory enemies, lose. background
 
 startPage();
@@ -192,6 +192,7 @@ document.addEventListener("keydown", (e) => {
   } //continue game
   else if (e.code === "Enter" && gameStop === true) {
     gameStop = false;
+    selectionSound.play();
     if (startGameLoop) {
       clearInterval(startGameLoop);
     }
