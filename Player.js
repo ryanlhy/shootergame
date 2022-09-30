@@ -123,6 +123,8 @@ export default class Player {
     if (e.code === "Space") {
       this.shootPressed = true;
     }
+    this.shootPressed = true;
+
     e.preventDefault();
   };
 
