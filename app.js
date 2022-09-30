@@ -43,10 +43,9 @@ export { fleet };
 let selectionSound = new Audio(
   "./sfx/mixkit-negative-game-notification-249.wav"
 );
+selectionSound.volume = 0.5;
 let gameOverSound = new Audio("./sfx/mixkit-funny-system-break-down-2955.wav");
-// selectionSound.volume = 0.5;
-// let sound = new Audio("mp3")
-// new audio context?
+gameOverSound.volume = 0.5;
 // sound effects: selection. destory enemies, lose. background
 
 startPage();
