@@ -13,9 +13,15 @@ let score = 0;
 let pointsTextSize = 20; // text size on screen for points
 let timeToNextEnemy = 0; //delay till next row of enemy is drawn. height of enemy, start from 0
 // specify canvas dimensions
-canvas.width = 550;
-canvas.height = 600;
+canvas.width = 550; //innerWidth
+canvas.height = 600; //innerHeight
 export { canvas };
+
+//specify enemy width and height
+const enemyWidth = 30;
+const enemyHeight = 50;
+export { enemyWidth, enemyHeight };
+
 // create bullet
 const bulletController = new BulletController(canvas);
 const bulletControllerEnemy = new BulletControllerEnemy(canvas);

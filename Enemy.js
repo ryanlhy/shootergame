@@ -1,4 +1,4 @@
-import { fleet, canvas } from "./app.js";
+import { fleet, canvas, enemyWidth, enemyHeight } from "./app.js";
 export default class Enemy {
   constructor(
     x,
@@ -13,8 +13,8 @@ export default class Enemy {
     this.x = x;
     this.y = y;
     this.health = health;
-    this.width = 30; //dimensions of enemy
-    this.height = 50; //dimension of enemy
+    this.width = enemyWidth; //dimensions of enemy
+    this.height = enemyHeight; //dimension of enemy
     this.speedX = speedX;
     this.speedY = speedY;
 
@@ -55,6 +55,7 @@ export default class Enemy {
     // this.x -= this.speedX;
     this.y += this.speedY;
     this.x += this.speedX;
+    console.log("x pos: " + this.x);
   }
   shoot() {
     // where bullet originate in terms of x & y, (originally starts in top left corner of square)
