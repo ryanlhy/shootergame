@@ -167,7 +167,7 @@ class StarsController extends BulletController {
       // this.createStars();
     }
     // this.shoot(this.delay);
-    console.log(" stars length" + this.stars.length);
+    // console.log(" stars length" + this.stars.length);
     // loop over all the star
     // and for each star, draw
     this.stars.forEach((star) => {
@@ -185,7 +185,7 @@ class StarsController extends BulletController {
             Math.floor(Math.random() * 3)
           )
         );
-        console.log("off scren");
+        // console.log("off scren");
       } else {
         star.draw(ctx);
       }

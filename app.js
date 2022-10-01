@@ -68,6 +68,7 @@ function gameLoop() {
   // call draw method
   player.draw(ctx); // not .draw also has shoot method
   starsController.draw(ctx);
+  console.log(gameStart + "gamestart");
   if (gameStart === true) {
     startPage();
     gameStart = false;
@@ -111,35 +112,14 @@ function gameLoop() {
       bulletControllerEnemy.collideWith(player);
     });
 
-    // add points and health on screen
-    setTextCommonStyle();
-    ctx.font = `${pointsTextSize}px Arial`;
-    ctx.textAlign = "left";
-    ctx.fillText(
-      `Score: ${score}`,
-      pointsTextSize,
-      canvas.height - pointsTextSize / 2 - pointsTextSize,
-      canvas.width
-    );
-    ctx.fillText(
-      `High Score: ${highScore}`,
-      pointsTextSize,
-      canvas.height - pointsTextSize / 2,
-      canvas.width
-    );
-    ctx.fillText(
-      `Health: ${player.health}`,
-      canvas.width - pointsTextSize * 5,
-      canvas.height - pointsTextSize / 2,
-      canvas.width
-    );
+    inGameText();
   } else {
-    clearInterval(startGameLoop); // this seems redundant
+    clearInterval(startGameLoop); // pauses game loop
   }
   // check player health and when no enemies in array. need to remove enemies from array
   if (player.health <= 0) {
     gameStop = true;
-    clearInterval(startGameLoop); // this seems redundant
+    clearInterval(startGameLoop); // pauses game loop
 
     // go to end page after 1 sec
     setTimeout(endPage, 500);
@@ -171,34 +151,34 @@ function startPage() {
   ctx.fillText(
     "Welcome to Space Shooter!",
     canvas.width / 2,
-    canvas.height / (2 + 0.5),
+    canvas.height / (2 + 0.8),
     canvas.width
   );
   ctx.fillText(
     "Press Space to start!",
     canvas.width / 2,
-    canvas.height / 2,
+    canvas.height / (2 + 0.2),
     canvas.width
   );
   ctx.font = "20px Arial";
   ctx.fillText(
     "Move with Arrow Keys",
     canvas.width / 2,
-    canvas.height / (2 - 0.3),
+    canvas.height / (2 - 0.1),
     canvas.width
   );
   ctx.font = "18px Driod Sans";
   ctx.fillText(
     `You have ${player.health} lives`,
     canvas.width / 2,
-    canvas.height / (2 - 0.5),
+    canvas.height / (2 - 0.3),
     canvas.width
   );
   ctx.font = "35px Driod Sans";
   ctx.fillText(
     `ELIMINATE ALL ENEMIES!`,
     canvas.width / 2,
-    canvas.height / (2 - 0.65),
+    canvas.height / (2 - 0.5),
     canvas.width
   );
 }
@@ -239,11 +219,38 @@ function endPage() {
   });
 }
 
+function inGameText() {
+  // add points and health on screen
+  setTextCommonStyle();
+  ctx.font = `${pointsTextSize}px Arial`;
+  ctx.textAlign = "left";
+  ctx.fillText(
+    `Score: ${score}`,
+    pointsTextSize,
+    canvas.height - pointsTextSize / 2 - pointsTextSize,
+    canvas.width
+  );
+  ctx.fillText(
+    `High Score: ${highScore}`,
+    pointsTextSize,
+    canvas.height - pointsTextSize / 2,
+    canvas.width
+  );
+  ctx.fillText(
+    `Health: ${player.health}`,
+    canvas.width - pointsTextSize * 5,
+    canvas.height - pointsTextSize / 2,
+    canvas.width
+  );
+}
+
 // pause game
 document.addEventListener("keydown", (e) => {
   // START GAME
   if (e.code === "Space" && gameStop === true) {
     gameStop = false; // checker to start gameloop only once
+    // gameStart = false;
+    console.log("game  begins");
     if (startGameLoop) {
       clearInterval(startGameLoop);
     }
