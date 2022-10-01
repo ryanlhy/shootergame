@@ -71,7 +71,7 @@ function gameLoop() {
   console.log(gameStart + "gamestart");
   if (gameStart === true) {
     startPage();
-    gameStart = false;
+    // gameStart = false;
   }
 
   if (gameStop === false) {
@@ -114,7 +114,7 @@ function gameLoop() {
 
     inGameText();
   } else {
-    clearInterval(startGameLoop); // pauses game loop
+    // clearInterval(startGameLoop); // pauses game loop
   }
   // check player health and when no enemies in array. need to remove enemies from array
   if (player.health <= 0) {
@@ -209,6 +209,8 @@ function endPage() {
   document.addEventListener("keydown", (e) => {
     if (e.code === "Enter") {
       gameStop = false;
+      gameStart = false;
+
       if (startGameLoop) {
         clearInterval(startGameLoop);
       }
@@ -249,7 +251,7 @@ document.addEventListener("keydown", (e) => {
   // START GAME
   if (e.code === "Space" && gameStop === true) {
     gameStop = false; // checker to start gameloop only once
-    // gameStart = false;
+    gameStart = false;
     console.log("game  begins");
     if (startGameLoop) {
       clearInterval(startGameLoop);
