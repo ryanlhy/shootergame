@@ -10,7 +10,7 @@ import Fleet from "./Fleet.js";
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
 export { ctx };
-let gameStart = false; // checker to start gameloop once
+let gameStart = true; // checker to start gameloop once
 let gameStop = true;
 let score = 0;
 let pointsTextSize = 20; // text size on screen for points
@@ -55,20 +55,25 @@ let gameOverSound = new Audio("./sfx/mixkit-funny-system-break-down-2955.wav");
 gameOverSound.volume = 0.3;
 // sound effects: selection. destory enemies, lose. background
 
-startPage();
+// startPage();
 // function that runs setinterval
 let startGameLoop = setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
 // set a loop
 function gameLoop() {
+  setCommonStyle();
+  ctx.fillStyle = "black"; // clear the screen
+  ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
+  // draw bullet (draw below player so player goes on top of bullet)
+  bulletController.draw(ctx);
+  // call draw method
+  player.draw(ctx); // not .draw also has shoot method
+  starsController.draw(ctx);
+  if (gameStart === true) {
+    startPage();
+    gameStart = false;
+  }
+
   if (gameStop === false) {
-    setCommonStyle();
-    ctx.fillStyle = "black"; // clear the screen
-    ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
-    // draw bullet (draw below player so player goes on top of bullet)
-    bulletController.draw(ctx);
-    // call draw method
-    player.draw(ctx); // not .draw also has shoot method
-    starsController.draw(ctx);
     if (fleet.enemies.length < 8 && timeToNextEnemy <= 0) {
       // console.log("generate fleet");
       fleet.draw(score);
@@ -153,13 +158,15 @@ function setCommonStyle() {
 // set common text properties
 function setTextCommonStyle() {
   ctx.fillStyle = "white";
-  ctx.font = "30px Arial";
+  ctx.font = "30px Driod Sans";
   ctx.textAlign = "center";
 }
 
 // start page
 function startPage() {
-  ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
+  // ctx.fillStyle = "black"; // clear the screen
+
+  // ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
   setTextCommonStyle(); // text properties
   ctx.fillText(
     "Welcome to Space Shooter!",
@@ -180,18 +187,18 @@ function startPage() {
     canvas.height / (2 - 0.3),
     canvas.width
   );
-  ctx.font = "18px Arial";
+  ctx.font = "18px Driod Sans";
   ctx.fillText(
     `You have ${player.health} lives`,
     canvas.width / 2,
     canvas.height / (2 - 0.5),
     canvas.width
   );
-  ctx.font = "35px Arial";
+  ctx.font = "35px Driod Sans";
   ctx.fillText(
     `ELIMINATE ALL ENEMIES!`,
     canvas.width / 2,
-    canvas.height / (2 - 0.7),
+    canvas.height / (2 - 0.65),
     canvas.width
   );
 }

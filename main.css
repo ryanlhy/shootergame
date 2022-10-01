@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Droid+Sans:400,700);
 body{
     display: flex;
     flex-direction: column; /*stack h1 and canvas on top of each other*/
