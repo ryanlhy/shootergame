@@ -10,12 +10,12 @@ import Fleet from "./Fleet.js";
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
 export { ctx };
-let gameStart = true; // checker to start gameloop once
-let gameStop = true;
+let gameStartPage = true; // checker to show startpage once
+let gameStop = true; // check if game should stop
 let score = 0;
+let highScore = 0;
 let pointsTextSize = 20; // text size on screen for points
 let timeToNextEnemy = 0; //delay till next row of enemy is drawn. height of enemy, start from 0
-let highScore = 0;
 
 // specify canvas dimensions
 canvas.width = 550; //394; //innerWidth - 550
@@ -34,15 +34,15 @@ const starsController = new StarsController(canvas);
 export { bulletControllerEnemy, starsController };
 
 // create player.
-// takes x & y position to specify where the player is on the canvas
 const player = new Player(
   canvas.width / 2.2,
   canvas.height / 1.3,
   bulletController, // pass in bulletcontroller to shoot
-  canvas, // pass in canvas to specify player restrictions
-  4 //gun
+  canvas, // pass in canvas to specify player restrictions (to remove)
+  4 // number of guns
 );
 
+// create fleet
 let fleet = new Fleet();
 export { fleet };
 
@@ -50,33 +50,32 @@ export { fleet };
 let selectionSound = new Audio(
   "./sfx/mixkit-negative-game-notification-249.wav"
 );
-selectionSound.volume = 0.3;
+selectionSound.volume = 0.3; // lower volume
 let gameOverSound = new Audio("./sfx/mixkit-funny-system-break-down-2955.wav");
 gameOverSound.volume = 0.3;
 // sound effects: selection. destory enemies, lose. background
 
-// startPage();
 // function that runs setinterval
-let startGameLoop = setInterval(gameLoop, 1000 / 60); // 1000 / 60  - call it 60 times a second
-// set a loop
+let startGameLoop = setInterval(gameLoop, 1000 / 60); // call it 60 times a second
+
+// set main loop
 function gameLoop() {
   setCommonStyle();
-  ctx.fillStyle = "black"; // clear the screen
-  ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
-  // draw bullet (draw below player so player goes on top of bullet)
+  ctx.fillStyle = "black"; // clear screen
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // draw
   bulletController.draw(ctx);
-  // call draw method
-  player.draw(ctx); // not .draw also has shoot method
+  player.draw(ctx); // .draw contains shoot method
   starsController.draw(ctx);
-  console.log(gameStart + "gamestart");
-  if (gameStart === true) {
+
+  if (gameStartPage === true) {
     startPage();
-    // gameStart = false;
   }
 
+  // start of actual game
   if (gameStop === false) {
     if (fleet.enemies.length < 8 && timeToNextEnemy <= 0) {
-      // console.log("generate fleet");
       fleet.draw(score);
       timeToNextEnemy = 50; //height of enemy
     }
@@ -113,20 +112,16 @@ function gameLoop() {
     });
 
     inGameText();
-  } else {
-    // clearInterval(startGameLoop); // pauses game loop
   }
-  // check player health and when no enemies in array. need to remove enemies from array
+
+  // check player health
   if (player.health <= 0) {
     gameStop = true;
     clearInterval(startGameLoop); // pauses game loop
-
-    // go to end page after 1 sec
     setTimeout(endPage, 500);
   }
 }
 
-// to add in notes
 // set style properties for better aesthetics
 function setCommonStyle() {
   ctx.shadowColor = "#d53";
@@ -144,9 +139,6 @@ function setTextCommonStyle() {
 
 // start page
 function startPage() {
-  // ctx.fillStyle = "black"; // clear the screen
-
-  // ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
   setTextCommonStyle(); // text properties
   ctx.fillText(
     "Welcome to Space Shooter!",
@@ -183,7 +175,6 @@ function startPage() {
   );
 }
 
-// ending page
 function endPage() {
   if (highScore < score) {
     highScore = score;
@@ -191,7 +182,6 @@ function endPage() {
   gameOverSound.play();
   // ctx.globalAlpha = 0.5; // make transparent
   ctx.fillStyle = "black";
-  // ctx.fillRect(0, 0, canvas.width, canvas.height); // draw from corner (0, 0)
   setTextCommonStyle();
   ctx.fillText("Game has ended!", canvas.width / 2, canvas.height / (2 - 0.25));
   ctx.fillText(
@@ -205,11 +195,11 @@ function endPage() {
     canvas.height / (2 - 0.5)
   );
 
-  //restart game
+  // restart game
   document.addEventListener("keydown", (e) => {
     if (e.code === "Enter") {
       gameStop = false;
-      gameStart = false;
+      gameStartPage = false;
 
       if (startGameLoop) {
         clearInterval(startGameLoop);
@@ -221,8 +211,8 @@ function endPage() {
   });
 }
 
+// add points, health, high score on screen
 function inGameText() {
-  // add points and health on screen
   setTextCommonStyle();
   ctx.font = `${pointsTextSize}px Arial`;
   ctx.textAlign = "left";
@@ -246,24 +236,23 @@ function inGameText() {
   );
 }
 
-// pause game
+// on key down
 document.addEventListener("keydown", (e) => {
   // START GAME
   if (e.code === "Space" && gameStop === true) {
-    gameStop = false; // checker to start gameloop only once
-    gameStart = false;
-    console.log("game  begins");
+    gameStop = false;
+    gameStartPage = false;
     if (startGameLoop) {
       clearInterval(startGameLoop);
     }
     selectionSound.play();
     startGameLoop = setInterval(gameLoop, 1000 / 60); // does not do anything
   }
+
   // pause game
   if (e.code === "Enter" && gameStop === false) {
     gameStop = true;
     selectionSound.play();
-    // console.log(e.code + " pause " + gameStop);
   } //continue game
   else if (e.code === "Enter" && gameStop === true) {
     gameStop = false;
@@ -275,10 +264,11 @@ document.addEventListener("keydown", (e) => {
     startGameLoop = setInterval(gameLoop, 1000 / 60);
   }
 });
+
 // start game loop on click in canvas
 canvas.addEventListener("click", () => {
   if (gameStop === true) {
-    gameStop = false; // checker to start gameloop only once
+    gameStop = false; // check if game is stopped
     if (startGameLoop) {
       clearInterval(startGameLoop);
     }
@@ -287,7 +277,7 @@ canvas.addEventListener("click", () => {
   }
 });
 
-// end game
+// key to immediately end game
 document.addEventListener("keydown", (e) => {
   if (e.code === "Escape") {
     selectionSound.play();
@@ -306,27 +296,6 @@ function resetValues() {
   bulletControllerEnemy.bullets = [];
   fleet = new Fleet();
 }
-// create array of enemies
-// const enemies = [
-// new Enemy(50, 20, "green", 5),
-// new Enemy(150, 20, "green", 5),
-// new Enemy(250, 20, "green", 5),
-// new Enemy(350, 20, "green", 5),
-// new Enemy(450, 20, "green", 5),
-// new Enemy(50, 100, "green", 5),
-// new Enemy(150, 100, "green", 5),
-// new Enemy(250, 100, "green", 5),
-// new Enemy(350, 100, "green", 5),
-// new Enemy(450, 100, "green", 5),
-// ];
-
-// // in case didnt render
-// const animate = () => {
-//   requestAnimationFrame(animate);
-//   ctx.fillStyle = "black";
-//   player.draw(ctx);
-//   //   console.log("animate");
-// };
 
 ////////////////////////////////////////////////////////////
 // NOTES FOR UNDERSTANDING THIS SCRIPT
@@ -441,16 +410,17 @@ add score system
 add score on every kill
 
 
-mouse to control
+mouse control
+pointer
 mobile responsive dimensions
 
 
 AETHETICS
 add animated images to enemies, players, bullets, collision,
-make background image move continously
-add sounds
+add more sounds
 add start button
 add rotation when player move left or right
+add animated images for objects
 
 
 LOGIC

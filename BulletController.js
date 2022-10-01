@@ -185,7 +185,6 @@ class StarsController extends BulletController {
             Math.floor(Math.random() * 3)
           )
         );
-        // console.log("off scren");
       } else {
         star.draw(ctx);
       }
