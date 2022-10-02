@@ -252,6 +252,9 @@ document.addEventListener("keydown", (e) => {
   // pause game
   if (e.code === "Enter" && gameStop === false) {
     gameStop = true;
+    if (startGameLoop) {
+      clearInterval(startGameLoop);
+    }
     selectionSound.play();
   } //continue game
   else if (e.code === "Enter" && gameStop === true) {
