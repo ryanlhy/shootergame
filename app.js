@@ -110,13 +110,19 @@ function gameLoop() {
       }
       // player collide with enemy. player health deducted
       bulletControllerEnemy.collideWith(player);
+      checkPlayerHealth();
     });
 
     inGameText();
   }
 
   // check player health
+  // checkPlayerHealth();
+}
+
+function checkPlayerHealth() {
   if (player.health <= 0) {
+    console.log("player health function passed through")
     gameStop = true;
     clearInterval(startGameLoop); // pauses game loop
     setTimeout(endPage, 500);
