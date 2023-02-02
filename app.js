@@ -10,10 +10,11 @@ import Fleet from "./Fleet.js";
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d"); // ctx will be used for drawing, "2d"
 export { ctx };
+
 let gameStartPage = true; // checker to show startpage once
 let gameStop = true; // check if game should stop
-let score = 0;
-let highScore = 0;
+let score = 0
+let highScore = localStorage.getItem("highScore") || 0; // get highscore from local storage
 let pointsTextSize = 20; // text size on screen for points
 let timeToNextEnemy = 0; //delay till next row of enemy is drawn. height of enemy, start from 0
 
@@ -178,6 +179,7 @@ function startPage() {
 function endPage() {
   if (highScore < score) {
     highScore = score;
+    localStorage.setItem("highScore", highScore); 
   }
   gameOverSound.play();
   // ctx.globalAlpha = 0.5; // make transparent
@@ -246,16 +248,16 @@ document.addEventListener("keydown", (e) => {
       clearInterval(startGameLoop);
     }
     selectionSound.play();
-    startGameLoop = setInterval(gameLoop, 1000 / 60); // does not do anything
+    startGameLoop = setInterval(gameLoop, 1000 / 60); // start game loop
   }
 
   // pause game
   if (e.code === "Enter" && gameStop === false) {
     gameStop = true;
+    selectionSound.play();
     if (startGameLoop) {
       clearInterval(startGameLoop);
     }
-    selectionSound.play();
   } //continue game
   else if (e.code === "Enter" && gameStop === true) {
     gameStop = false;
@@ -287,6 +289,8 @@ document.addEventListener("keydown", (e) => {
     console.log(e.code + " escape key pressed");
     clearInterval(startGameLoop);
     gameStop = true;
+    // localStorage.removeItem("highScore");
+    localStorage.clear();
     endPage();
   }
 });
