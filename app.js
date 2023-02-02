@@ -110,14 +110,12 @@ function gameLoop() {
       }
       // player collide with enemy. player health deducted
       bulletControllerEnemy.collideWith(player);
-      checkPlayerHealth();
     });
 
     inGameText();
   }
 
-  // check player health
-  // checkPlayerHealth();
+  checkPlayerHealth();
 }
 
 function checkPlayerHealth() {
@@ -198,25 +196,25 @@ function endPage() {
     canvas.height / (2 + 0.3)
   );
   ctx.fillText(
-    "Press Enter to play again",
+    "Press Space to play again",
     canvas.width / 2,
     canvas.height / (2 - 0.5)
   );
 
   // restart game
-  document.addEventListener("keydown", (e) => {
-    if (e.code === "Enter") {
-      gameStop = false;
-      gameStartPage = false;
+  // document.addEventListener("keydown", (e) => {
+  //   if (e.code === "Enter") {
+  //     gameStop = false;
+  //     gameStartPage = false;
 
-      if (startGameLoop) {
-        clearInterval(startGameLoop);
-      }
-      console.log(e.code + "restart pressed " + gameStop);
-      resetValues();
-      startGameLoop = setInterval(gameLoop, 1000 / 60);
-    }
-  });
+  //     if (startGameLoop) {
+  //       clearInterval(startGameLoop);
+  //     }
+  //     console.log(e.code + "restart pressed " + gameStop);
+  //     resetValues();
+  //     startGameLoop = setInterval(gameLoop, 1000 / 60);
+  //   }
+  // });
 }
 
 // add points, health, high score on screen
@@ -248,6 +246,7 @@ function inGameText() {
 document.addEventListener("keydown", (e) => {
   // START GAME
   if (e.code === "Space" && gameStop === true) {
+    resetValues();
     gameStop = false;
     gameStartPage = false;
     if (startGameLoop) {
