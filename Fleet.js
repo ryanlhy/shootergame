@@ -66,6 +66,8 @@ export default class Fleet {
   }
   draw(score) {
     let stage = this.determineStage(score);
+    // let stage = 12 ;
+
     console.log("stage " + stage);
     // create rows and cols of enemies, 1st wave
     for (let x = 0; x < this.columns; x++) {
@@ -96,13 +98,16 @@ export default class Fleet {
                 this.x / Math.floor(Math.random() * 2 + 1) -
                 (Math.random() * this.x - this.x / 2) / 2,
               -this.y,
-              this.health,
+              this.health - 2,
               this.speedX + (Math.random() * 0.7 - 0.7 / 2),
               this.speedY + 1,
               bulletControllerEnemy,
               Math.floor(Math.random() * stage + 1) //gun
             )
           );
+        if (stage >= 6) {
+          this.speedY =  stage / 2;
+        }
     }
   }
   determineStage(score) {
@@ -111,6 +116,15 @@ export default class Fleet {
     else if (score <= 300) return 2;
     else if (score <= 400) return 3;
     else if (score <= 500) return 4;
-    else return 4;
+    else if (score <= 700) return 5;
+    else if (score <= 1000) return 6;
+    else if (score <= 1300) return 7;
+    else if (score <= 1600) return 8;
+    else if (score <= 2000) return 9;
+    else if (score <= 3000) return 10;
+    else if (score <= 4000) return 11;
+    else if (score <= 5000) return 12;
+    else if (score <= 6000) return 13;
+    else return 13;
   }
 }
