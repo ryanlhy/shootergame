@@ -20,6 +20,10 @@ export default class Player {
     // collision damage with enemy
     this.collideDamage = 1;
 
+    // countInterval for demo
+    this.xLeftRight = "left";
+    this.demoSpeed = 3;
+
     // add keyboard listeners, fired when key is pressed / released
     document.addEventListener("keydown", this.keydown);
     document.addEventListener("keyup", this.keyup);
@@ -176,5 +180,24 @@ export default class Player {
       return true;
     }
     return false;
+  }
+  demo(gameStop){
+    
+    if (gameStop === true && this.shootPressed === true){
+      // make player move
+      switch(this.xLeftRight){
+        case "left":
+          this.x -= this.demoSpeed;
+          break;
+        case "right":
+          this.x += this.demoSpeed;
+          break;
+      }
+
+      // boundaries
+      if (this.xLeftRight === "left" && this.x < this.width + 10) this.xLeftRight = "right";
+      if (this.xLeftRight === "right" && this.x > this.canvas.width - this.width - 20) this.xLeftRight = "left";
+    }
+  
   }
 }

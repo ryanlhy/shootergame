@@ -70,6 +70,9 @@ function gameLoop() {
   player.draw(ctx); // .draw contains shoot method
   starsController.draw(ctx);
 
+  // demo
+  player.demo(gameStop);
+
   if (gameStartPage === true) {
     startPage();
   }
@@ -114,7 +117,6 @@ function gameLoop() {
 
     inGameText();
   }
-
   checkPlayerHealth();
 }
 
@@ -217,6 +219,15 @@ function endPage() {
   // });
 }
 
+function pausePage() {
+  setTextCommonStyle();
+  ctx.fillText("Game Paused!", canvas.width / 2, canvas.height / (2 - 0 ));
+  ctx.fillText(
+    "Press Space to continue",
+    canvas.width / 2,
+    canvas.height / (2 - 0.25)
+  );
+}
 // add points, health, high score on screen
 function inGameText() {
   setTextCommonStyle();
@@ -244,6 +255,7 @@ function inGameText() {
 
 // on key down
 document.addEventListener("keydown", (e) => {
+  e.preventDefault(); 
   // START GAME
   if (e.code === "Space" && gameStop === true) {
     resetValues();
@@ -260,6 +272,7 @@ document.addEventListener("keydown", (e) => {
   if (e.code === "Enter" && gameStop === false) {
     gameStop = true;
     selectionSound.play();
+    pausePage();
     if (startGameLoop) {
       clearInterval(startGameLoop);
     }
