@@ -28,6 +28,10 @@ export default class Player {
     document.addEventListener("keydown", this.keydown);
     document.addEventListener("keyup", this.keyup);
     // document.addEventListener("pointerdown", this.pointerDown);
+    // add the touch event listeners to the canvas
+    document.addEventListener("touchstart", this.touchstart);
+    document.addEventListener("touchend", this.touchend);
+    document.addEventListener("touchmove", this.touchmove);
   }
 
   // draw method
@@ -181,6 +185,64 @@ export default class Player {
     }
     return false;
   }
+
+  // touchstart event listener - when the screen is touched
+  touchstart = (e) => {
+    // get the x and y coordinates of the touch event
+    let touch = e.touches[0];
+    this.touchX = touch.clientX;
+    this.touchY = touch.clientY;
+  };
+
+  // touchend event listener - when the screen is no longer touched
+  touchend = (e) => {
+    // reset the touch coordinates
+    this.touchX = -1;
+    this.touchY = -1;
+  };
+
+  // touchmove event listener - when the touch is moved
+  touchmove = (e) => {
+    // get the x and y coordinates of the touch event
+    let touch = e.touches[0];
+    this.touchX = touch.clientX;
+    this.touchY = touch.clientY;
+  };
+
+  // in your update function, use the touch coordinates to determine the direction of movement
+  update = () => {
+    // check if up is pressed
+    if (this.touchY < innerHeight / 2) {
+      this.upPressed = true;
+    } else {
+      this.upPressed = false;
+    }
+
+    // check if down is pressed
+    if (this.touchY > innerHeight / 2) {
+      this.downPressed = true;
+    } else {
+      this.downPressed = false;
+    }
+
+    // check if left is pressed
+    if (this.touchX < innerWidth / 2) {
+      this.leftPressed = true;
+    } else {
+      this.leftPressed = false;
+    }
+
+    // check if right is pressed
+    if (this.touchX > innerWidth / 2) {
+      this.rightPressed = true;
+    } else {
+      this.rightPressed = false;
+    }
+  };
+
+
+
+
   demo(gameStop){
     
     if (gameStop === true && this.shootPressed === true){
@@ -195,8 +257,8 @@ export default class Player {
       }
 
       // boundaries
-      if (this.xLeftRight === "left" && this.x < this.width + 10) this.xLeftRight = "right";
-      if (this.xLeftRight === "right" && this.x > this.canvas.width - this.width - 20) this.xLeftRight = "left";
+      if (this.xLeftRight === "left" && this.x < this.width) this.xLeftRight = "right";
+      if (this.xLeftRight === "right" && this.x > this.canvas.width - 2 * this.width) this.xLeftRight = "left";
     }
   
   }

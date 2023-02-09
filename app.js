@@ -19,7 +19,7 @@ let pointsTextSize = 20; // text size on screen for points
 let timeToNextEnemy = 0; //delay till next row of enemy is drawn. height of enemy, start from 0
 
 // specify canvas dimensions
-canvas.width = 550; //394; //innerWidth - 550
+canvas.width = 500; //394; //innerWidth - 550
 canvas.height = 600; //700; //innerHeight -600
 export { canvas };
 
