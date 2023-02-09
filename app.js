@@ -15,7 +15,9 @@ let gameStartPage = true; // checker to show startpage once
 let gameStop = true; // check if game should stop
 let score = 0
 let highScore = localStorage.getItem("highScore") || 0; // get highscore from local storage
-let leaderBoardObj = localStorage.getItem("leaderBoardObj")? localStorage.getItem("leaderBoardObj"): {'SFCCA':0, '99.co': 0,'NTT': 0,'IMDA': 0,'ef': 0,'d': 0,'e': 0,'f': 0,'g': 0,'h': 0, 'i':0}; // get leaderboard from local storage
+let leaderBoardObjString =  localStorage.getItem("leaderBoardObj")||{'SFCCA':0, '99.co': 0,'NTT': 0,'IMDA': 0,'CREX PTE LTD': 0,'CIMB Bank Berhad': 0,'Wiley Edge': 0,'Decathlon Singapore': 0,'FDM': 0,'Allied Container Group': 0, 'Adecco':0}; // get leaderboard from local storage
+let leaderBoardObj = typeof(leaderBoardObjString) === "string"? JSON.parse(leaderBoardObjString) :leaderBoardObjString
+console.log(typeof(leaderBoardObjString))
 let archivedLeaderBoardObj = localStorage.getItem("archivedLeaderBoardObj")
 // let leaderBoardObj = {'a':10, 'b': 13,'c': 14,'4': 15,'Singapore Federation of Chinese': 13,'d': 16,'e': 16,'f': 71,'g': 23,'h': 1, 'i':12};
 let leaderBoardKeyPressed = false;
@@ -57,9 +59,13 @@ export { fleet };
 let selectionSound = new Audio(
   "./sfx/mixkit-negative-game-notification-249.wav"
 );
+let collideSound = new Audio("./sfx/mixkit-falling-hit-757-trimmed.wav");
+collideSound.volume = 0.05; // lower volume
 selectionSound.volume = 0.3; // lower volume
 let gameOverSound = new Audio("./sfx/mixkit-funny-system-break-down-2955.wav");
 gameOverSound.volume = 0.3;
+let music = new Audio("./sfx/mixkit-space-game-668.mp3");
+music.volume = 0.1;
 // sound effects: selection. destory enemies, lose. background
 
 // function that runs setinterval
@@ -93,6 +99,7 @@ function gameLoop() {
 
   // start of actual game
   if (gameStop === false) {
+    music.play()
     leaderBoardKeyPressedEnd = false;
     if (fleet.enemies.length < 8 && timeToNextEnemy <= 0) {
       fleet.draw(score);
@@ -115,6 +122,7 @@ function gameLoop() {
         }
       } // player collide with enemy
       else if (player.collideWith(enemy)) {
+        collideSound.play();
         fleet.enemies.splice(index, 1);
       } // if enemy is out of screen or canvas
       else if (enemy.y >= canvas.height + enemy.height) {
@@ -273,10 +281,14 @@ function promptName() {
       [currentScoreName]: currentScore
     };
     console.log(currentScoreObj)
-    leaderBoardObj = Object.assign(currentScoreObj, leaderBoardObj);
+    // leaderBoardObj = Object.assign(currentScoreObj, leaderBoardObj);
+    for (const key in currentScoreObj) {
+      leaderBoardObj[key] = currentScoreObj[key];
+    }
     console.log(leaderBoardObj)
-    localStorage.setItem("leaderBoardObj", leaderBoardObj); 
-    localStorage.setItem("archivedLeaderBoardObj", leaderBoardObj); // to achive the leaderboard
+    localStorage.setItem("leaderBoardObj", JSON.stringify(leaderBoardObj)); 
+    localStorage.setItem("archivedLeaderBoardObj", JSON.stringify(leaderBoardObj)); // to achive the leaderboard
+    console.log(leaderBoardObj)
     if (highScore < score) {
       highScore = score;
       localStorage.setItem("highScore", highScore); 
@@ -433,9 +445,9 @@ document.addEventListener("keydown", (e) => {
 
 // key to immediately end game
 document.addEventListener("keydown", (e) => {
-  if (e.code === "Escape") {
+  if (e.code === "KeyN") {
     selectionSound.play();
-    console.log(e.code + " escape key pressed");
+    console.log(e.code + " n key pressed");
     clearInterval(startGameLoop);
     gameStop = true;
     localStorage.removeItem("highScore");
@@ -455,6 +467,8 @@ function resetValues() {
   fleet = new Fleet();
   leaderBoardKeyPressed = false;
   leaderBoardKeyPressedEnd = false;
+  music.pause();
+  music.currentTime = 0;
 }
 
 

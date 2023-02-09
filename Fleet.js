@@ -66,7 +66,7 @@ export default class Fleet {
   }
   draw(score) {
     let stage = this.determineStage(score);
-    // let stage = 12 ;
+    // let stage = 13 ;
 
     console.log("stage " + stage);
     // create rows and cols of enemies, 1st wave
