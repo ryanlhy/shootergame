@@ -41,16 +41,6 @@ export default class Player {
     //draw player as image
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 
-    // box
-    // // strokeStyle	- Sets or returns the color, gradient, or pattern used for strokes
-    // ctx.strokeStyle = "yellow";
-    // // strokeRect() - Draws a rectangle (no fill)
-    // ctx.strokeRect(this.x, this.y, this.width, this.height);
-    // // fillStyle - Sets or returns the color, gradient, or pattern used to fill the drawing
-    // ctx.fillStyle = "black";
-    // // fillRect() - Draws a "filled" rectangle
-    // ctx.fillRect(this.x, this.y, this.width, this.height);
-
     // shoot method, always running, but false is no spacebar
     this.shoot();
   }
@@ -132,9 +122,6 @@ export default class Player {
       this.rightPressed = true;
       e.preventDefault();
     }
-    // if (e.code === "Space") {
-    //   this.shootPressed = true;
-    // }
     this.shootPressed = true; // always shoot
   };
 
@@ -203,6 +190,8 @@ export default class Player {
 
   // touchmove event listener - when the touch is moved
   touchmove = (e) => {
+    e.preventDefault();
+
     // get the x and y coordinates of the touch event
     let touch = e.touches[0];
     this.touchX = touch.clientX;

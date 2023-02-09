@@ -15,6 +15,12 @@ let gameStartPage = true; // checker to show startpage once
 let gameStop = true; // check if game should stop
 let score = 0
 let highScore = localStorage.getItem("highScore") || 0; // get highscore from local storage
+let leaderBoardObj = localStorage.getItem("leaderBoardObj")? localStorage.getItem("leaderBoardObj"): {'SFCCA':0, '99.co': 0,'NTT': 0,'IMDA': 0,'ef': 0,'d': 0,'e': 0,'f': 0,'g': 0,'h': 0, 'i':0}; // get leaderboard from local storage
+let archivedLeaderBoardObj = localStorage.getItem("archivedLeaderBoardObj")
+// let leaderBoardObj = {'a':10, 'b': 13,'c': 14,'4': 15,'Singapore Federation of Chinese': 13,'d': 16,'e': 16,'f': 71,'g': 23,'h': 1, 'i':12};
+let leaderBoardKeyPressed = false;
+let leaderBoardKeyPressedEnd = false;
+
 let pointsTextSize = 20; // text size on screen for points
 let timeToNextEnemy = 0; //delay till next row of enemy is drawn. height of enemy, start from 0
 
@@ -59,6 +65,9 @@ gameOverSound.volume = 0.3;
 // function that runs setinterval
 let startGameLoop = setInterval(gameLoop, 1000 / 60); // call it 60 times a second
 
+let pageCounter = 100; // counter for start page
+const pageDuration = 200; // duration of start page
+
 // set main loop
 function gameLoop() {
   setCommonStyle();
@@ -72,13 +81,19 @@ function gameLoop() {
 
   // demo
   player.demo(gameStop);
-
+  // logic for pages
   if (gameStartPage === true) {
-    startPage();
+    if (leaderBoardKeyPressed === true) leaderBoard();
+    else if (pageCounter > 0) startPage();
+    else if (pageCounter <= 0) leaderBoard();
+    pageCounter--;
+    if (pageCounter < -pageDuration) pageCounter = pageDuration;
+    
   }
 
   // start of actual game
   if (gameStop === false) {
+    leaderBoardKeyPressedEnd = false;
     if (fleet.enemies.length < 8 && timeToNextEnemy <= 0) {
       fleet.draw(score);
       timeToNextEnemy = 50; //height of enemy
@@ -153,12 +168,7 @@ function startPage() {
     canvas.height / (2 + 0.8),
     canvas.width
   );
-  ctx.fillText(
-    "Press Space to start!",
-    canvas.width / 2,
-    canvas.height / (2 + 0.2),
-    canvas.width
-  );
+  
   ctx.font = "20px Arial";
   ctx.fillText(
     "Move with Arrow Keys",
@@ -180,50 +190,145 @@ function startPage() {
     canvas.height / (2 - 0.5),
     canvas.width
   );
+  displayPressSpace();
+  displayScoreAndHealth();
+}
+function displayScoreAndHealth () {
+  setTextCommonStyle(); // text properties
+  ctx.font = `${pointsTextSize}px Arial`;
+  ctx.textAlign = "left";
+  ctx.fillText(
+    `High Score: ${highScore}`,
+    pointsTextSize,
+    canvas.height - pointsTextSize / 2,
+    canvas.width
+  );
+  ctx.fillText(
+    `Health: ${player.health}`,
+    canvas.width - pointsTextSize * 5,
+    canvas.height - pointsTextSize / 2,
+    canvas.width
+  );
 }
 
-function endPage() {
-  if (highScore < score) {
-    highScore = score;
-    localStorage.setItem("highScore", highScore); 
+function fillTextMultiLine(ctx, text, x, y) {
+  var lineHeight = ctx.measureText("M").width * 1.2;
+  var lines = text.split("\n");
+  for (var i = 0; i < lines.length; ++i) {
+    ctx.fillText(lines[i], x, y);
+    y += lineHeight;
   }
+}
+
+function accessObjects(obj) {
+  let returnString =``;
+  let sortable = [];
+  for (var vehicle in obj) {
+    sortable.push([vehicle, obj[vehicle]]);
+}
+sortable.sort(function(a, b) {
+    return b[1] - a[1];
+});
+  for (let i = 0; i < 10; i++) {
+    returnString = returnString.concat(`${sortable[i][0]}: ${sortable[i][1]}\n`);
+  }
+  return returnString
+}
+
+function leaderBoard() {
+  setTextCommonStyle(); // text properties
+  ctx.fillText(
+    `LEADERBOARD`,
+    canvas.width / 2,
+    canvas.height / (10),
+    canvas.width
+  );
+  
+  fillTextMultiLine(ctx, `${accessObjects(leaderBoardObj)}`, canvas.width / 2,canvas.height / (5) )
+  displayPressSpace();
+  displayScoreAndHealth();
+}
+
+function displayPressSpace() {
+  setTextCommonStyle(); // text properties
+  ctx.fillText(
+    "Press Space to start!",
+    canvas.width / 2,
+    canvas.height / (1.13),
+    canvas.width
+  );
+}
+
+function promptName() {
+    let currentScore = score;
+    let currentScoreName
+    do {
+      currentScoreName = prompt("Enter Company name for the Leaderboard (max 30 characters)")
+    }
+    while (currentScoreName.length >= 30) {
+      alert("Entered into leaderboard. Top 10 scores will be displayed!")
+    }
+    
+    let currentScoreObj = {
+      [currentScoreName]: currentScore
+    };
+    console.log(currentScoreObj)
+    leaderBoardObj = Object.assign(currentScoreObj, leaderBoardObj);
+    console.log(leaderBoardObj)
+    localStorage.setItem("leaderBoardObj", leaderBoardObj); 
+    localStorage.setItem("archivedLeaderBoardObj", leaderBoardObj); // to achive the leaderboard
+    if (highScore < score) {
+      highScore = score;
+      localStorage.setItem("highScore", highScore); 
+    }
+    
+    gameStop = false;
+    gameStartPage = false;
+    if (startGameLoop) {
+      clearInterval(startGameLoop);
+    }
+    selectionSound.play();
+    pageCounter = 500;
+    resetValues();
+    startGameLoop = setInterval(gameLoop, 1000 / 60); // start game loop
+  // if current score is higher than any of the scores in object, replace the score with current score
+  // if current score is lower than any of the scores in object, add to object
+  // sort the object in descending order
+  
+}
+function endPage() {
+  leaderBoardKeyPressedEnd = true;
+  
+  gameStop = true;
   gameOverSound.play();
   // ctx.globalAlpha = 0.5; // make transparent
   ctx.fillStyle = "black";
   setTextCommonStyle();
-  ctx.fillText("Game has ended!", canvas.width / 2, canvas.height / (2 - 0.25));
+  ctx.font = "70px Driod Sans";
+  ctx.fillText("GAME OVER!", canvas.width / 2, canvas.height / (3));
   ctx.fillText(
-    `Your Score: ${score}`,
+    `Score: ${score}`,
     canvas.width / 2,
-    canvas.height / (2 + 0.3)
+    canvas.height / (2 + 0.2)
   );
+  ctx.font = "20px Driod Sans";
   ctx.fillText(
     "Press Space to play again",
     canvas.width / 2,
     canvas.height / (2 - 0.5)
   );
-
-  // restart game
-  // document.addEventListener("keydown", (e) => {
-  //   if (e.code === "Enter") {
-  //     gameStop = false;
-  //     gameStartPage = false;
-
-  //     if (startGameLoop) {
-  //       clearInterval(startGameLoop);
-  //     }
-  //     console.log(e.code + "restart pressed " + gameStop);
-  //     resetValues();
-  //     startGameLoop = setInterval(gameLoop, 1000 / 60);
-  //   }
-  // });
+  ctx.fillText(
+    "Left-Shift to Enter Leaderboard",
+    canvas.width / 2,
+    canvas.height / (2 - 0.65)
+  );
 }
 
 function pausePage() {
   setTextCommonStyle();
   ctx.fillText("Game Paused!", canvas.width / 2, canvas.height / (2 - 0 ));
   ctx.fillText(
-    "Press Space to continue",
+    "Press Enter to continue",
     canvas.width / 2,
     canvas.height / (2 - 0.25)
   );
@@ -252,12 +357,11 @@ function inGameText() {
     canvas.width
   );
 }
-
 // on key down
 document.addEventListener("keydown", (e) => {
-  e.preventDefault(); 
   // START GAME
   if (e.code === "Space" && gameStop === true) {
+    e.preventDefault(); 
     resetValues();
     gameStop = false;
     gameStartPage = false;
@@ -267,9 +371,36 @@ document.addEventListener("keydown", (e) => {
     selectionSound.play();
     startGameLoop = setInterval(gameLoop, 1000 / 60); // start game loop
   }
+  // shift key to end game and enter name
+  if (e.code === "ShiftLeft" && gameStop === true) {
+    e.preventDefault(); 
+    console.log("shift ")
+    promptName();
+    gameStop = true;
+    gameStartPage = true;
+    leaderBoardKeyPressed = true;
+    if (startGameLoop) {
+      clearInterval(startGameLoop);
+    }
+    selectionSound.play();
+    startGameLoop = setInterval(gameLoop, 1000 / 60); // start game loop
+  }
+  // leftctrl to access leaderboard
+  if (e.code === "ControlLeft" && gameStop === true) {
+    console.log("ControlLeft ")
+    // gameStop = true;
+    // gameStartPage = true;
+    // if (startGameLoop) {
+    //   clearInterval(startGameLoop);
+    //   clearInterval(endPage )
+    // }
+    leaderBoardKeyPressed = true;
+    // startGameLoop = setInterval(gameLoop, 1000 / 60); // start game loop
+    
 
+  }
   // pause game
-  if (e.code === "Enter" && gameStop === false) {
+  if (e.code === "Enter" && gameStop === false && gameStartPage === false && leaderBoardKeyPressedEnd === false) {
     gameStop = true;
     selectionSound.play();
     pausePage();
@@ -277,7 +408,7 @@ document.addEventListener("keydown", (e) => {
       clearInterval(startGameLoop);
     }
   } //continue game
-  else if (e.code === "Enter" && gameStop === true) {
+  else if (e.code === "Enter" && gameStop === true && gameStartPage === false && leaderBoardKeyPressedEnd === false) {
     gameStop = false;
     selectionSound.play();
     if (startGameLoop) {
@@ -288,17 +419,17 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// start game loop on click in canvas
-canvas.addEventListener("click", () => {
-  if (gameStop === true) {
-    gameStop = false; // check if game is stopped
-    if (startGameLoop) {
-      clearInterval(startGameLoop);
-    }
-    selectionSound.play();
-    startGameLoop = setInterval(gameLoop, 1000 / 60); // does not do anything
-  }
-});
+// // start game loop on click in canvas
+// canvas.addEventListener("click", () => {
+//   if (gameStop === true) {
+//     gameStop = false; // check if game is stopped
+//     if (startGameLoop) {
+//       clearInterval(startGameLoop);
+//     }
+//     selectionSound.play();
+//     startGameLoop = setInterval(gameLoop, 1000 / 60); // does not do anything
+//   }
+// });
 
 // key to immediately end game
 document.addEventListener("keydown", (e) => {
@@ -307,8 +438,10 @@ document.addEventListener("keydown", (e) => {
     console.log(e.code + " escape key pressed");
     clearInterval(startGameLoop);
     gameStop = true;
-    // localStorage.removeItem("highScore");
-    localStorage.clear();
+    localStorage.removeItem("highScore");
+    localStorage.removeItem("leaderBoardObj");
+    // localStorage.removeItem("archivedLeaderBoardObj")
+    // localStorage.clear();
     endPage();
   }
 });
@@ -320,7 +453,10 @@ function resetValues() {
   bulletController.bullets = [];
   bulletControllerEnemy.bullets = [];
   fleet = new Fleet();
+  leaderBoardKeyPressed = false;
+  leaderBoardKeyPressedEnd = false;
 }
+
 
 ////////////////////////////////////////////////////////////
 // NOTES FOR UNDERSTANDING THIS SCRIPT
