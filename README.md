@@ -1,6 +1,6 @@
 # Shooter Game
 
-Welcome to Shooter Game, a digital implementation of a vintage space shooter game! In this game, your goal is to fend off unlimited waves of enemies and achieve the highest score possible.
+Welcome to Shooter Game, a digital implementation of a vintage space shooter game! In this game, your goal is to fend off unlimited waves of enemies and achieve the highest score possible. Play it [here](https://ryanlhy.github.io/shootergame/).
 
 ## How to Play
 
