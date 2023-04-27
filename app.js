@@ -13,12 +13,27 @@ export { ctx };
 
 let gameStartPage = true; // checker to show startpage once
 let gameStop = true; // check if game should stop
-let score = 0
+let score = 0;
 let highScore = localStorage.getItem("highScore") || 0; // get highscore from local storage
-let leaderBoardObjString =  localStorage.getItem("leaderBoardObj")||{'SFCCA':0, '99.co': 0,'NTT': 0,'IMDA': 0,'CREX PTE LTD': 0,'CIMB Bank Berhad': 0,'Wiley Edge': 0,'Decathlon Singapore': 0,'FDM': 0,'Allied Container Group': 0, 'Adecco':0}; // get leaderboard from local storage
-let leaderBoardObj = typeof(leaderBoardObjString) === "string"? JSON.parse(leaderBoardObjString) :leaderBoardObjString
-console.log(typeof(leaderBoardObjString))
-let archivedLeaderBoardObj = localStorage.getItem("archivedLeaderBoardObj")
+let leaderBoardObjString = localStorage.getItem("leaderBoardObj") || {
+  "GECO ASIA": 0,
+  "Wiley Edge": 0,
+  IHIS: 0,
+  Accenture: 0,
+  DXC: 0,
+  Adecco: 0,
+  "Green-N-Glist": 0,
+  "Perx Technologies": 0,
+  imToken: 0,
+  "AIDA Technologies": 0,
+  Shopee: 0,
+}; // get leaderboard from local storage
+let leaderBoardObj =
+  typeof leaderBoardObjString === "string"
+    ? JSON.parse(leaderBoardObjString)
+    : leaderBoardObjString;
+console.log(typeof leaderBoardObjString);
+let archivedLeaderBoardObj = localStorage.getItem("archivedLeaderBoardObj");
 // let leaderBoardObj = {'a':10, 'b': 13,'c': 14,'4': 15,'Singapore Federation of Chinese': 13,'d': 16,'e': 16,'f': 71,'g': 23,'h': 1, 'i':12};
 let leaderBoardKeyPressed = false;
 let leaderBoardKeyPressedEnd = false;
@@ -94,12 +109,11 @@ function gameLoop() {
     else if (pageCounter <= 0) leaderBoard();
     pageCounter--;
     if (pageCounter < -pageDuration) pageCounter = pageDuration;
-    
   }
 
   // start of actual game
   if (gameStop === false) {
-    music.play()
+    music.play();
     leaderBoardKeyPressedEnd = false;
     if (fleet.enemies.length < 8 && timeToNextEnemy <= 0) {
       fleet.draw(score);
@@ -145,7 +159,7 @@ function gameLoop() {
 
 function checkPlayerHealth() {
   if (player.health <= 0) {
-    console.log("player health function passed through")
+    console.log("player health function passed through");
     gameStop = true;
     clearInterval(startGameLoop); // pauses game loop
     setTimeout(endPage, 500);
@@ -176,7 +190,7 @@ function startPage() {
     canvas.height / (2 + 0.8),
     canvas.width
   );
-  
+
   ctx.font = "20px Arial";
   ctx.fillText(
     "Move with Arrow Keys",
@@ -201,7 +215,7 @@ function startPage() {
   displayPressSpace();
   displayScoreAndHealth();
 }
-function displayScoreAndHealth () {
+function displayScoreAndHealth() {
   setTextCommonStyle(); // text properties
   ctx.font = `${pointsTextSize}px Arial`;
   ctx.textAlign = "left";
@@ -229,18 +243,20 @@ function fillTextMultiLine(ctx, text, x, y) {
 }
 
 function accessObjects(obj) {
-  let returnString =``;
+  let returnString = ``;
   let sortable = [];
   for (var vehicle in obj) {
     sortable.push([vehicle, obj[vehicle]]);
-}
-sortable.sort(function(a, b) {
-    return b[1] - a[1];
-});
-  for (let i = 0; i < 10; i++) {
-    returnString = returnString.concat(`${sortable[i][0]}: ${sortable[i][1]}\n`);
   }
-  return returnString
+  sortable.sort(function (a, b) {
+    return b[1] - a[1];
+  });
+  for (let i = 0; i < 10; i++) {
+    returnString = returnString.concat(
+      `${sortable[i][0]}: ${sortable[i][1]}\n`
+    );
+  }
+  return returnString;
 }
 
 function leaderBoard() {
@@ -248,11 +264,16 @@ function leaderBoard() {
   ctx.fillText(
     `LEADERBOARD`,
     canvas.width / 2,
-    canvas.height / (10),
+    canvas.height / 10,
     canvas.width
   );
-  
-  fillTextMultiLine(ctx, `${accessObjects(leaderBoardObj)}`, canvas.width / 2,canvas.height / (5) )
+
+  fillTextMultiLine(
+    ctx,
+    `${accessObjects(leaderBoardObj)}`,
+    canvas.width / 2,
+    canvas.height / 5
+  );
   displayPressSpace();
   displayScoreAndHealth();
 }
@@ -262,67 +283,67 @@ function displayPressSpace() {
   ctx.fillText(
     "Press Space to start!",
     canvas.width / 2,
-    canvas.height / (1.13),
+    canvas.height / 1.13,
     canvas.width
   );
 }
 
 function promptName() {
-    let currentScore = score;
-    let currentScoreName
-    do {
-      currentScoreName = prompt("Enter Company name for the Leaderboard (max 30 characters)")
-    }
-    while (currentScoreName.length >= 30) {
-      alert("Entered into leaderboard. Top 10 scores will be displayed!")
-    }
-    
-    let currentScoreObj = {
-      [currentScoreName]: currentScore
-    };
-    console.log(currentScoreObj)
-    // leaderBoardObj = Object.assign(currentScoreObj, leaderBoardObj);
-    for (const key in currentScoreObj) {
-      leaderBoardObj[key] = currentScoreObj[key];
-    }
-    console.log(leaderBoardObj)
-    localStorage.setItem("leaderBoardObj", JSON.stringify(leaderBoardObj)); 
-    localStorage.setItem("archivedLeaderBoardObj", JSON.stringify(leaderBoardObj)); // to achive the leaderboard
-    console.log(leaderBoardObj)
-    if (highScore < score) {
-      highScore = score;
-      localStorage.setItem("highScore", highScore); 
-    }
-    
-    gameStop = false;
-    gameStartPage = false;
-    if (startGameLoop) {
-      clearInterval(startGameLoop);
-    }
-    selectionSound.play();
-    pageCounter = 500;
-    resetValues();
-    startGameLoop = setInterval(gameLoop, 1000 / 60); // start game loop
+  let currentScore = score;
+  let currentScoreName;
+  do {
+    currentScoreName = prompt(
+      "Enter Company name for the Leaderboard (max 30 characters)"
+    );
+  } while (currentScoreName.length >= 30);
+  {
+    alert("Entered into leaderboard. Top 10 scores will be displayed!");
+  }
+
+  let currentScoreObj = {
+    [currentScoreName]: currentScore,
+  };
+  console.log(currentScoreObj);
+  // leaderBoardObj = Object.assign(currentScoreObj, leaderBoardObj);
+  for (const key in currentScoreObj) {
+    leaderBoardObj[key] = currentScoreObj[key];
+  }
+  console.log(leaderBoardObj);
+  localStorage.setItem("leaderBoardObj", JSON.stringify(leaderBoardObj));
+  localStorage.setItem(
+    "archivedLeaderBoardObj",
+    JSON.stringify(leaderBoardObj)
+  ); // to achive the leaderboard
+  console.log(leaderBoardObj);
+  if (highScore < score) {
+    highScore = score;
+    localStorage.setItem("highScore", highScore);
+  }
+
+  gameStop = false;
+  gameStartPage = false;
+  if (startGameLoop) {
+    clearInterval(startGameLoop);
+  }
+  selectionSound.play();
+  pageCounter = 500;
+  resetValues();
+  startGameLoop = setInterval(gameLoop, 1000 / 60); // start game loop
   // if current score is higher than any of the scores in object, replace the score with current score
   // if current score is lower than any of the scores in object, add to object
   // sort the object in descending order
-  
 }
 function endPage() {
   leaderBoardKeyPressedEnd = true;
-  
+
   gameStop = true;
   gameOverSound.play();
   // ctx.globalAlpha = 0.5; // make transparent
   ctx.fillStyle = "black";
   setTextCommonStyle();
   ctx.font = "70px Driod Sans";
-  ctx.fillText("GAME OVER!", canvas.width / 2, canvas.height / (3));
-  ctx.fillText(
-    `Score: ${score}`,
-    canvas.width / 2,
-    canvas.height / (2 + 0.2)
-  );
+  ctx.fillText("GAME OVER!", canvas.width / 2, canvas.height / 3);
+  ctx.fillText(`Score: ${score}`, canvas.width / 2, canvas.height / (2 + 0.2));
   ctx.font = "20px Driod Sans";
   ctx.fillText(
     "Press Space to play again",
@@ -338,7 +359,7 @@ function endPage() {
 
 function pausePage() {
   setTextCommonStyle();
-  ctx.fillText("Game Paused!", canvas.width / 2, canvas.height / (2 - 0 ));
+  ctx.fillText("Game Paused!", canvas.width / 2, canvas.height / (2 - 0));
   ctx.fillText(
     "Press Enter to continue",
     canvas.width / 2,
@@ -373,7 +394,7 @@ function inGameText() {
 document.addEventListener("keydown", (e) => {
   // START GAME
   if (e.code === "Space" && gameStop === true) {
-    e.preventDefault(); 
+    e.preventDefault();
     resetValues();
     gameStop = false;
     gameStartPage = false;
@@ -385,8 +406,8 @@ document.addEventListener("keydown", (e) => {
   }
   // shift key to end game and enter name
   if (e.code === "ShiftLeft" && gameStop === true) {
-    e.preventDefault(); 
-    console.log("shift ")
+    e.preventDefault();
+    console.log("shift ");
     promptName();
     gameStop = true;
     gameStartPage = true;
@@ -399,7 +420,7 @@ document.addEventListener("keydown", (e) => {
   }
   // leftctrl to access leaderboard
   if (e.code === "ControlLeft" && gameStop === true) {
-    console.log("ControlLeft ")
+    console.log("ControlLeft ");
     // gameStop = true;
     // gameStartPage = true;
     // if (startGameLoop) {
@@ -408,11 +429,14 @@ document.addEventListener("keydown", (e) => {
     // }
     leaderBoardKeyPressed = true;
     // startGameLoop = setInterval(gameLoop, 1000 / 60); // start game loop
-    
-
   }
   // pause game
-  if (e.code === "Enter" && gameStop === false && gameStartPage === false && leaderBoardKeyPressedEnd === false) {
+  if (
+    e.code === "Enter" &&
+    gameStop === false &&
+    gameStartPage === false &&
+    leaderBoardKeyPressedEnd === false
+  ) {
     gameStop = true;
     selectionSound.play();
     pausePage();
@@ -420,7 +444,12 @@ document.addEventListener("keydown", (e) => {
       clearInterval(startGameLoop);
     }
   } //continue game
-  else if (e.code === "Enter" && gameStop === true && gameStartPage === false && leaderBoardKeyPressedEnd === false) {
+  else if (
+    e.code === "Enter" &&
+    gameStop === true &&
+    gameStartPage === false &&
+    leaderBoardKeyPressedEnd === false
+  ) {
     gameStop = false;
     selectionSound.play();
     if (startGameLoop) {
@@ -452,7 +481,7 @@ document.addEventListener("keydown", (e) => {
     gameStop = true;
     localStorage.removeItem("highScore");
     localStorage.removeItem("leaderBoardObj");
-    // localStorage.removeItem("archivedLeaderBoardObj")
+    // localStorage.removeItem("archivedLeaderBoardObj");
     // localStorage.clear();
     endPage();
   }
@@ -470,7 +499,6 @@ function resetValues() {
   music.pause();
   music.currentTime = 0;
 }
-
 
 ////////////////////////////////////////////////////////////
 // NOTES FOR UNDERSTANDING THIS SCRIPT
